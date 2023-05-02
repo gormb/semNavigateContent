@@ -1,0 +1,51 @@
+<html>
+
+</html>
+<body>
+    <!-- table for all companies in Norway (use brreg to get list) -->
+    <table>
+        <tr>
+            <td>Company name</td>
+            <td>Company number</td>
+            <td>Address</td>
+            <td>Post number</td>
+            <td>Post place</td>
+            <td>Phone number</td>
+            <td>Internet address</td>
+            <td>Company status</td>
+            <td>Company type</td>
+            <td>Company owner</td>
+            <td>Company owner address</td>
+            <td>Company owner post number</td>
+            <td>Company owner post place</td>
+            <td>Company owner phone number</td>
+            <td>Company owner internet address</td>
+            <td>Company owner status</td>
+            <td>Company owner type</td>
+        </tr>
+        <!-- loop for each company -->
+        <script>
+            let row=`
+        <tr>
+            <td>Company name</td>
+            <td>Company number</td>
+            <td>Address</td>
+            <td>Post number</td>
+            <td>Post place</td>
+            <td>Phone number</td>
+            <td>Internet address</td>
+            <td>Company status</td>
+            <td>Company type</td>
+            <td>Company owner</td>
+            <td>Company owner address</td>
+            <td>Company owner post number</td>
+            <td>Company owner post place</td>
+            <td>Company owner phone number</td>
+            <td>Company owner internet address</td>
+            <td>Company owner status</td>
+            <td>Company owner type</td>
+        </tr>`;
+        let companyJson = JSON.parse(`<?php echo $companyJson; ?>`);
+
+    </table>
+</body>
