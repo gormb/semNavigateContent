@@ -297,19 +297,19 @@ INT_PTR MsgNotify(WORD wParamLw, LPARAM lParam)
         case TVN_DELETEITEM: {
                 TSK* pTsk = (TSK*)(((LPNMTREEVIEW)lParam)->itemOld.lParam);
                 if (pTsk && pTsk->bDeleteOnRemove)
-                    delete pTsk;
-                return TRUE;
+                    delete pTsk; 
             }
+            return TRUE; 
         case TVN_KEYDOWN: return PostMessage(_g_hDlg, APP_CHECKSTATECHANGE, (WPARAM)nmInfo->hwndFrom, (LPARAM)TreeView_GetSelection(_g_hTreeStatus));
-        case NM_CLICK: { // TvwCheckAdjust
-                DWORD dwpos = GetMessagePos();
-                TVHITTESTINFO ht = { { LOWORD(dwpos), HIWORD(dwpos)}, 0, 0 };
-                MapWindowPoints(HWND_DESKTOP, nmInfo->hwndFrom, &ht.pt, 1);
-                TreeView_HitTest(nmInfo->hwndFrom, &ht);
-                if (TVHT_ONITEMSTATEICON & ht.flags)
-                    PostMessage(_g_hDlg, APP_CHECKSTATECHANGE, (WPARAM)nmInfo->hwndFrom, (LPARAM)ht.hItem); //else //    TreeView_SelectItem(nmInfo->hwndFrom, NULL);
+        case NM_CLICK: {// TvwCheckAdjust
+                    DWORD dwpos = GetMessagePos();
+                    TVHITTESTINFO ht = { { LOWORD(dwpos), HIWORD(dwpos)}, 0, 0 };
+                    MapWindowPoints(HWND_DESKTOP, nmInfo->hwndFrom, &ht.pt, 1);
+                    TreeView_HitTest(nmInfo->hwndFrom, &ht);
+                    if (TVHT_ONITEMSTATEICON & ht.flags)
+                        PostMessage(_g_hDlg, APP_CHECKSTATECHANGE, (WPARAM)nmInfo->hwndFrom, (LPARAM)ht.hItem); //else //    TreeView_SelectItem(nmInfo->hwndFrom, NULL);
+                }
                 return TRUE;
-            }
         default:
             OutputDebugString(DspDebugTxt(buffer, MAX_PATH, wParamLw, nmInfo->code));
             OutputDebugString(L"\n");
