@@ -34,10 +34,10 @@ int main()
     pRec[3] = new WavRecorder(true, 2000);
 
 
-    bool bDone = WavRecorder::Cancelled();
-    for (int i = 1; i < 10 && !bDone; i++, bDone = WavRecorder::Cancelled())
-        WaitForSingleObject(hDone, 99); // Does it take 1 ms to start the two previous recordings?
-    if (!bDone)
+    //bool bDone = WavRecorder::Cancelled();
+    //for (int i = 1; i < 10 && !bDone; i++, bDone = WavRecorder::Cancelled())
+    //    WaitForSingleObject(hDone, 99); // Does it take 1 ms to start the two previous recordings?
+    //if (!bDone)
     {
         pRec[2]->Record(); // 2nd mic-thread
         pRec[3]->Record(); // 2nd speaker-thread
@@ -46,13 +46,13 @@ int main()
     while (WaitForSingleObject(hDone, 100) == WAIT_TIMEOUT)
     {
         // Wait for ESC to be pressed
-        if (WavRecorder::Cancelled())
+        //if (WavRecorder::Cancelled())
         { // Stop recording and save
-            pRec[0]->Stop();
-            pRec[1]->Stop();
-            pRec[2]->Stop();
-            pRec[3]->Stop();
-            break;
+            //pRec[0]->Stop();
+            //pRec[1]->Stop();
+            //pRec[2]->Stop();
+            //pRec[3]->Stop();
+            //break;
         }
 	}
     return res;

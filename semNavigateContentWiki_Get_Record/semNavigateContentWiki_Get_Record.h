@@ -69,9 +69,9 @@ public:
             // Get the recorded audio
             XAUDIO2_VOICE_STATE state;
             pSourceVoice->GetState(&state);
-            BYTE* pBuffer = new BYTE[state.SamplesRecorded * wfx.nBlockAlign];
+            //BYTE* pBuffer = new BYTE[state.SamplesRecorded * wfx.nBlockAlign];
             //pSourceVoice->GetBuffer(pBuffer, state.SamplesRecorded);
-            pSourceVoice->GetBuffer(pBuffer, state.pCurrentBufferContext);
+            //pSourceVoice->GetBuffer(pBuffer, state.pCurrentBufferContext);
             // Write the recorded audio to file
             HANDLE hFile = CreateFile(szFileName, GENERIC_WRITE, FILE_SHARE_READ, NULL, CREATE_ALWAYS, 0, NULL);
             DWORD dwWritten;
@@ -80,7 +80,7 @@ public:
             CloseHandle(hFile);
 
             // Release the resources
-            delete[] pBuffer;
+            //delete[] pBuffer;
             pSourceVoice->DestroyVoice();
             pXAudio2->Release();
             return true;
