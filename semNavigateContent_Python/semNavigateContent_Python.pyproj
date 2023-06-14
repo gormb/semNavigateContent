@@ -22,6 +22,11 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="semNavigateContent_Python.py" />
+    <Compile Include="wiki_act.py" />
+    <Compile Include="wiki_list.py" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="semNavigateContent_Python.cmd" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
   <!-- Uncomment the CoreCompile target to enable the Build command in
