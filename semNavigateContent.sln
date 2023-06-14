@@ -9,7 +9,9 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "aniGptUtilCudaRuntime", "an
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "semNavigateContentWiki_Get_Record", "semNavigateContentWiki_Get_Record\semNavigateContentWiki_Get_Record.vcxproj", "{94CCA295-BEE3-486D-AE98-6E4EDAF190D4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "semNavigateContent_SoundService", "semNavigateContent_SoundService\semNavigateContent_SoundService.csproj", "{A63FA00F-E506-4D73-9E08-123A2EF91288}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "semNavigateContent_SoundService", "semNavigateContent_SoundService\semNavigateContent_SoundService.csproj", "{A63FA00F-E506-4D73-9E08-123A2EF91288}"
+EndProject
+Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "semNavigateContent_Python", "semNavigateContent_Python\semNavigateContent_Python.pyproj", "{6FE81EAB-0EE1-4FEA-88DF-71AC56E46107}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -67,6 +69,12 @@ Global
 		{A63FA00F-E506-4D73-9E08-123A2EF91288}.Release|x64.Build.0 = Release|Any CPU
 		{A63FA00F-E506-4D73-9E08-123A2EF91288}.Release|x86.ActiveCfg = Release|Any CPU
 		{A63FA00F-E506-4D73-9E08-123A2EF91288}.Release|x86.Build.0 = Release|Any CPU
+		{6FE81EAB-0EE1-4FEA-88DF-71AC56E46107}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6FE81EAB-0EE1-4FEA-88DF-71AC56E46107}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{6FE81EAB-0EE1-4FEA-88DF-71AC56E46107}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{6FE81EAB-0EE1-4FEA-88DF-71AC56E46107}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6FE81EAB-0EE1-4FEA-88DF-71AC56E46107}.Release|x64.ActiveCfg = Release|Any CPU
+		{6FE81EAB-0EE1-4FEA-88DF-71AC56E46107}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
