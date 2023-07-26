@@ -1,6 +1,6 @@
 import sys
 import requests
-import pyodbc
+#import pyodbc
 
 parse = "https://www.mediawiki.org/xml/export-0.10.xsd" # https://www.mediawiki.org/wiki/Help:Export#Export_format
 

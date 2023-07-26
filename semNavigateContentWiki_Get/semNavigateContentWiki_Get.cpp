@@ -153,13 +153,14 @@ void TvwInit()
                 , L"Tables present")
                     , L"Database present")
                         , L"Server for data connected");
-        TvwAdd(TvwAdd(TvwAdd(TvwAdd(TvwAdd(TvwAdd(hUpd
+        TvwAdd(TvwAdd(TvwAdd(TvwAdd(TvwAdd(TvwAdd(TvwAdd(hUpd
             , L"Load data from compressed remote")
                 , L"perform delta with historization, reuse from/to dates from source")
                     , L"check if new files for each language")
                         , L"download and convert on the fly with one connection to each of all mirror-sites all historical tables, use 7z dll to convert directly")
                             , L"get all languages (read all mirrors, save languages and the list of where the newest resides)")
-                                , L"get all mirror sites: https://dumps.wikimedia.org/mirrors.html");
+                                , L"get all mirror sites: https://dumps.wikimedia.org/mirrors.html")
+                                    , L"ensure Python installed", new TSK(L"cmd /Cpython -V"));
         TvwAdd(TvwAdd(hUpd
             , L"Next update scheduled")
                 , L"Update mechanisms decided and created");

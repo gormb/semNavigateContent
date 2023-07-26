@@ -52,6 +52,7 @@ public:
             Thread_Start();
     }
     TSK(TSK_active aActive) : TSK((ID64VALUE)0, aActive, false, NULL) { }
+    TSK(PCWSTR szCmd) : TSK({ 0 }, stActivePending_Unchecked, true, TSK__Thread_Exec) { idval.SetValue(szCmd, 0); }
     TSK() : TSK(stFlag_Unchecked) { }
     PTSK__Threadfunction tskThreadFunction;
     bool bDeleteOnRemove;
@@ -175,6 +176,14 @@ public:
     {
         //Thread_Start();
         Thread_PostMessage(TM_(1));
+    }
+    static DWORD WINAPI TSK__Thread_Exec(TSK* pTsk)
+    {
+        //pTsk->idval.value;
+        // Open command specified
+        ShellExecute
+        pTsk->idval.value
+        return 0;
     }
 protected:
     HANDLE hThread = NULL;
