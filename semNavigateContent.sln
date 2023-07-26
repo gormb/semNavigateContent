@@ -13,6 +13,26 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "semNavigateContent_SoundSer
 EndProject
 Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "semNavigateContent_Python", "semNavigateContent_Python\semNavigateContent_Python.pyproj", "{6FE81EAB-0EE1-4FEA-88DF-71AC56E46107}"
 EndProject
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "semNavigateContent_Big6", "semNavigateContent_Big6\", "{87451B00-86B8-4F9D-B46B-5FAA11248B92}"
+	ProjectSection(WebsiteProperties) = preProject
+		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.8"
+		Debug.AspNetCompiler.VirtualPath = "/localhost_54408"
+		Debug.AspNetCompiler.PhysicalPath = "semNavigateContent_Big6\"
+		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_54408\"
+		Debug.AspNetCompiler.Updateable = "true"
+		Debug.AspNetCompiler.ForceOverwrite = "true"
+		Debug.AspNetCompiler.FixedNames = "false"
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.VirtualPath = "/localhost_54408"
+		Release.AspNetCompiler.PhysicalPath = "semNavigateContent_Big6\"
+		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_54408\"
+		Release.AspNetCompiler.Updateable = "true"
+		Release.AspNetCompiler.ForceOverwrite = "true"
+		Release.AspNetCompiler.FixedNames = "false"
+		Release.AspNetCompiler.Debug = "False"
+		VWDPort = "54408"
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -75,6 +95,18 @@ Global
 		{6FE81EAB-0EE1-4FEA-88DF-71AC56E46107}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6FE81EAB-0EE1-4FEA-88DF-71AC56E46107}.Release|x64.ActiveCfg = Release|Any CPU
 		{6FE81EAB-0EE1-4FEA-88DF-71AC56E46107}.Release|x86.ActiveCfg = Release|Any CPU
+		{87451B00-86B8-4F9D-B46B-5FAA11248B92}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{87451B00-86B8-4F9D-B46B-5FAA11248B92}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{87451B00-86B8-4F9D-B46B-5FAA11248B92}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{87451B00-86B8-4F9D-B46B-5FAA11248B92}.Debug|x64.Build.0 = Debug|Any CPU
+		{87451B00-86B8-4F9D-B46B-5FAA11248B92}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{87451B00-86B8-4F9D-B46B-5FAA11248B92}.Debug|x86.Build.0 = Debug|Any CPU
+		{87451B00-86B8-4F9D-B46B-5FAA11248B92}.Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{87451B00-86B8-4F9D-B46B-5FAA11248B92}.Release|Any CPU.Build.0 = Debug|Any CPU
+		{87451B00-86B8-4F9D-B46B-5FAA11248B92}.Release|x64.ActiveCfg = Debug|Any CPU
+		{87451B00-86B8-4F9D-B46B-5FAA11248B92}.Release|x64.Build.0 = Debug|Any CPU
+		{87451B00-86B8-4F9D-B46B-5FAA11248B92}.Release|x86.ActiveCfg = Debug|Any CPU
+		{87451B00-86B8-4F9D-B46B-5FAA11248B92}.Release|x86.Build.0 = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

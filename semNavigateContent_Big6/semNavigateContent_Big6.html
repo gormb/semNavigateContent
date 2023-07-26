@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Big 6 Traits</title><meta charset='utf-8'><meta http-equiv='X-UA-Compatible' content='IE=edge'><meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel='stylesheet' type='text/css' media='screen' href='semNavigateContent_Big6.css'>
+    <script src="https://www.gstatic.com/firebasejs/9.0.2/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.0.2/firebase-database.js"></script>
+    <script src="semNavigateContent_Big6.js"></script>
+    <script src="semNavigateContent_Big6_qr.js"></script>
+    <script src="semNavigateContent_Big6_firebase.js"></script>
+    <script>
+        var bYes = -1, bNo = -1;
+        function SetYN(cell, y, n) {
+            if (y != null) {
+                bYes = y;
+                cell.classList.toggle("yes");
+            }
+            if (n != null) {
+                bNo = n;
+                cell.classList.toggle("no");
+            }
+        }
+    </script><script>
+        function TraitsClear() { // clear names and percentages of traits since no test chosen
+            t0.innerHTML = t1.innerHTML = t2.innerHTML = t3.innerHTML = t4.innerHTML = t5.innerHTML =
+            t0.style.borderColor = t1.style.borderColor = t2.style.borderColor = t3.style.borderColor = t4.style.borderColor = t5.style.borderColor =
+                t0c.style.borderColor = t1c.style.borderColor = t2c.style.borderColor = t3c.style.borderColor = t4c.style.borderColor = t5c.style.borderColor = 'gray';
+        }
+        function TraitsPopulate() { // set names of traits for the test chosen
+            for (var i = 0; i < 6; i++) {
+                if (i < big6_scores.length) 
+                    document.getElementById("t" + i).innerHTML = big6_scores[i][i_trait][i_belieftext];
+            }
+        }
+        function TraitsUpdate() { // update percentages for traits based upon answers given
+            for (var i = 0; i < 6; i++) 
+                if (i < big6_scores.length) 
+                    {
+                        document.getElementById("t" + i).style.borderColor = 'yellow';
+                        document.getElementById("t"+i+"c").style.borderColor = 'green';
+                    }
+        }
+    </script><script>            
+        function selectButton(b, cell) {
+            if (big6_testIndex == 0) { // Menu click! set test and navigate to first choice!
+                big6_SetTestIndex(big6_menu[b][i_beliefid]);
+                TraitsPopulate();
+                StatementPopulate(); // populate the first statement
+            }
+            else { 
+                if (bYes == b) SetYN(cell, -1); // turn off yes
+                else if (bNo == b) SetYN(cell, null, -1); // turn off no
+                else if (bYes == -1) SetYN(cell, b); // set yes
+                else if (bNo == -1) SetYN(cell, null, b); // set no
+                // Score the test
+                TraitsUpdate(); // Show percentages
+            }
+            bNext.style.visibility = bYes == -1 || bNo == -1 ? "hidden" : "visible";
+            bSkip.style.visibility = bYes != -1 || bNo != -1 ? "hidden" : "visible";
+        }
+        function StatementReset(b_i, t) {
+            var b = document.getElementById("b" + b_i);
+            b.classList.remove("yes");
+            b.classList.remove("no");
+            try { b.innerHTML = t[i_belieftext]; } // If an array, then text is the i_belieftext-th element
+            catch (e) { b.innerHTML = t; }// not an array, t is a string
+        }
+        function ifnull(s, d = "", extra="") { return (s === null ? d : s) + extra; }
+        function StatementPopulate(i, s0, s1, s2, s3) {
+            if (i == null) { // Find four fitting statements
+                if (big6_testIndex == 0) { // Menu click! set test and navigate to first choice!
+                    big6_menu = big6_GetChildren(0);
+                    TraitsClear();
+                }
+                else
+                    big6_menu = big6_GetStatements();
+                StatementPopulate(0, big6_menu[0], big6_menu.length > 1 ? big6_menu[1]:null, big6_menu.length > 2 ? big6_menu[2]:null, big6_menu.length > 3 ? big6_menu[3]:null);
+            }
+            else { // values (or arrays)
+                StatementReset(0, s0);
+                StatementReset(1, s1);
+                StatementReset(2, s2);
+                StatementReset(3, s3);
+                bYes = bNo = -1;
+                bNext.style.visibility = "hidden";
+                bSkip.style.visibility =
+                    bReset.style.visibility = big6_testIndex == 0 ? "hidden" : "visible";
+            }
+        }
+      </script>
+</head>
+<body onload="StatementPopulate()">
+
+<table style="width: 100vw;height:20vh;"><tr><td style="border-width: 0px;">
+<h1>Din mening</h1>
+Trykk på den av uttalelsene du er mest enig i og den du er mest uenig i.
+</td><td id="traits" style="border-width: 5px; border-color: white;">
+    <table style="width: 100%;height:100%;">
+        <tr><td id="t0c" class="trait"><div id="t0" class="trait">&nbsp;</div></td><td id="t1c" class="trait"><div id="t1" class="trait">&nbsp;</div></td><td id="t2c" class="trait"><div id="t2" class="trait">&nbsp;</div></td>
+        </tr><tr><td id="t3c" class="trait"><div id="t3" class="trait">&nbsp;</div></td><td id="t4c" class="trait"><div id="t4" class="trait">&nbsp;</div></td><td id="t5c" class="trait"><div id="t5" class="trait">&nbsp;</div></td></tr>
+    </table>
+</td></tr></table>
+
+<table style="top: 20%; position: absolute;width: 100vw;height: 60vh;border-spacing: 10px;user-select: none;">
+<tr><td id="b0" onclick="selectButton(0, this)">
+</td><td id="b1" onclick="selectButton(1, this)">
+</td></tr><tr><td id="b2" onclick="selectButton(2, this)">
+</td><td id="b3" onclick="selectButton(3, this)">
+</td></tr></table>
+<button id="bNext" onclick="StatementPopulate()" style="position: absolute; left:40%; top:46%; width:20%; height: 8%;font-size: larger;">&#x27A1;&#x2753;</button>
+<button id="bSkip" onclick="StatementPopulate()" style="visibility:hidden; position: absolute; left:40%; top:46%; width:20%; height: 8%;font-size: larger;">&#x27A1;&#x23ED;</button>
+<button id="bReset" onclick="big6_testIndex=0;StatementPopulate()" style="position: absolute; left:90%; top:72%; width:10%; height: 8%;font-size: larger;">&#x21BA;&#x2190;</button>
+
+<div style="visibility:hidden;position: absolute; left:10%; top:80%; width:10%; height: 8%;font-size: larger;">
+    <input type="button" value="Sign In" onclick="RegisterUser('110751039536784560815')" />
+    Link:<input type="text" value="randomId" /><input type="button" value="Show link" onclick="QrGenerateLink('110751039536784560815')" />
+</div>
+</body>
+</html>

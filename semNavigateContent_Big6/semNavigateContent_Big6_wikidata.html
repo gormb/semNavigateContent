@@ -1,0 +1,43 @@
+    <!DOCTYPE html>
+<html>
+<head>
+    <title>Big 6 Traits</title><meta charset='utf-8'><meta http-equiv='X-UA-Compatible' content='IE=edge'><meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel='stylesheet' type='text/css' media='screen' href='semNavigateContent_Big6.css'>
+    <script src="https://apis.google.com/js/api.js"></script>
+    <script>
+        function RegisterUser(id) {
+            document.write("Registering " + id + "...<br>");
+            gapi.load('auth2', function () {
+                gapi.auth2.init({
+                    client_id: id,
+                    cookiepolicy: 'single_host_origin'
+                }).then(function (auth2) {
+                    document.write("Registered " + id + ".<br>" + auth2.isSignedIn.get() + "<br>");
+                });
+            });
+        }
+    </script>
+    <script src="semNavigateContent_Big6.js"></script>
+</head>
+<body> 
+Hello World!
+<input type="button" value="Sign In" onclick="RegisterUser('110751039536784560815')" />
+<!-- <div id="SignInButton" class="g-signin2" data-onsuccess="onSignIn">
+
+Email semnavigatecontent@semnavigatecontent.iam.gserviceaccount.com
+Unique ID 110751039536784560815
+
+instructions on implementing authentication.
+Load the Google Sheets API and make API calls:
+
+Once the user is authenticated, load the Google Sheets API using the gapi.client.load method.
+Use the loaded API to retrieve and modify data in the Google Sheet.
+You can use methods like gapi.client.sheets.spreadsheets.values.get to retrieve data and gapi.client.sheets.spreadsheets.values.update to modify data.
+Provide the appropriate spreadsheet ID and range of cells for your operations.
+Please note that client-side access to the Google Sheets API using JavaScript has some limitations and restrictions. You may encounter cross-origin resource sharing (CORS) issues if your JavaScript code is running on a different domain than the Google Sheets API. Additionally, you need to handle the authorization and authentication flow correctly to ensure the security of your application.
+
+Make sure to refer to the official Google Sheets API documentation and the Google Sign-In documentation for more detailed information, code examples, and guidelines specific to client-side JavaScript usage.
+
+</div> -->
+</body>
+</html>

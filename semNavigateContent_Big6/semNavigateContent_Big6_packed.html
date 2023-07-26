@@ -1,3 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Big 6 Traits</title><meta charset='utf-8'><meta http-equiv='X-UA-Compatible' content='IE=edge'><meta name='viewport' content='width=device-width, initial-scale=1'>
+    <style>
+        body, html {margin: 0;padding: 0;height: 100%;background-color: #f0f0f0;}
+        td {width: 50%;height: 50%;background-color: #ffffff;vertical-align: middle;text-align: center;cursor: pointer;border: 20px solid #cccccc;}
+        td.trait {width: 80%;border-width: 2px;text-align: left;}
+        td.traitsc {width: 10%;border-width: 2px;text-align: left;}
+        td.yes {border-color: green;}
+        td.no {border-color: red;}
+    </style>
+    <script>
 
 var big6 = new Array(), i_beliefid=0,i_parentid=1,i_belieftext=2,i_consequence=3,i_attitudeyesopportunity=4,i_attitudenoopportunity=5,i_attitudeyesthreat=6,i_attitudenothreat=7,i_time=8;
 var big6_menu = new Array();
@@ -164,16 +177,16 @@ big6.push([162100,162000,'Fare for misbruk av teknologi kan lede til forbud','',
 big6.push([162200,162000,'Behov for nye regelverk','','','','','']);
 big6.push([162300,162000,'Nytt regelverk må utvikles raskt, og være i nærmest kontinuerlig utvikling','','','','','']);
 big6.push([200000,0,'Big 5 Mini - personality test','The Big Five Personality Test, also known as the Five-Factor Model (FFM), is a widely used framework in psychology to measure and describe personality traits.  The traits are considered to represent broad dimensions of personality and are used to describe and understand individual differences in personality characteristics. It\'s important to note that individuals can possess a combination of high and low scores on each trait, resulting in unique personality profiles.','','','','']);
-big6.push([210000,200000,'Open&shy;ness to Experi&shy;ence','This trait reflects a person\'s inclination towards novelty, imagination, creativity, and intellectual curiosity. Individuals high in openness tend to be imaginative, open-minded, adventurous, and appreciate art and beauty. Those low in openness are more conventional, practical, and prefer routine and familiarity.','','','','']);
+big6.push([210000,200000,'Openness to Experience','This trait reflects a person\'s inclination towards novelty, imagination, creativity, and intellectual curiosity. Individuals high in openness tend to be imaginative, open-minded, adventurous, and appreciate art and beauty. Those low in openness are more conventional, practical, and prefer routine and familiarity.','','','','']);
 big6.push([211000,210000,'','','Endless possibilities inspire me to explore new ideas and push the boundaries of what is known','I prefer sticking to what I know and feel comfortable with, as it provides a sense of security and predictability','The desire to embrace life\'s possibilities drives me to constantly seek new experiences and adventures, ensuring I have no regrets','The uncertainty surrounding the unknown inhibits me from venturing outside of my comfort zone and exploring new things']);
 big6.push([212000,210000,'','','Embracing novel ideas and unconventional thinking expands my perspective and fosters personal growth','I find comfort in sticking to familiar routines and established methods, as they provide a sense of stability and security','Venturing into unexplored territories fuels my desire for constant self-improvement and discovery','The fear of the unknown prevents me from stepping outside of my comfort zone and trying new things']);
-big6.push([220000,200000,'Conscien&shy;tiousness','Conscientiousness refers to the degree of organization, responsibility, dependability, and self-discipline in an individual. Highly conscientious individuals are diligent, reliable, organized, and self-motivated, while those low in conscientiousness may be more spontaneous, laid-back, and less focused on details.','','','','']);
+big6.push([220000,200000,'Conscientiousness','Conscientiousness refers to the degree of organization, responsibility, dependability, and self-discipline in an individual. Highly conscientious individuals are diligent, reliable, organized, and self-motivated, while those low in conscientiousness may be more spontaneous, laid-back, and less focused on details.','','','','']);
 big6.push([221000,220000,'','','Setting high standards and striving for excellence allows me to achieve remarkable results and reach my full potential','Being less focused on details and rules allows me the freedom to explore different approaches and embrace spontaneity','The drive to excel and meet others\' expectations fuels my determination to meticulously plan and execute tasks flawlessly','The aversion to constraints and inflexible systems makes me reluctant to adhere to rules and rigid schedules']);
 big6.push([222000,220000,'','','Being organized and detail-oriented allows me to stay on top of my responsibilities and achieve desired outcomes','I value flexibility and spontaneity, as they allow me to adapt and respond effectively to changing circumstances','Striving for perfection and meeting high standards propels me to excel in various aspects of life','The fear of restrictions and rigid structures makes me resist following rules and adhering to strict schedules']);
-big6.push([230000,200000,'Extra&shy;version','This trait captures a person\'s sociability, assertiveness, talkativeness, and level of outgoingness. Extroverted individuals tend to be energetic, enthusiastic, and seek social interactions. They are often described as outgoing and gain energy from being around others. Introverted individuals, on the other hand, prefer solitude, tend to be more reserved, and may feel drained by extensive social interactions.','','','','']);
+big6.push([230000,200000,'Extraversion','This trait captures a person\'s sociability, assertiveness, talkativeness, and level of outgoingness. Extroverted individuals tend to be energetic, enthusiastic, and seek social interactions. They are often described as outgoing and gain energy from being around others. Introverted individuals, on the other hand, prefer solitude, tend to be more reserved, and may feel drained by extensive social interactions.','','','','']);
 big6.push([231000,230000,'','','The excitement of social interactions and the potential for new connections energize and inspire me to constantly seek out others','Solitude and introspection provide the necessary space to unleash my creativity and delve deeper into my thoughts and ideas','The preference to avoid feelings of loneliness and the fear of missing out on social opportunities motivate me to constantly seek the company of others','The discomfort associated with social interactions and overwhelming stimuli causes me to withdraw and steer clear of situations that may lead to unease']);
 big6.push([232000,230000,'','','Engaging in social activities energizes me and helps me thrive in dynamic and collaborative environments','I find solace in solitude and introspection, which provide the space for self-reflection and recharge','The fear of missing out on social opportunities drives me to seek the company of others and engage in social interactions','The fear of overwhelming social interactions and stimuli leads me to withdraw and avoid situations that may cause discomfort']);
-big6.push([240000,200000,'Agree&shy;able&shy;ness','Agreeableness reflects a person\'s tendency to be compassionate, cooperative, empathetic, and considerate of others. Those high in agreeableness are typically friendly, helpful, trusting, and prioritize harmonious relationships. Individuals low in agreeableness may be more skeptical, competitive, and assertive.','','','','']);
+big6.push([240000,200000,'Agreeableness','Agreeableness reflects a person\'s tendency to be compassionate, cooperative, empathetic, and considerate of others. Those high in agreeableness are typically friendly, helpful, trusting, and prioritize harmonious relationships. Individuals low in agreeableness may be more skeptical, competitive, and assertive.','','','','']);
 big6.push([241000,240000,'','','The belief in the power of cooperation and compassion motivates me to create harmony and make a positive impact on others','Asserting my own needs and boundaries allows me the freedom to pursue my goals and desires without feeling restricted','The preference to maintain harmony and avoid conflict and disapproval drives me to prioritize peaceful interactions and steer clear of confrontations','The inclination to protect myself from vulnerability and dependency results in guardedness and prioritizing self-preservation over forming close relationships']);
 big6.push([242000,240000,'','','Valuing harmony and empathy allows me to build strong and meaningful connections with others','Asserting my opinions and boundaries enables me to maintain my individuality and personal growth','The fear of conflict and disapproval drives me to prioritize maintaining peace and avoiding any confrontations','The fear of vulnerability and dependence leads me to be guarded and prioritize self-preservation over building close relationships']);
 big6.push([250000,200000,'Emotional Stability','This trait refers to the degree of emotional stability and reactivity in an individual. Neuroticism encompasses traits such as anxiety, moodiness, irritability, and susceptibility to stress. Highly neurotic individuals may experience negative emotions more intensely and frequently, whereas those low in neuroticism tend to be more emotionally stable and resilient.','','','','']);
@@ -183,10 +196,10 @@ big6.push([300000,0,'Big 5 Mini - personlighetstest','Big Five-personlighetstest
 big6.push([310000,300000,'Åpenhet for erfaring','Dette trekket gjenspeiler en persons tiltrekning mot nyhet, fantasi, kreativitet og intellektuell nysgjerrighet. Personer som er høye på åpenhet, har en tendens til å være fantasifulle, åpensinnede, eventyrlystne og sette pris på kunst og skjønnhet. De som er lave på åpenhet, er mer konvensjonelle, praktiske og foretrekker rutine og kjennskap.','','','','']);
 big6.push([311000,310000,'','','Endeløse muligheter inspirerer meg til å utforske nye ideer og utfordre grensene for det som er kjent','Foretrekker å holde meg til det jeg vet og føler meg komfortabel med, da det gir en følelse av sikkerhet og forutsigbarhet','Ønsket om å omfavne livets muligheter driver meg til stadig å søke nye opplevelser og eventyr, og sikre at jeg ikke har noen angrende tanker','Usikkerheten rundt det ukjente hindrer meg i å våge utenfor komfortsonen og utforske nye ting']);
 big6.push([312000,310000,'','','Å omfavne nye ideer og ukonvensjonell tenkning utvider perspektivet mitt og fremmer personlig vekst','Jeg finner trøst i å holde meg til kjente rutiner og etablerte metoder, da de gir en følelse av stabilitet og trygghet','Våge inn i uutforskede områder gir næring til mitt ønske om kontinuerlig selvforbedring og oppdagelse','Frykten for det ukjente hindrer meg i å trå utenfor komfortsonen og prøve nye ting']);
-big6.push([320000,300000,'Samvittig&shy;hetsfullhet','Samvittighetsfullhet refererer til graden av organisasjon, ansvar, pålitelighet og selvdisiplin hos en person. Personer med høy samvittighetsfullhet er flittige, pålitelige, organiserte og selvmotiverte, mens de som er lave på samvittighetsfullhet kan være mer spontane, avslappede og mindre opptatt av detaljer.','','','','']);
+big6.push([320000,300000,'Samvittighetsfullhet','Samvittighetsfullhet refererer til graden av organisasjon, ansvar, pålitelighet og selvdisiplin hos en person. Personer med høy samvittighetsfullhet er flittige, pålitelige, organiserte og selvmotiverte, mens de som er lave på samvittighetsfullhet kan være mer spontane, avslappede og mindre opptatt av detaljer.','','','','']);
 big6.push([321000,320000,'','','Å sette høye standarder og strebe etter ekspertise gjør at jeg kan oppnå bemerkelsesverdige resultater og nå mitt fulle potensial','Å være mindre opptatt av detaljer og regler gir meg friheten til å utforske ulike tilnærminger og omfavne spontanitet','Motivasjonen for å utmerke seg og møte andres forventninger driver min besluttsomhet til å planlegge og utføre oppgaver feilfritt','Motviljen mot begrensninger og stive systemer gjør meg motvillig til å følge regler og overholde strenge tidsplaner']);
 big6.push([322000,320000,'','','Å være organisert og detaljorientert gjør at jeg kan holde styr på mine ansvarsområder og oppnå ønskede resultater','Jeg verdsetter fleksibilitet og spontanitet, da det gir meg muligheten til å tilpasse meg og reagere effektivt på endrede omstendigheter','Streben etter perfeksjon og oppfyllelse av høye standarder driver meg til å utmerke meg på ulike områder i livet','Frykten for begrensninger og rigide strukturer gjør at jeg motsetter meg å følge regler og holde meg til strenge rutiner']);
-big6.push([330000,300000,'Ekstro&shy;versjon','Dette trekket fanger opp en persons sosialitet, pågåenhet, pratelyst og grad av utadvendthet. Utadvendte personer har en tendens til å være energiske, entusiastiske og søke sosiale interaksjoner. De blir ofte beskrevet som utadvendte og får energi av å være sammen med andre. Introverte personer foretrekker derimot å være alene, har en tendens til å være mer reserverte og kan føle seg utmattet av omfattende sosiale interaksjoner.','','','','']);
+big6.push([330000,300000,'Ekstroversjon','Dette trekket fanger opp en persons sosialitet, pågåenhet, pratelyst og grad av utadvendthet. Utadvendte personer har en tendens til å være energiske, entusiastiske og søke sosiale interaksjoner. De blir ofte beskrevet som utadvendte og får energi av å være sammen med andre. Introverte personer foretrekker derimot å være alene, har en tendens til å være mer reserverte og kan føle seg utmattet av omfattende sosiale interaksjoner.','','','','']);
 big6.push([331000,330000,'','','Spenningen ved sosiale interaksjoner og muligheten for nye forbindelser energiserer og inspirerer meg til stadig å søke etter andre','Ensomhet og introspeksjon gir nødvendig plass for å utfolde min kreativitet og dykke dypere inn i mine tanker og ideer','Ønsket om å unngå følelsen av ensomhet og frykten for å gå glipp av sosiale muligheter motiverer meg til stadig å søke selskap av andre','Ubekvemheten knyttet til sosiale interaksjoner og overveldende stimuli får meg til å trekke meg tilbake og unngå situasjoner som kan føre til ubehag']);
 big6.push([332000,330000,'','','Å engasjere seg i sosiale aktiviteter gir meg energi og hjelper meg å trives i dynamiske og samarbeidsorienterte miljøer','Jeg finner trøst i ensomhet og introspeksjon, som gir rom for selvrefleksjon og gjenopplading','Frykten for å gå glipp av sosiale muligheter driver meg til å søke selskap av andre og engasjere meg i sosiale interaksjoner','Frykten for overveldende sosiale interaksjoner og stimuli får meg til å trekke meg tilbake og unngå situasjoner som kan føre til ubehag']);
 big6.push([340000,300000,'Vennlighet','Vennlighet gjenspeiler en persons tendens til å være medfølende, samarbeidsvillig, empatisk og hensynsfull overfor andre. De som er høye på vennlighet er vanligvis vennlige, hjelpsomme, tillitsfulle og prioriterer harmoniske relasjoner. Personer som er lave på vennlighet kan være mer skeptiske, konkurransedyktige og pågående.','','','','']);
@@ -312,3 +325,120 @@ big6.push([162230,162200,' Selvkjørende kjøretøy allerede er i bruk, og det e
 big6.push([162310,162300,' Samfunnsområdene som regelverket skal regulere, er i mye raskere omstilling enn tidligere','','','','','']);
 big6.push([162320,162300,' Kompensasjonsordningen for næringslivet under covid-19 ble utviklet på tre uker. Regelverksutvikling, faglige avklaringer og teknisk utvikling forgikk samtidig','','','','','']);
 big6.push([162330,162300,' Behov for god sammenheng i regelverksutviklingen på tvers av sektorene for gode og effektive tjenester','','','','','']);
+
+
+    </script>
+    <script>
+        var bYes = -1, bNo = -1;
+        function SetYN(cell, y, n) {
+            if (y != null) {
+                bYes = y;
+                cell.classList.toggle("yes");
+            }
+            if (n != null) {
+                bNo = n;
+                cell.classList.toggle("no");
+            }
+        }
+    </script><script>
+        function TraitsClear() { // clear names and percentages of traits since no test chosen
+            t0.innerHTML = t1.innerHTML = t2.innerHTML = t3.innerHTML = t4.innerHTML = t5.innerHTML =
+                t0yn.innerHTML = t1yn.innerHTML = t2yn.innerHTML = t3yn.innerHTML = t4yn.innerHTML = t5yn.innerHTML =
+                t0ot.innerHTML = t1ot.innerHTML = t2ot.innerHTML = t3ot.innerHTML = t4ot.innerHTML = t5ot.innerHTML = "";
+        }
+        function TraitsPopulate() { // set names of traits for the test chosen
+            for (var i = 0; i < 6; i++) try {
+                document.getElementById("t"+i).innerHTML = big6_scores[i][i_trait][i_belieftext];
+                document.getElementById("t"+i+"yn").innerHTML = 
+                    document.getElementById("t"+i+"ot").innerHTML = "0%";
+            } catch(e){}
+        }
+        function TraitsUpdate() { // update percentages for traits based upon answers given
+            for (var i = 0; i < 6; i++) 
+                if (i < big6_scores.length) 
+                    try {
+                        document.getElementById("t"+i+"yn").innerHTML = "51%";
+                        document.getElementById("t"+i+"ot").innerHTML = "51%";
+                    } catch(e){}
+        }
+    </script><script>            
+        function selectButton(b, cell) {
+            if (big6_testIndex == 0) { // Menu click! set test and navigate to first choice!
+                big6_SetTestIndex(big6_menu[b][i_beliefid]);
+                TraitsPopulate();
+                StatementPopulate(); // populate the first statement
+            }
+            else { 
+                if (bYes == b) SetYN(cell, -1); // turn off yes
+                else if (bNo == b) SetYN(cell, null, -1); // turn off no
+                else if (bYes == -1) SetYN(cell, b); // set yes
+                else if (bNo == -1) SetYN(cell, null, b); // set no
+                // Score the test
+                TraitsUpdate(); // Show percentages
+            }
+            bNext.style.visibility = bYes == -1 || bNo == -1 ? "hidden" : "visible";
+            bSkip.style.visibility = bYes != -1 || bNo != -1 ? "hidden" : "visible";
+        }
+        function StatementReset(b_i, t) {
+            var b = document.getElementById("b" + b_i);
+            b.classList.remove("yes");
+            b.classList.remove("no");
+            try { b.innerHTML = t[i_belieftext]; } // If an array, then text is the i_belieftext-th element
+            catch (e) { b.innerHTML = t; }// not an array, t is a string
+        }
+        function ifnull(s, d = "", extra="") { return (s === null ? d : s) + extra; }
+        function StatementPopulate(i, s0, s1, s2, s3) {
+            if (i == null) { // Find four fitting statements
+                if (big6_testIndex == 0) { // Menu click! set test and navigate to first choice!
+                    big6_menu = big6_GetChildren(0);
+                    TraitsClear();
+                }
+                else
+                    big6_menu = big6_GetStatements();
+                StatementPopulate(0, big6_menu[0], big6_menu.length > 1 ? big6_menu[1]:null, big6_menu.length > 2 ? big6_menu[2]:null, big6_menu.length > 3 ? big6_menu[3]:null);
+            }
+            else { // values (or arrays)
+                StatementReset(0, s0);
+                StatementReset(1, s1);
+                StatementReset(2, s2);
+                StatementReset(3, s3);
+                bYes = bNo = -1;
+                bNext.style.visibility = "hidden";
+                bSkip.style.visibility =
+                    bReset.style.visibility = big6_testIndex == 0 ? "hidden" : "visible";
+            }
+        }
+      </script>
+</head>
+<body onload="StatementPopulate()">
+
+<table><tr><td style="border-width: 0px;">
+<h1>Din mening</h1>
+Trykk på den av uttalelsene du er mest enig i og den du er mest uenig i.
+</td><td id="traits" style="border-width: 5px; border-color: white;">
+    <table style="width: 100%;">
+        <tr><td id="t0" class="trait">&nbsp;</td><td id="t0yn" class="traitsc">&nbsp;</td><td id="t0ot" class="traitsc">&nbsp;</td></tr>
+        <tr><td id="t1" class="trait">&nbsp;</td><td id="t1yn" class="traitsc">&nbsp;</td><td id="t1ot" class="traitsc">&nbsp;</td></tr>
+        <tr><td id="t2" class="trait">&nbsp;</td><td id="t2yn" class="traitsc">&nbsp;</td><td id="t2ot" class="traitsc">&nbsp;</td></tr>
+        <tr><td id="t3" class="trait">&nbsp;</td><td id="t3yn" class="traitsc">&nbsp;</td><td id="t3ot" class="traitsc">&nbsp;</td></tr>
+        <tr><td id="t4" class="trait">&nbsp;</td><td id="t4yn" class="traitsc">&nbsp;</td><td id="t4ot" class="traitsc">&nbsp;</td></tr>
+        <tr><td id="t5" class="trait">&nbsp;</td><td id="t5yn" class="traitsc">&nbsp;</td><td id="t5ot" class="traitsc">&nbsp;</td></tr>
+    </table>
+</td></tr></table>
+
+<table style="top: 20%; position: absolute;width: 100%;height: 60vh;border-spacing: 10px;user-select: none;">
+<tr><td id="b0" onclick="selectButton(0, this)">
+</td><td id="b1" onclick="selectButton(1, this)">
+</td></tr><tr><td id="b2" onclick="selectButton(2, this)">
+</td><td id="b3" onclick="selectButton(3, this)">
+</td></tr></table>
+<button id="bNext" onclick="StatementPopulate()" style="position: absolute; left:40%; top:46%; width:20%; height: 8%;font-size: larger;">&#x27A1;&#x2753;</button>
+<button id="bSkip" onclick="StatementPopulate()" style="visibility:hidden; position: absolute; left:40%; top:46%; width:20%; height: 8%;font-size: larger;">&#x27A1;&#x23ED;</button>
+<button id="bReset" onclick="big6_testIndex=0;StatementPopulate()" style="position: absolute; left:90%; top:72%; width:10%; height: 8%;font-size: larger;">&#x21BA;&#x2190;</button>
+
+<div style="visibility:hidden;position: absolute; left:10%; top:80%; width:10%; height: 8%;font-size: larger;">
+    <input type="button" value="Sign In" onclick="RegisterUser('110751039536784560815')" />
+    Link:<input type="text" value="randomId" /><input type="button" value="Show link" onclick="QrGenerateLink('110751039536784560815')" />
+</div>
+</body>
+</html>
