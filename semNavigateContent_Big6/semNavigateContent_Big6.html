@@ -42,7 +42,7 @@
             for (var i = 0; i < 6; i++)
                 if (i < big6_scores.length)
                     { // var big6_scores = new Array(), i_trait=0, i_statements = 1, i_yesno=2, i_opportunitythreat=3;
-                        var t = document.getElementById("t" + i), tc = document.getElementById("t" + i + "c"), trait = big6_scores[i]; 
+                        var t = document.getElementById("t" + i), tc = document.getElementById("t" + i + "c"), trait = big6_scores[i];
                         var t_c = trait[i_statements].length;
                         tc.style.borderColor = t_c < 1 ? 'grey' : t_c < 2 ? 'yellow' :  'green';
                         if (t_c < 2)
@@ -102,24 +102,24 @@
 
 <table id="buttonsTable" style="width: 100vw;height:20vh;"><tr><td style="border-width: 0px;">
 <h1>Din mening</h1>
-Trykk på den av uttalelsene du er mest enig i og den du er mest uenig i. 
+Svar så godt du kan på det som passer best og det som passer dårligst. Du kan hoppe over spørsmål du ikke vil svare på.
 <a href="?test=200000,211000y2,232000n3,232000.1,232000.0,!,221000y2,222000n3,232000.1,232000.0,!,241000y2,212000n3,232000.1,232000.0,!,251000y2,202000n3,232000.1,232000.0,!,211000y2,252000n3,232000.1,232000.0,!,241000y2,232000n3,232000.1,232000.0,!,$">simuler big5</a>
 <a href="?test=300000,311000y2,332000n3,332000.1,332000.0,!,321000y2,322000n3,332000.1,332000.0,!,341000y2,312000n3,332000.1,332000.0,!,351000y2,302000n3,332000.1,332000.0,!,311000y2,352000n3,332000.1,332000.0,!,341000y2,332000n3,332000.1,332000.0,!,$">norsk</a>
-</td><td id="traits" style="border-width: 5px; border-color: white;user-select: none;">
+</td><td id="traits" style="border-width: 1vw; border-color: white;user-select: none;">
     <table style="width: 45vw;height:100%;">
         <tr><td id="t0c" class="trait"><div id="t0" class="trait" onclick="ShowTraits(0);">&nbsp;</div></td><td id="t1c" class="trait"><div id="t1" class="trait" onclick="ShowTraits(1);">&nbsp;</div></td><td id="t2c" class="trait"><div id="t2" class="trait" onclick="ShowTraits(2);">&nbsp;</div></td>
         </tr><tr><td id="t3c" class="trait"><div id="t3" class="trait" onclick="ShowTraits(3);">&nbsp;</div></td><td id="t4c" class="trait"><div id="t4" class="trait" onclick="ShowTraits(4);">&nbsp;</div></td><td id="t5c" class="trait"><div id="t5" class="trait" onclick="ShowTraits(5);">&nbsp;</div></td></tr>
     </table>
 </td></tr></table>
 
-<table id="traitsTable" style="top: 20%; position: absolute;width: 95vw;height: 60vh;border-spacing: 10px;user-select: none;">
+<table id="traitsTable" style="top: 20%; position: absolute;width: 95vw;height: 60vh;border-spacing: 1vw;user-select: none;">
 <tr><td id="b0" onclick="selectButton(0, this)">
 </td><td id="b1" onclick="selectButton(1, this)">
 </td></tr><tr><td id="b2" onclick="selectButton(2, this)">
 </td><td id="b3" onclick="selectButton(3, this)">
 </td></tr></table>
 
-<table id="traitDetailsTable" style="z-index: 1; display:none;position: absolute;left: 0%; top: 20%; width: 95vw;height: 60%;border-spacing: 10px;user-select: none;">
+<table id="traitDetailsTable" style="z-index: 1; display:none;position: absolute;left: 0%; top: 20%; width: 95vw;height: 60%;border-spacing: 1vw;user-select: none;">
 <tr><td id="traitsDetail" onclick="traitDetailsTable.style.display='none'">Trait</td>
 </tr></table>
 
@@ -146,8 +146,8 @@ function Click_Results() {
 </script>
 
 <button id="bNext" onclick="Click_Next();" style="position: absolute; left:40%; top:46%; width:20%; height: 8%;font-size: larger;">&#x27A1;&#x2753;</button>
-<button id="bSkip" onclick="Click_Skip()" style="display:none; position: absolute; left:40%; top:46%; width:20%; height: 8%;font-size: larger;">&#x27A1;&#x23ED;</button>
-<button id="bResults" onclick="Click_Results()" style="display:none; position: absolute; left:70%; top:6%; width:10%; height: 8%;font-size: larger;">&#x2705;&#x2753;</button>
+<button id="bSkip" onclick="Click_Skip();" style="display:none; position: absolute; left:40%; top:46%; width:20%; height: 8%;font-size: larger;">&#x27A1;&#x23ED;</button>
+<button id="bResults" onclick="Click_Results();" style="display:none; position: absolute; left:70%; top:6%; width:10%; height: 8%;font-size: larger;">&#x2705;&#x2753;</button>
 <button id="bReset" onclick="Click_Reset();" style="position: absolute; left:85%; top:72%; width:10%; height: 8%;font-size: larger;">&#x21BA;&#x2190;</button>
 
 <div style="display:none;position: absolute; left:10%; top:80%; width:10%; height: 8%;font-size: larger;">
