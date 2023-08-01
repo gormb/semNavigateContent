@@ -2,7 +2,7 @@ var big6 = new Array(), i_beliefid=0,i_parentid=1,i_belieftext=2,i_consequence=3
 var big6_menu = new Array(4);
 var big6_testIndex = 0;
 var big6_scores = new Array(), i_trait=0, i_statements = 1, i_yesno=2, i_opportunitythreat=3; //big6_scores.push([[210000,...],[210001,210003,210002],0.0,0.0])
-var big6_scores_scoreForNotSelected = -.1;
+var big6_scores_scoreForNotSelected = -.0001;
 var big6_statements = new Array() /*, i_beliefid=0 */, i_belieftoscoreid=1/*, i_belieftext=2*/, i_attitudetype=3/*yesopportunity/noopportunity/yesthreat/,nothreat*/, i_attractiveness=4, i_shown=5, i_answer=6; //big6_statements.push([241000,3,'abc',0.98,0]);big6_statements.push([221000,3,'adg',-0.19,0]);big6_statements.push([212000,3,'sreg',0.47,0]);big6_statements.push([232000,3,'strhgd',0.38,0]);big6_statements.push([232000,1,'shtd',-0.38,0]);
 
 function big6_SetTestIndex(i) {
@@ -140,14 +140,14 @@ function big6_UpdateScore(iB, isY, isN) {
     var beliefid=statement[i_beliefid], belieftoscoreid=statement[i_belieftoscoreid], attitudetype=statement[i_attitudetype];
     var score = isY ? 1.0 : isN ? -1 : big6_scores_scoreForNotSelected; // score: 1:agree, -0.99:disagree, -0.0001:not chosen
     big6_statements.forEach((stat) => { // update statement count //document.write(beliefid + " " + score + "<br>");
+        stat[i_shown]++;
         if (stat[i_beliefid] == beliefid) {
             if (attitudetype == stat[i_attitudetype]) { // score this statement
-                stat[i_shown]++;
-                stat[i_attractiveness]+=score;
+                stat[i_attractiveness]+=Math.abs(score);
             }
-            else stat[i_attractiveness]+=score*0.01; // score the other statements for same beliefid a percentage of the score
+            else stat[i_attractiveness]+=Math.abs(score*.01); // score the other statements for same beliefid a percentage of the score
         }
-        else if (stat[i_belieftoscoreid] == belieftoscoreid) stat[i_attractiveness]+=score*0.001; // score the other statements for same i_belieftoscoreid a thousand of the score
+        else if (stat[i_belieftoscoreid] == belieftoscoreid) stat[i_attractiveness]+=Math.abs(score*0.001); // score the other statements for same i_belieftoscoreid a thousand of the score
     });
     //if (isY | isN) // update trait i_trait=0, i_statements = 1, i_yesno=2, i_opportunitythreat=3;
     big6_scores.forEach((trait) => { // update score // document.write("Maybe trait " + trait[i_trait][i_beliefid] + "<br>");
@@ -196,9 +196,9 @@ function big6_GetChildren(parentid) {
 
 function big6_GetStatements() {
     var shuffledStatements = big6_statements.slice();
-    shuffledStatements.sort((a, b) => { // Push the most used and least attractive to the bottom
+    shuffledStatements.sort((a, b) => { // Push the most used and most attractive to the bottom
             if (b[i_shown] != a[i_shown]) return a[i_shown]-b[i_shown];
-            else if (a[i_attractiveness] != b[i_attractiveness]) return b[i_attractiveness]-a[i_attractiveness];
+            else if (a[i_attractiveness] != b[i_attractiveness]) return a[i_attractiveness]-b[i_attractiveness];
             else return Math.random() - 0.5; 
         });
     return shuffledStatements;
@@ -481,7 +481,7 @@ big6.push([461000,460000,'','',' I keep myself updated on industry trends and em
 big6.push([462000,460000,'','',' I enjoy exploring potential disruptions in the industry, as they may lead to untapped possibilities. ',' While I lack in-depth knowledge of current industry trends, I\'m curious to explore and understand them better. ',' I am hesitant to invest time in understanding new industry trends, as I believe they may not significantly impact my work. ',' I tend to be skeptical about the long-term impact of emerging trends until they prove their worth. ']);
 
 big6.push([500000,0,'Kandidattest','','','','','']);
-big6.push([510000,500000,'Teknisk Ferdighet','Teknisk ferdighetsvurdering omfatter en kandidats kompetanse innen spesifikke verktøy, teknologier og metoder som er relevante for deres ekspertiseområde. Disse ferdighetene gjør individene i stand til å utføre oppgaver effektivt, demonstrere ekspertise og tilpasse seg skiftende teknologiske landskap. Beherskelse av programmeringsspråk, programvareapplikasjoner, dataanalyse og andre tekniske kompetanser er avgjørende for suksess i ulike roller, fra programvareutvikling til ingeniørfag og videre.','','','','']);
+big6.push([510000,500000,'Teknisk Ferdighet','Teknisk ferdighetsvurdering omfatter en kandidats innstilling til kompetanse innen spesifikke verktøy, teknologier og metoder som er relevante for deres ekspertiseområde. Disse ferdighetene gjør individene i stand til å utføre oppgaver effektivt, demonstrere ekspertise og tilpasse seg skiftende teknologiske landskap. Beherskelse av programmeringsspråk, programvareapplikasjoner, dataanalyse og andre tekniske kompetanser er avgjørende for suksess i ulike roller, fra programvareutvikling til ingeniørfag og videre.','','','','']);
 big6.push([511000,510000,'','',' Jeg gleder meg til å utforske nye teknologier og finne innovative måter å anvende dem i arbeidet mitt. ',' Jeg har begrenset erfaring med de spesifikke verktøyene og teknologiene som kreves for denne jobben, men jeg er ivrig etter å lære. ',' Jeg foretrekker å holde meg til teknologiene og verktøyene jeg allerede er kjent med, heller enn å eksperimentere med ukjente. ',' Jeg har liten eller ingen erfaring med de nødvendige tekniske ferdighetene, og jeg nøler med å skaffe dem. ']);
 big6.push([512000,510000,'','',' Jeg tror på kontinuerlig læring og er alltid ivrig etter å skaffe nye tekniske ferdigheter for å holde meg oppdatert. ',' Selv om jeg mangler ekspertise på visse tekniske områder, er jeg trygg på min evne til å tilpasse meg og vokse. ',' Jeg føler meg mer komfortabel med å stole på min eksisterende ekspertise i stedet for å investere tid i å lære nye tekniske ferdigheter. ',' Jeg føler meg ukomfortabel med å ta på meg prosjekter som krever tekniske ferdigheter utover mine nåværende evner. ']);
 big6.push([513000,510001,'','',' Mine tekniske ferdigheter er et styrkeområde, og jeg er alltid på utkikk etter muligheter for å bruke dem til å løse utfordringer. ',' Selv om jeg har begrenset erfaring med noen teknologier, er jeg sikker på at jeg kan lære raskt og effektivt. ',' Jeg fokuserer primært på ikke-tekniske aspekter av jobben min og foretrekker å delegere tekniske oppgaver til andre. ',' Mine tekniske ferdigheter er begrensede, og jeg har liten interesse for å utvide dem. ']);
