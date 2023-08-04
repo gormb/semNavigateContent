@@ -6,24 +6,11 @@
     <!--script src="https://www.gstatic.com/firebasejs/9.0.2/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.0.2/firebase-database.js"></script-->
     <script src="semNavigateContent_Big6.js"></script>
+    <script src="semNavigateContent_Big6_ux.js"></script>
     <script src="semNavigateContent_Big6_data.js"></script>
     <!--script src="semNavigateContent_Big6_qr.js"></script>
     <script src="semNavigateContent_Big6_firebase.js"></script-->
     <script>
-        var bYes = -1, bNo = -1;
-        function SetYN(cell, y, n) {
-            // if (Number.isInteger(parseInt(cell)))
-            //     cell = document.getElementById("b" + cell);
-            if (y != null) {
-                bYes = y;
-                cell.classList.toggle("yes");
-            }
-            if (n != null) {
-                bNo = n;
-                cell.classList.toggle("no");
-            }
-        }
-    </script><script>
         function TraitsClear() { // clear names and percentages of traits since no test chosen
             t0.innerHTML = t1.innerHTML = t2.innerHTML = t3.innerHTML = t4.innerHTML = t5.innerHTML = '';
             t0.style.borderColor = t1.style.borderColor = t2.style.borderColor = t3.style.borderColor = t4.style.borderColor = t5.style.borderColor =
@@ -36,8 +23,8 @@
             }
         }
         function TraitsUpdate() { // update percentages for traits based upon answers given, update gui
-            //alert("TraitsUpdate " + big6_menu[bYes][i_belieftext] + " " + big6_menu[bNo][i_belieftext]);
-            big6_UpdateScores(bYes, bNo);
+            //alert("TraitsUpdate " + big6_menu[big6_bYes][i_belieftext] + " " + big6_menu[big6_bNo][i_belieftext]);
+            big6_UpdateScores(big6_bYes, big6_bNo);
             bResults.style.display = 'table';
             //bResults.style.visibility = "visible";
             for (var i = 0; i < 6; i++)
@@ -55,20 +42,20 @@
         function selectButton(b, cell) {
             if (big6_testIndex == 0) { // Menu click! set test and navigate to first choice!
                 big6_SetTestIndex(big6_menu[b][i_beliefid]);
-                big6_Url(big6_testIndex, 1);
+                big6_Url_Set(big6_testIndex, 1);
                 TraitsPopulate();
-                StatementPopulate(); // populate the first statement
+                big6_SetButtons(); // populate the first statement
             }
             else { 
-                if (bYes == b) SetYN(cell, -1); // turn off yes
-                else if (bNo == b) SetYN(cell, null, -1); // turn off no
-                else if (bYes == -1) SetYN(cell, b); // set yes
-                else if (bNo == -1) SetYN(cell, null, b); // set no
+                if (big6_bYes == b) big6_SetYN(cell, -1); // turn off yes
+                else if (big6_bNo == b) big6_SetYN(cell, null, -1); // turn off no
+                else if (big6_bYes == -1) big6_SetYN(cell, b); // set yes
+                else if (big6_bNo == -1) big6_SetYN(cell, null, b); // set no
             }
-            bNext.style.display = bYes == -1 || bNo == -1 ? "none" : "table";
-            bSkip.style.display = bYes != -1 || bNo != -1 ? "none" : "table";
+            bNext.style.display = big6_bYes == -1 || big6_bNo == -1 ? "none" : "table";
+            bSkip.style.display = big6_bYes != -1 || big6_bNo != -1 ? "none" : "table";
         }
-        function StatementReset(b_i, t) {
+        function big6_SetButton(b_i, t) {
             var b = document.getElementById("b" + b_i);
             b.classList.remove("yes");
             b.classList.remove("no");
@@ -76,22 +63,22 @@
             catch (e) { b.innerHTML = t; }// not an array, t is a string
         }
         function ifnull(s, d = "", extra="") { return (s === null ? d : s) + extra; }
-        function StatementPopulate(i, s0, s1, s2, s3) {
+        function big6_SetButtons(i, s0, s1, s2, s3) {
             if (i == null) { // Find four fitting statements
-                if (big6_testIndex == 0) { // Menu click! set test and navigate to first choice!
-                    big6_menu = big6_GetChildren(0);
+                if (big6_testIndex <= 0) { // Menu click! set test and navigate to first choice!
+                    big6_menu = big6_GetChildren(big6_testIndex);
                     TraitsClear();
                 }
                 else
-                    big6_menu = big6_GetStatements().slice(0, 4);  // Return only the first four elements;
-                StatementPopulate(0, big6_menu[0], big6_menu.length > 1 ? big6_menu[1]:null, big6_menu.length > 2 ? big6_menu[2]:null, big6_menu.length > 3 ? big6_menu[3]:null);
+                    big6_menu = big6_GetStatements();// .slice(0, 4);  // Return only the first four elements;
+                big6_SetButtons(0, big6_menu[0], big6_menu.length > 1 ? big6_menu[1]:null, big6_menu.length > 2 ? big6_menu[2]:null, big6_menu.length > 3 ? big6_menu[3]:null);
             }
             else { // values (or arrays)
-                StatementReset(0, s0);
-                StatementReset(1, s1);
-                StatementReset(2, s2);
-                StatementReset(3, s3);
-                bYes = bNo = -1;
+                big6_SetButton(0, s0);
+                big6_SetButton(1, s1);
+                big6_SetButton(2, s2);
+                big6_SetButton(3, s3);
+                big6_bYes = big6_bNo = -1;
                 bNext.style.display = "none";
                 bSkip.style.display =
                     bReset.style.display = big6_testIndex == 0 ? "none" : "table";
@@ -99,7 +86,7 @@
         }
       </script>
 </head>
-<body onload="StatementPopulate();big6_Navigate(new URLSearchParams(window.location.search).get('test').toString())">
+<body onload="big6_SetButtons();big6_Url_Simulate(new URLSearchParams(window.location.search).get('test').toString())">
 
 <table id="buttonsTable" style="width: 100vw;height:20vh;"><tr><td style="border-width: 0px;">
 <b>Din mening</b>
@@ -108,8 +95,8 @@ Velg uttalelse som passer best, og dårligst
 <a href="?test=300000,311000y2,332000n3,332000.1,332000.0,!,321000y2,322000n3,332000.1,332000.0,!,341000y2,312000n3,332000.1,332000.0,!,351000y2,302000n3,332000.1,332000.0,!,311000y2,352000n3,332000.1,332000.0,!,341000y2,332000n3,332000.1,332000.0,!,$">norsk</a>
 </td><td id="traits" style="border-width: 4px; border-color: white;user-select: none;">
     <table style="width: 45vw;height:100%;">
-        <tr><td id="t0c" class="trait"><div id="t0" class="trait" onclick="ShowTraits(0);">&nbsp;</div></td><td id="t1c" class="trait"><div id="t1" class="trait" onclick="ShowTraits(1);">&nbsp;</div></td><td id="t2c" class="trait"><div id="t2" class="trait" onclick="ShowTraits(2);">&nbsp;</div></td>
-        </tr><tr><td id="t3c" class="trait"><div id="t3" class="trait" onclick="ShowTraits(3);">&nbsp;</div></td><td id="t4c" class="trait"><div id="t4" class="trait" onclick="ShowTraits(4);">&nbsp;</div></td><td id="t5c" class="trait"><div id="t5" class="trait" onclick="ShowTraits(5);">&nbsp;</div></td></tr>
+        <tr><td id="t0c" class="trait"><div id="t0" class="trait" onclick="big6_traits_AsHtm(0);">&nbsp;</div></td><td id="t1c" class="trait"><div id="t1" class="trait" onclick="big6_traits_AsHtm(1);">&nbsp;</div></td><td id="t2c" class="trait"><div id="t2" class="trait" onclick="big6_traits_AsHtm(2);">&nbsp;</div></td>
+        </tr><tr><td id="t3c" class="trait"><div id="t3" class="trait" onclick="big6_traits_AsHtm(3);">&nbsp;</div></td><td id="t4c" class="trait"><div id="t4" class="trait" onclick="big6_traits_AsHtm(4);">&nbsp;</div></td><td id="t5c" class="trait"><div id="t5" class="trait" onclick="big6_traits_AsHtm(5);">&nbsp;</div></td></tr>
     </table>
 </td></tr></table>
 
@@ -126,24 +113,24 @@ Velg uttalelse som passer best, og dårligst
 
 <script>
 function Click_Reset() {
-    big6_Url('', 1);
+    big6_Url_Set('', 1);
     bResults.style.display='none';
     big6_testIndex=0;
-    StatementPopulate();
+    big6_SetButtons();
 }
 function Click_Next() {
-    big6_Url('!', 0);
+    big6_Url_Set('!', 0);
     TraitsUpdate();
-    StatementPopulate();
+    big6_SetButtons();
 }
 function Click_Skip() { 
-    big6_Url('-', 0);
+    big6_Url_Set('-', 0);
     TraitsUpdate();
-    StatementPopulate();
+    big6_SetButtons();
 }
 function Click_Results() { 
-    big6_Url('$', 0);
-    ShowTraits(null);
+    big6_Url_Set('$', 0);
+    big6_traits_AsHtm(null);
 }
 </script>
 
