@@ -1,3 +1,23 @@
+function ux_Click_Reset() {
+    big6_Url_Set('', 1);
+    bResults.style.display = 'none';
+    big6_testIndex = 0;
+    big6_SetButtons();
+}
+function ux_Click_Next() {
+    big6_Url_Set('!', 0);
+    TraitsUpdate();
+    big6_SetButtons();
+}
+function ux_Click_Skip() {
+    big6_Url_Set('-', 0);
+    TraitsUpdate();
+    big6_SetButtons();
+}
+function ux_Click_Results() {
+    big6_Url_Set('$', 0);
+    big6_traits_ShowAsHtm(null);
+}
 function big6_Url_Set(a, clear) { // history.pushState(nextState, nextTitle, nextURL);
     console.log("big6_Url " + a + " " + clear);
     if (a == '!' || a == '-') // Add values of the choices made
@@ -43,7 +63,7 @@ function big6_Url_Simulate(a) { // window.location.search = "?test=300000,311000
             TraitsUpdate();big6_SetButtons() 
         }
         else if (v == '$') { // console.log("show results");
-            big6_traits_AsHtm(null); 
+            big6_traits_ShowAsHtm(null); 
         }
         else if (Number.isInteger(parseInt(v))) { // console.log("select test " + v);
             big6_SetTestIndex(v);
@@ -53,8 +73,8 @@ function big6_Url_Simulate(a) { // window.location.search = "?test=300000,311000
     }
 }
 
-function big6_test_AsHtm() {
-    var i=big6_i(big6_testIndex);
+function big6_test_AsHtm(testIndex = big6_testIndex) {
+    var i = big6_i(testIndex);
     return "<h2>" + big6[i][i_belieftext] + "</h2>" + "<p>" + big6[i][i_consequence] + "</p>";
 }
 
@@ -78,8 +98,8 @@ function big6_score_AsHtm(trait) {
     return h;
 } //= new Array(), i_trait=0, i_statements = 1, i_yesno=2, i_opportunitythreat=3;
 
-var big6_traits_AsHtm_lastShow = -1;
-function big6_traits_AsHtm(i) {
+var big6_traits_ShowAsHtm_lastShow = -1;
+function big6_traits_ShowAsHtm(i) {
     if (i == null) { // Show all traits
         var h = big6_test_AsHtm() + "<h1>&#x1F4C8;</h1>";
         for (var t=0;t<big6_scores.length;t++)
@@ -87,13 +107,134 @@ function big6_traits_AsHtm(i) {
         traitsDetail.innerHTML = h;
         traitDetailsTable.style.display='table';
     }
-    else if (big6_traits_AsHtm_lastShow != i) { // trait clicked; show trait details and relevant statement chosen
-        big6_traits_AsHtm_lastShow = i;
+    else if (big6_traits_ShowAsHtm_lastShow != i) { // trait clicked; show trait details and relevant statement chosen
+        big6_traits_ShowAsHtm_lastShow = i;
         traitsDetail.innerHTML = big6_score_AsHtm(big6_scores[i], 2);
         traitDetailsTable.style.display='table';
     }
     else { // second click; hide
         traitDetailsTable.style.display='none';
-        big6_traits_AsHtm_lastShow = -1;
+        big6_traits_ShowAsHtm_lastShow = -1;
     }
 }
+function big6_Text(b6i, f, addIfContent) {
+    var t = big6[b6i];
+    var res = t[f];
+    // replace html characters with normal characters
+    res = res.replace(/&shy;/g, "");
+    res = res.replace(/&nbsp;/g, "");
+    res = res.replace(/&amp;/g, "&");
+    res = res.replace(/&lt;/g, "<");
+    res = res.replace(/&gt;/g, ">");
+    res = res.replace(/&quot;/g, "\"");
+    res = res.replace(/&apos;/g, "'");
+    res = res.replace(/&cent;/g, "¢");
+    res = res.replace(/&pound;/g, "£");
+    res = res.replace(/&yen;/g, "¥");
+    res = res.replace(/&euro;/g, "€");
+    res = res.replace(/&copy;/g, "©");
+    res = res.replace(/&reg;/g, "®");
+    res = res.replace(/&trade;/g, "™");
+    res = res.replace(/&times;/g, "×");
+    if (addIfContent != null && res != "") res += addIfContent;
+    return res;
+}
+function big6_prompt_FromIds(a)
+{
+    var res = a.length == 0 ? "0" : a[a.length - 1] + "\t" + (a.length == 1 ? "-1" : a[a.length - 2]) + "\t"; // two last id's
+    for (var i = 0; i < a.length; i++) { // i_beliefid=0,i_parentid=1,i_belieftext=2,i_consequence=3,i_attitudeyesopportunity=4,i_attitudenoopportunity=5,i_attitudeyesthreat=6,i_attitudenothreat=7
+        var b6i = big6_i(a[i]);
+        switch (i) {
+            case 0: res += big6_Text(b6i, i_belieftext, ". "); break;  
+        }
+        res += big6_Text(b6i, i_belieftext , ". ") + big6_Text(b6i, i_consequence, ". ");
+        // i_beliefid=0,i_parentid=1,i_belieftext=2,i_consequence
+    }
+    return res;
+}
+
+function big6_editTests_AsHtm_AddTest() { return "<button onclick='alert(\"Buy pro-version\");'>+</button>"; }
+function big6_editTests_PromptsButton_Click(b, prompt) {
+    // Create prompt from ID's'
+    prompt = big6_prompt_FromIds(prompt.split(' '));
+    // Add prompt to clipboard
+    var textArea = document.createElement("textarea");
+    textArea.value = prompt;
+    document.body.appendChild(textArea);
+    textArea.focus();
+    textArea.select();
+    document.execCommand('copy');
+    document.body.removeChild(textArea);
+    // remove content from parent after button but keep the button and everything before it, add prompt
+    b.parentNode.innerHTML = b.parentNode.innerHTML.substring(0, b.parentNode.innerHTML.indexOf(b.outerHTML) + b.outerHTML.length)
+        + "<i>" + prompt + "</i>"; // add text to parent of clicked button
+    // Change button color to random color
+    b.style.backgroundColor = '#' + Math.floor(Math.random() * 16777215).toString(16);
+    // stop click event to propagate to parent
+    event.stopPropagation();
+    return true;
+}
+function big6_editTests_PromptsButton(promptStatus) {
+    //return promptStatus.hasStatements ? ""
+    //    : "<button onclick=\"big6_editTests_PromptsButton_Click('" + promptStatus.prompt + "');\">+</button>";
+    return "<button onclick=\"big6_editTests_PromptsButton_Click(this, '" + promptStatus.prompt + "');\">+</button>";
+    //<button onclick="big6_editTests_PromptsButton_Click(" 110000 = "" 111000 = "" 111100 = "" 111110 = "" 111111');' = "" > +</button >
+}
+function big6_children_AsHtm(parentid, parentStatus) {
+    var ret = "";
+    big6.forEach((child) => {
+        if (child[i_parentid] == parentid) {
+            var promptStatus = {
+                hasStatements: parentStatus.hasStatements ? true : false,
+                prompt: parentStatus.prompt + " " + child[i_beliefid]
+            };
+            ret += "<tr><td>";
+            ret += "<b>" + child[i_belieftext] + " (" + child[i_beliefid] + ")</b><br>" + child[i_consequence];
+            //promptStatus.prompt += child[i_belieftext] /*+ ", " + child[i_consequence]*/ + ". ";
+            if (0 < child[i_attitudeyesopportunity].length + child[i_attitudenoopportunity].length + child[i_attitudeyesthreat].length + child[i_attitudenothreat].length) {
+                promptStatus.hasStatements = true;
+                ret += "<br><table><tr><td style='width:1px;border:0px'></td><td style='border:0px;background-color:green'>&#x2714;</td><td style='border:0px;background-color:red'>&#x2714;</td></tr>";
+                ret += "<tr><td style='width:1px;border:0px'>&#x1F4CC;</td><td>" + child[i_attitudeyesopportunity] + "</td><td>" + child[i_attitudenoopportunity] + "</td></tr>";
+                ret += "<tr><td style='width:1px;border:0px'>&#x1F6A8;</td><td>" + child[i_attitudeyesthreat] + "</td><td>" + child[i_attitudenothreat] + "</td></tr>";
+                ret += "</table>";
+            }
+            ret += "<table>" + big6_children_AsHtm(child[i_beliefid], promptStatus) + "</table>";
+            ret += big6_editTests_PromptsButton(promptStatus);
+            ret += "</td></tr>";
+        }
+    });
+    return ret;
+}
+
+function big6_editTests_ShowAsHtm(i) {
+    if (i == null)
+        i = big6_testIndex; // Show active all test (all if none selected)
+    var ret = big6_test_AsHtm(i) + "<hr>";
+    //var t = big6_i(i); // i_beliefid = 0, i_parentid = 1, i_belieftext = 2, i_consequence = 3, i_attitudeyesopportunity = 4, i_attitudenoopportunity = 5, i_attitudeyesthreat = 6, i_attitudenothreat = 7, i_time = 8;
+    if (i == 0) { // show all tests
+        ret += big6_editTests_AsHtm_AddTest(i);
+        big6.forEach((test) => { if (test[i_parentid] == 0) ret += big6_editTests_ShowAsHtm(test[i_beliefid]); });
+    }
+    else { // Show test
+        big6.forEach((test) => {
+            if (test[i_parentid] == i) {
+                var promptStatus = { prompt: test[i_parentid] + " " + test[i_beliefid], hasStatements: false };
+                ret += "<table>";
+                ret += big6_children_AsHtm(test[i_beliefid], promptStatus);
+                ret += "<b>" + test[i_belieftext] + " (" + test[i_beliefid] + ")</b><br>" + test[i_consequence];
+                if (!promptStatus.hasStatements)
+                        ret += "<br><i>" + promptStatus.prompt + "</i>";  
+                ret += "</table><hr>";
+            }
+        });
+    }
+    return ret;
+}
+
+document.addEventListener('keydown', function (event) { // Add event listener to the 'keydown' event on the document
+    if (event.key === 'e') { // Check if the pressed key is 'e'
+        editTestsTable.style.innerHTML='...';
+        editTestsTable.style.display = 'table';
+        editTestsDetail.innerHTML = big6_editTests_ShowAsHtm(big6_testIndex);
+    }
+});
