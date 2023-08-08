@@ -6,12 +6,12 @@ function ux_Click_Reset() {
 }
 function ux_Click_Next() {
     big6_Url_Set('!', 0);
-    TraitsUpdate();
+    big6_TraitsUpdate();
     big6_SetButtons();
 }
 function ux_Click_Skip() {
     big6_Url_Set('-', 0);
-    TraitsUpdate();
+    big6_TraitsUpdate();
     big6_SetButtons();
 }
 function ux_Click_Results() {
@@ -60,14 +60,14 @@ function big6_Url_Simulate(a) { // window.location.search = "?test=300000,311000
             big6_SetButton(ignoreI, big6_menu[ignoreI]); 
         }
         else if (v == '!' || v == '-') { // console.log("commit");
-            TraitsUpdate();big6_SetButtons() 
+            big6_TraitsUpdate();big6_SetButtons() 
         }
         else if (v == '$') { // console.log("show results");
             big6_traits_ShowAsHtm(null); 
         }
         else if (Number.isInteger(parseInt(v))) { // console.log("select test " + v);
             big6_SetTestIndex(v);
-            TraitsPopulate();
+            big6_TraitsPopulate();
             big6_SetButtons(); // populate the first statement
         }
     }
@@ -87,11 +87,18 @@ function big6_score_AsHtm(trait) {
         + "</h4>";
     h += "<p>" + trait[i_trait][i_consequence] + "</p>";
     h += "<table>";//<tr><th>Statement</th><th>Score</th><th>Attractiveness</th></tr>";
+    var iAnswersGiven = 0;
     for (var i=0;i<len;i++) {
         var rep = trait[i_statements][i];
-        if (i % cols == 0) h += '<tr>'
-        h += '<td style="border-width: 5px;border-color:'+ (rep[i_answer] > 0 ? 'green' : 'red') +'">'+rep[i_belieftext]+'</td>';
-        if (i % cols == cols - 1) h += '</tr>'
+        //if (Math.abs(rep[i_answer]) != 0)
+        { // Chosen yes or no
+            if (iAnswersGiven % cols == 0) h += '<tr>'
+            h += '<td style="border-width: 5px;border-color:' + (rep[i_answer] > .9 ? 'green' : (rep[i_answer] < -.9 ? 'red' : 'grey')) + '">'
+                + rep[i_belieftext]
+                + "(rep= " + rep[i_answer] + ')</td>';
+            if (iAnswersGiven % cols == cols - 1) h += '</tr>'
+            iAnswersGiven++;
+        }
     }
     if (len % cols == 1) h += '<td style="border-width: 0px;"></td></tr>'
     h += "</table>";
@@ -216,17 +223,18 @@ function big6_editTests_ShowAsHtm(i) {
         big6.forEach((test) => { if (test[i_parentid] == 0) ret += big6_editTests_ShowAsHtm(test[i_beliefid]); });
     }
     else { // Show test
-        big6.forEach((test) => {
-            if (test[i_parentid] == i) {
-                var promptStatus = { prompt: test[i_parentid] + " " + test[i_beliefid], hasStatements: false };
-                ret += "<table>";
-                ret += big6_children_AsHtm(test[i_beliefid], promptStatus);
-                ret += "<b>" + test[i_belieftext] + " (" + test[i_beliefid] + ")</b><br>" + test[i_consequence];
-                if (!promptStatus.hasStatements)
-                        ret += "<br><i>" + promptStatus.prompt + "</i>";  
-                ret += "</table><hr>";
-            }
-        });
+        ret = "<table>" + big6_children_AsHtm(i, { prompt: "", hasStatements: false }) + "</table>";
+    //    big6.forEach((test) => {
+    //        if (test[i_parentid] == i) {
+    //            var promptStatus = { prompt: test[i_parentid] + " " + test[i_beliefid], hasStatements: false };
+    //            ret += "<table>";
+    //            ret += big6_children_AsHtm(test[i_beliefid], promptStatus);
+    //            ret += "<b>" + test[i_belieftext] + " (" + test[i_beliefid] + ")</b><br>" + test[i_consequence];
+    //            if (!promptStatus.hasStatements)
+    //                    ret += "<br><i>" + promptStatus.prompt + "</i>";  
+    //            ret += "</table><hr>";
+    //        }
+    //    });
     }
     return ret;
 }

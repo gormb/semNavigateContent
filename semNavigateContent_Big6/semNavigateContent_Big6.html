@@ -11,39 +11,11 @@
     <!--script src="semNavigateContent_Big6_qr.js"></script>
     <script src="semNavigateContent_Big6_firebase.js"></script-->
     <script>
-        function TraitsClear() { // clear names and percentages of traits since no test chosen
-            t0.innerHTML = t1.innerHTML = t2.innerHTML = t3.innerHTML = t4.innerHTML = t5.innerHTML = '';
-            t0.style.borderColor = t1.style.borderColor = t2.style.borderColor = t3.style.borderColor = t4.style.borderColor = t5.style.borderColor =
-                t0c.style.borderColor = t1c.style.borderColor = t2c.style.borderColor = t3c.style.borderColor = t4c.style.borderColor = t5c.style.borderColor = 'gray';
-        }
-        function TraitsPopulate() { // set names of traits for the test chosen
-            for (var i = 0; i < 6; i++) {
-                if (i < big6_scores.length) 
-                    document.getElementById("t" + i).innerHTML = big6_scores[i][i_trait][i_belieftext];
-            }
-        }
-        function TraitsUpdate() { // update percentages for traits based upon answers given, update gui
-            //alert("TraitsUpdate " + big6_menu[big6_bYes][i_belieftext] + " " + big6_menu[big6_bNo][i_belieftext]);
-            big6_UpdateScores(big6_bYes, big6_bNo);
-            bResults.style.display = 'table';
-            //bResults.style.visibility = "visible";
-            for (var i = 0; i < 6; i++)
-                if (i < big6_scores.length)
-                    { // var big6_scores = new Array(), i_trait=0, i_statements = 1, i_yesno=2, i_opportunitythreat=3;
-                        var t = document.getElementById("t" + i), tc = document.getElementById("t" + i + "c"), trait = big6_scores[i];
-                        var t_c = trait[i_statements].length;
-                        tc.style.borderColor = t_c < 1 ? 'grey' : t_c < 2 ? 'yellow' :  'green';
-                        if (t_c < 2)
-                            bResults.style.display = 'none';
-                            //bResults.style.visibility = "hidden";
-                    }
-        }
-    </script><script>
         function selectButton(b, cell) {
             if (big6_testIndex == 0) { // Menu click! set test and navigate to first choice!
                 big6_SetTestIndex(big6_menu[b][i_beliefid]);
                 big6_Url_Set(big6_testIndex, 1);
-                TraitsPopulate();
+                big6_TraitsPopulate();
                 big6_SetButtons(); // populate the first statement
             }
             else { 
@@ -67,7 +39,7 @@
             if (i == null) { // Find four fitting statements
                 if (big6_testIndex <= 0) { // Menu click! set test and navigate to first choice!
                     big6_menu = big6_GetChildren(big6_testIndex);
-                    TraitsClear();
+                    big6_TraitsClear();
                 }
                 else
                     big6_menu = big6_GetStatements();// .slice(0, 4);  // Return only the first four elements;
