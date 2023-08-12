@@ -82,9 +82,9 @@ function big6_score_AsHtm(trait) {
     var cols = 2;
     var h = "<h3>" + trait[i_trait][i_belieftext] + "</h3>";
     var len = trait[i_statements].length;
-    h += "<h4>&#x2714;:" + (len==0 ? "?" : Math.trunc(50 + (50 * trait[i_yesno])/len) + "% ") 
-        + "&#x1F4CC;&#x1F6A8;:" + (len==0 ? "?" : Math.trunc(50 + (50 * trait[i_opportunitythreat])/len) + "%") 
-        + "</h4>";
+    h += "<b>&#x2714;:" + (len==0 ? "?" : Math.trunc(50 + (50 * trait[i_yesno])/len) + "%") 
+        + "</b><br>&#x1F4CC; " + (len==0 ? "?" : Math.trunc(50 + (50 * trait[i_opportunitythreat])/len) + "%") 
+        + "&#x1F6A8;";
     h += "<p>" + trait[i_trait][i_consequence] + "</p>";
     h += "<table>";//<tr><th>Statement</th><th>Score</th><th>Attractiveness</th></tr>";
     var iAnswersGiven = 0;
