@@ -142,7 +142,7 @@ function big6_Text(b6i, f, addIfContent) {
     res = res.replace(/&trade;/g, "™");
     res = res.replace(/&times;/g, "×");
     if (addIfContent != null && res != "") res += addIfContent;
-    res = res.replace(/"/g, '\""');
+    res = res.replace(/"/g, '\'');
     return res;
 }
 function big6_prompt_FromIds(a, aPrompts)
@@ -177,7 +177,7 @@ function big6_editTests_AsHtm_AddTest() { return "<button onclick='alert(\"Buy p
 function big6_editTests_PromptsButton_Click(b, prompt) {
     // Create prompt from ID's'
     var aPrompts = new Array();
-    prompt = big6_prompt_FromIds(prompt.split(' '), aPrompts);
+    prompt = big6_prompt_FromIds(prompt.split(','), aPrompts);
     // Add prompt to clipboard
     var textArea = document.createElement("textarea");
     textArea.value = prompt;
@@ -202,7 +202,7 @@ function big6_children_AsHtm(parentid, parentStatus) {
         if (child[i_parentid] == parentid) {
             var promptStatus = {
                 hasStatements: parentStatus.hasStatements ? true : false,
-                prompt: parentStatus.prompt + " " + child[i_beliefid]
+                prompt: parentStatus.prompt + "," + child[i_beliefid]
             };
             ret += "<tr><td>";
             ret += "<b>" + child[i_belieftext] + " (" + child[i_beliefid] + ")</b><br>" + child[i_consequence];
@@ -233,17 +233,6 @@ function big6_editTests_ShowAsHtm(i) {
     }
     else { // Show test
         ret = "<table>" + big6_children_AsHtm(i, { prompt: "", hasStatements: false }) + "</table>";
-    //    big6.forEach((test) => {
-    //        if (test[i_parentid] == i) {
-    //            var promptStatus = { prompt: test[i_parentid] + " " + test[i_beliefid], hasStatements: false };
-    //            ret += "<table>";
-    //            ret += big6_children_AsHtm(test[i_beliefid], promptStatus);
-    //            ret += "<b>" + test[i_belieftext] + " (" + test[i_beliefid] + ")</b><br>" + test[i_consequence];
-    //            if (!promptStatus.hasStatements)
-    //                    ret += "<br><i>" + promptStatus.prompt + "</i>";  
-    //            ret += "</table><hr>";
-    //        }
-    //    });
     }
     return ret;
 }
