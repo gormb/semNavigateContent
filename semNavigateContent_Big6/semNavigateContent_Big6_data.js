@@ -1,7 +1,12 @@
 if (big6.length == 0)
     big6.push([0, -1, 'Test', '', '', '', '', '']);
 
-big6.push([10000, 0, 'Test this tool', 'This is created to test the functionality of this tool', '', '', '', '']);
+big6.push([10000, 0, 'Test this tool', 'This is created to test the functionality of this tool'
+    , 'Explain in 20 words or less hvorfor dette skjer, og hvorfor det er bra for miljø, samfunn og folk:'
+    , 'Explain in 20 words or less hvorfor dette ikke skjer, og hvorfor det er bra for digitalisering, miljø, samfunn og folk at det ikke skjer:'
+    , 'Explain in 20 words or less hvorfor dette skjer, og hvorfor det er skadelig for digitalisering, miljø, samfunn og folk at det skjer:'
+    , 'Explain in 20 words or less hvorfor dette ikke skjer, og hvorfor det er skadelig for digitalisering, miljø, samfunn og folk at det ikke skjer:']);
+
 big6.push([11000, 10000, 'Trait 1', 'Explanation of Trait 1', '', '', '', '']);
 big6.push([11100, 11000, 'Trait 1 has two subtraits, this is the first', 'Trait 1 has two subtraits, this is the first', 'yes good 1.1', 'no good 1.1', 'yes bad 1.1', 'no bad 1.1']);
 big6.push([11200, 11000, 'Trait 1 has two subtraits, this is the second', '', 'yes good 1.2', 'no good 1.2', 'yes bad 1.2', 'no bad 1.2']);

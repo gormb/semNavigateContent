@@ -1,4 +1,9 @@
-big6.push([800000,0,'Biases','Biases to be extra aware of based upon your answers','','','','']);
+big6.push([800000, 0, 'Biases', 'Biases to be extra aware of based upon your answers'
+    , 'Explain in 20 words or less hvorfor dette skjer, og hvorfor det er bra for miljø, samfunn og folk:'
+    , 'Explain in 20 words or less hvorfor dette ikke skjer, og hvorfor det er bra for digitalisering, miljø, samfunn og folk at det ikke skjer:'
+    , 'Explain in 20 words or less hvorfor dette skjer, og hvorfor det er skadelig for digitalisering, miljø, samfunn og folk at det skjer:'
+    , 'Explain in 20 words or less hvorfor dette ikke skjer, og hvorfor det er skadelig for digitalisering, miljø, samfunn og folk at det ikke skjer:']);
+
 big6.push([810000,800000,'Cognitive Biases','Cognitive biases are mental shortcuts or patterns that influence our judgment and decision-making. They can lead to errors and distortions in perception, memory, and reasoning. These biases often result from our brain\'s attempt to process information efficiently, but they can lead to suboptimal decisions and design choices.','','','','']);
 big6.push([811000,810000,'Confirmation bias','Tendency to favor information that supports existing beliefs, ignoring contradictory evidence.','Refined decision-making, open-mindedness, and better solutions when challenging assumptions. ',' Reduced stubbornness, greater adaptability, and embracing diverse perspectives. ',' Reinforced misconceptions, hindered innovation, and suboptimal outcomes. ',' Informed decisions, improved creativity, and greater objectivity.']);
 big6.push([812000,810000,'Anchoring bias','Reliance on initial information to make decisions, affecting subsequent judgment regardless of accuracy.','Streamlined decision-making, avoiding fixation, and improved adaptability to new information. ',' Less biased decisions, increased openness to alternative possibilities, and enhanced creativity. ',' Limited exploration of alternatives, potential tunnel vision, and reduced adaptability. ',' Diverse ideas, unbiased decisions, and improved problem-solving. ']);

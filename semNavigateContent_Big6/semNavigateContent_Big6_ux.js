@@ -128,9 +128,7 @@ function big6_Text(b6i, f, addIfContent) {
     var t = big6[b6i];
     var res = t[f];
     // replace html characters with normal characters
-    res = res.replace(/&shy;/g, "");
-    res = res.replace(/&nbsp;/g, "");
-    res = res.replace(/&amp;/g, "&");
+    res = res.replace(/&shy;/g, "").replace(/&nbsp;/g, "").replace(/&amp;/g, "&");
     res = res.replace(/&lt;/g, "<");
     res = res.replace(/&gt;/g, ">");
     res = res.replace(/&quot;/g, "\"");
@@ -144,26 +142,42 @@ function big6_Text(b6i, f, addIfContent) {
     res = res.replace(/&trade;/g, "™");
     res = res.replace(/&times;/g, "×");
     if (addIfContent != null && res != "") res += addIfContent;
+    res = res.replace(/"/g, '\""');
     return res;
 }
-function big6_prompt_FromIds(a)
+function big6_prompt_FromIds(a, aPrompts)
 {
-    var res = a.length == 0 ? "0" : a[a.length - 1] + "\t" + (a.length == 1 ? "-1" : a[a.length - 2]) + "\t"; // two last id's
-    for (var i = 0; i < a.length; i++) { // i_beliefid=0,i_parentid=1,i_belieftext=2,i_consequence=3,i_attitudeyesopportunity=4,i_attitudenoopportunity=5,i_attitudeyesthreat=6,i_attitudenothreat=7
-        var b6i = big6_i(a[i]);
-        switch (i) {
-            case 0: res += big6_Text(b6i, i_belieftext, ". "); break;  
-        }
+    var ids = "(" + a.length == 0 ? "0" : a[a.length - 1] + "\t" + (a.length == 1 ? "-1" : a[a.length - 2]) + ")\n"; // two last id's
+    var res = '';
+    for (var i = a.length - 1; (i > 1 && i > a.length - 4) || res.length == 0; i--) { // item and max 3 ancestors
+        var b6i = big6_i(a[i]); // i_beliefid=0,i_parentid=1,i_belieftext=2,i_consequence=3,i_attitudeyesopportunity=4,i_attitudenoopportunity=5,i_attitudeyesthreat=6,i_attitudenothreat=7
         res += big6_Text(b6i, i_belieftext , ". ") + big6_Text(b6i, i_consequence, ". ");
-        // i_beliefid=0,i_parentid=1,i_belieftext=2,i_consequence
     }
-    return res;
+    // create prompts to ask open ai
+    aPrompts.push('{ "role": "system", "content": "you want to find statements that uncover traits within \"'
+        + big6_Text(big6_i(a[1]), i_belieftext, '. ')
+        + big6_Text(big6_i(a[1]), i_consequence, '. ')
+        + '\""}');
+    aPrompts.push('{ "role": "user", "content": "' + res + '\n\nUttrykk hvorfor vi vil oppleve dette og hvorfor det er bra det kommer til å skje. Bruk 15-20 ord" }');
+    alert(aPrompts);
+    return aPrompts.join('\n,');
+//´[{ $rSystem }
+//        ,{ "role": "user", "content": "{$res}\n\nUttrykk hvorfor vi vil oppleve dette og hvorfor det er bra det kommer til å skje. Bruk 15-20 ord"}´;
+
+//Uttrykk med få ord hvorfor vi vil oppleve dette og hvorfor det er bra
+//- Hvorfor vi vil ikke vil oppleve dette og hvorfor det er bra det ikke skjer
+//- Hvorfor vi vil oppleve dette og hvorfor det er skadelig
+//- Hvorfor vi ikke vil oppleve dette, og hvorfor det er skadelig at det ikke skjer
+
+    // { "role": "system", "content": "you want to find statements that uncover traits within \"{$a[0]}\""}`;
+    // ,{ "role": "user", "content": "{$res}\n\nUttrykk hvorfor vi vil oppleve dette og hvorfor det er bra det kommer til å skje. Bruk 15-20 ord"}`;
 }
 
 function big6_editTests_AsHtm_AddTest() { return "<button onclick='alert(\"Buy pro-version\");'>+</button>"; }
 function big6_editTests_PromptsButton_Click(b, prompt) {
     // Create prompt from ID's'
-    prompt = big6_prompt_FromIds(prompt.split(' '));
+    var aPrompts = new Array();
+    prompt = big6_prompt_FromIds(prompt.split(' '), aPrompts);
     // Add prompt to clipboard
     var textArea = document.createElement("textarea");
     textArea.value = prompt;
@@ -175,17 +189,12 @@ function big6_editTests_PromptsButton_Click(b, prompt) {
     // remove content from parent after button but keep the button and everything before it, add prompt
     b.parentNode.innerHTML = b.parentNode.innerHTML.substring(0, b.parentNode.innerHTML.indexOf(b.outerHTML) + b.outerHTML.length)
         + "<i>" + prompt + "</i>"; // add text to parent of clicked button
-    // Change button color to random color
-    b.style.backgroundColor = '#' + Math.floor(Math.random() * 16777215).toString(16);
-    // stop click event to propagate to parent
-    event.stopPropagation();
+    b.style.backgroundColor = '#' + Math.floor(Math.random() * 16777215).toString(16); // Change button color to random color
+    event.stopPropagation(); // stop click event to propagate to parent
     return true;
 }
 function big6_editTests_PromptsButton(promptStatus) {
-    //return promptStatus.hasStatements ? ""
-    //    : "<button onclick=\"big6_editTests_PromptsButton_Click('" + promptStatus.prompt + "');\">+</button>";
     return "<button onclick=\"big6_editTests_PromptsButton_Click(this, '" + promptStatus.prompt + "');\">+</button>";
-    //<button onclick="big6_editTests_PromptsButton_Click(" 110000 = "" 111000 = "" 111100 = "" 111110 = "" 111111');' = "" > +</button >
 }
 function big6_children_AsHtm(parentid, parentStatus) {
     var ret = "";
