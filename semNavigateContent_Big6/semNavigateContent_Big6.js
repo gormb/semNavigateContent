@@ -1,9 +1,9 @@
 var big6 = new Array(), i_beliefid=0,i_parentid=1,i_belieftext=2,i_consequence=3,i_attitudeyesopportunity=4,i_attitudenoopportunity=5,i_attitudeyesthreat=6,i_attitudenothreat=7,i_time=8;
 var big6_menu = new Array(4);
 var big6_testIndex = 0;
-var big6_scores = new Array(), i_trait=0, i_statements = 1, i_yesno=2, i_opportunitythreat=3; //big6_scores.push([[210000,...],[210001,210003,210002],0.0,0.0])
+var big6_scores = new Array(), i_trait=0, i_statements = 1, i_yesno=2, i_opportunityvsthreat=3; //big6_scores.push([[210000,...],[210001,210003,210002],0.0,0.0])
 var big6_scores_scoreForNotSelected = -.0001;
-var big6_statements = new Array() /*, i_beliefid=0 */, i_belieftoscoreid=1/*, i_belieftext=2*/, i_attitudetype=3/*yesopportunity/noopportunity/yesthreat/,nothreat*/, i_usedfactor=4, i_shown=5, i_answer=6; //big6_statements.push([241000,3,'abc',0.98,0]);big6_statements.push([221000,3,'adg',-0.19,0]);big6_statements.push([212000,3,'sreg',0.47,0]);big6_statements.push([232000,3,'strhgd',0.38,0]);big6_statements.push([232000,1,'shtd',-0.38,0]);
+var big6_statements = new Array() /*, i_beliefid=0 */, i_belieftoscoreid=1/*, i_belieftext=2*/, i_attitudetype=3/*yesopportunity/noopportunity/yesthreat/nothreat*/, i_usedfactor=4, i_shown=5, i_answer=6; //big6_statements.push([241000,3,'abc',0.98,0]);big6_statements.push([221000,3,'adg',-0.19,0]);big6_statements.push([212000,3,'sreg',0.47,0]);big6_statements.push([232000,3,'strhgd',0.38,0]);big6_statements.push([232000,1,'shtd',-0.38,0]);
 var big6_bYes = -1, big6_bNo = -1;
 
 function big6_SetTestIndex(i) {
@@ -19,11 +19,20 @@ function big6_SetTestIndex(i) {
 }
 
 function big6_i(beliefid) {
-    for (var i=0;i<big6.length;i++)
+    for (var i = 0; i < big6.length; i++)
         if (big6[i][i_beliefid] == beliefid)
             return i;
     return 0;
 }
+
+function big6_i_nextfree(val) {
+    while (big6_i(val) != 0) {
+        val++; // We found val at some index. Try next value
+    }
+    return val;
+}
+
+
 
 function big6_SetYN(cell, y, n) {
     if (y != null) {
@@ -63,7 +72,7 @@ function big6_UpdateScore(iB, isY, isN) {
         }
         // else if (stat[i_belieftoscoreid] == belieftoscoreid) stat[i_usedfactor]+=Math.abs(score*0.001); // score the other statements for same i_belieftoscoreid a thousand of the score
     });
-    if (isY | isN) // update trait i_trait=0, i_statements = 1, i_yesno=2, i_opportunitythreat=3;
+    if (isY | isN) // update trait i_trait=0, i_statements = 1, i_yesno=2, i_opportunityvsthreat=3;
         big6_scores.forEach((trait) => { // update score // document.write("Maybe trait " + trait[i_trait][i_beliefid] + "<br>");
             if (trait[i_trait][i_beliefid] == belieftoscoreid) { // score (yes or no)
                 if (isY)
@@ -71,8 +80,8 @@ function big6_UpdateScore(iB, isY, isN) {
                 else if (isN)
                     statement[i_answer] = -1; // 1:agree, -1:disagree, 0:not chosen
                 trait[i_statements].push(statement); //attitudeyesopportunity	attitudenoopportunity	attitudeyesthreat	attitudenothreat
-                trait[i_yesno] += statement[i_attitudetype]%1 == 0 ? score : -score; // if it's the positive, added score, if it's the negative, subtracted score
-                trait[i_opportunitythreat] += statement[i_attitudetype]%2 == 0 ? score : -score; // if it's the positive, added score, if it's the negative, subtracted score
+                trait[i_yesno] += statement[i_attitudetype] % 2 == 0 ? score : -score; // if it's the positive, added score, if it's the negative, subtracted score
+                trait[i_opportunityvsthreat] += statement[i_attitudetype] / 2 == 0 ? score : -score; // if it's the positive, added score, if it's the negative, subtracted score
             }
         });
 }
@@ -136,7 +145,7 @@ function big6_TraitsUpdate() { // update percentages for traits based upon answe
     bResults.style.display = 'table';
     //bResults.style.visibility = "visible";
     for (var i = 0; i < 6; i++)
-        if (i < big6_scores.length) { // var big6_scores = new Array(), i_trait=0, i_statements = 1, i_yesno=2, i_opportunitythreat=3;
+        if (i < big6_scores.length) { // var big6_scores = new Array(), i_trait=0, i_statements = 1, i_yesno=2, i_opportunityvsthreat=3;
             var tc = document.getElementById("t" + i + "c"), trait = big6_scores[i];
             var t_c = trait[i_statements].length;
             tc.style.borderColor = t_c < 1 ? 'grey' : t_c < 2 ? 'yellow' : 'green';

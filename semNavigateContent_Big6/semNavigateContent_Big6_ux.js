@@ -78,13 +78,20 @@ function big6_test_AsHtm(testIndex = big6_testIndex) {
     return "<h2>" + big6[i][i_belieftext] + "</h2>" + "<p>" + big6[i][i_consequence] + "</p>";
 }
 
+function big6_reply_AsHtm(rep) {
+    var i = big6_i(rep[i_beliefid]), iParent = big6_i(rep[i_parentid]);
+    var agree = rep[i_answer] > 0;
+    var yes = rep[i_attitudetype] % 2 == 0; // yesopportunity/noopportunity/yesthreat/,nothreat
+    var opportunity = rep[i_attitudetype] / 2 == 0; // yesopportunity/noopportunity/yesthreat/,nothreat
+    return (agree ? 'Positive' : 'Negative') + ' towards ' + (yes ? 'belief' : 'disbelief') + (opportunity ? ', driven by opportunity' : ',  avoid the alternative');// + '(' + rep + ')';
+}
+
 function big6_score_AsHtm(trait) {
     var cols = 2;
     var h = "<h3>" + trait[i_trait][i_belieftext] + "</h3>";
     var len = trait[i_statements].length;
-    h += "<b>&#x2714;:" + (len==0 ? "?" : Math.trunc(50 + (50 * trait[i_yesno])/len) + "%") 
-        + "</b><br>&#x1F4CC; " + (len==0 ? "?" : Math.trunc(50 + (50 * trait[i_opportunitythreat])/len) + "%") 
-        + "&#x1F6A8;";
+    h += "<b>&#x2714;:" + (len == 0 ? "?" : Math.trunc(50 + (50 * trait[i_yesno]) / len) + "% - &#x2717;") 
+        + "</b><br>&#x1F4CC; " + (len == 0 ? "?" : Math.trunc(50 + (50 * trait[i_opportunityvsthreat]) / len) + "% -") + "&#x1F6A8;";
     h += "<p>" + trait[i_trait][i_consequence] + "</p>";
     h += "<table>";//<tr><th>Statement</th><th>Score</th><th>Attractiveness</th></tr>";
     var iAnswersGiven = 0;
@@ -92,18 +99,29 @@ function big6_score_AsHtm(trait) {
         var rep = trait[i_statements][i];
         //if (Math.abs(rep[i_answer]) != 0)
         { // Chosen yes or no
-            if (iAnswersGiven % cols == 0) h += '<tr>'
-            h += '<td style="border-width: 5px;border-color:' + (rep[i_answer] > .9 ? 'green' : (rep[i_answer] < -.9 ? 'red' : 'grey')) + '">'
-                + rep[i_belieftext]
-                + "(rep= " + rep[i_answer] + ')</td>';
+            if (iAnswersGiven % cols == 0) h += '<tr>' // two pr line
+            h += '<td style="border-width: 5px;width:25%;border-color:' + (rep[i_answer] > .9 ? 'green' : (rep[i_answer] < -.9 ? 'red' : 'grey')) + '">'
+                + rep[i_belieftext] + ')</td>'; // Result
+            var yes = rep[i_attitudetype] % 2 == 0; // yesopportunity/noopportunity/yesthreat/,nothreat
+            var opportunity = rep[i_attitudetype] / 2 == 0; // yesopportunity/noopportunity/yesthreat/,nothreat
+            h += '<td style="border-width:0px; width:25%">' // &#x1F4C8;, ' // 
+                + ' ' // yes/no
+                + (rep[i_answer] > .9 ? (yes ? '&#x2714' : '&#x2717;') // yn: green
+                    : (yes ? '&#x2717 (-&#x2714;)' : '&#x2714; (-&#x2717;)')) // yn: red
+                + ' ' // opportunity/threat
+                + (rep[i_answer] > .9 ? (opportunity ? '&#x1F4CC' : '&#x1F6A8;') // ot: green
+                    : (opportunity ? '&#x1F6A8 (-&#x1F4CC;)' : '&#x1F4CC; (-&#x1F6A8;)')) // ot: red
+                + '<br>'
+                + big6_reply_AsHtm(rep)
+                + '</td>';
             if (iAnswersGiven % cols == cols - 1) h += '</tr>'
             iAnswersGiven++;
         }
     }
-    if (len % cols == 1) h += '<td style="border-width: 0px;"></td></tr>'
+    //if (len % cols == 1) h += '<td style="border-width: 0px;"></td></tr>'
     h += "</table>";
     return h;
-} //= new Array(), i_trait=0, i_statements = 1, i_yesno=2, i_opportunitythreat=3;
+} //= new Array(), i_trait=0, i_statements = 1, i_yesno=2, i_opportunityvsthreat=3;
 
 var big6_traits_ShowAsHtm_lastShow = -1;
 function big6_traits_ShowAsHtm(i) {
@@ -146,49 +164,40 @@ function big6_Text(b6i, f, addIfContent) {
     return res;
 }
 function big6_prompt_FromIds(a, aPrompts)
-{
-    var ids = "(" + a.length == 0 ? "0" : a[a.length - 1] + "\t" + (a.length == 1 ? "-1" : a[a.length - 2]) + ")\n"; // two last id's
+{ // create prompts to ask open ai
+    var parentid = a.length == 0 ? 0 : a.length == 1 ? a[0] : a[a.length - 2];
+    var newid = big6_i_nextfree(parseInt(parentid == 0 ? 0 : a[a.length - 1]) + 1); // last id or parent + 1 -- or next free
+
+    var root = big6[big6_i(a.length == 0 ? 0 : a[0])];
+    aPrompts.push('{ "role": "system", "content": "Find statements that uncover traits within \''
+        + big6_Text(big6_i(a[1]), i_belieftext, '. ') + big6_Text(big6_i(a[1]), i_consequence, '. ') + '\'"}'); //alert(root); // ultimate parent (to be scored)
     var res = '';
     for (var i = a.length - 1; (i > 1 && i > a.length - 4) || res.length == 0; i--) { // item and max 3 ancestors
         var b6i = big6_i(a[i]); // i_beliefid=0,i_parentid=1,i_belieftext=2,i_consequence=3,i_attitudeyesopportunity=4,i_attitudenoopportunity=5,i_attitudeyesthreat=6,i_attitudenothreat=7
         res += big6_Text(b6i, i_belieftext , ". ") + big6_Text(b6i, i_consequence, ". ");
-    }
-    // create prompts to ask open ai
-    aPrompts.push('{ "role": "system", "content": "you want to find statements that uncover traits within \"'
-        + big6_Text(big6_i(a[1]), i_belieftext, '. ')
-        + big6_Text(big6_i(a[1]), i_consequence, '. ')
-        + '\""}');
-    aPrompts.push('{ "role": "user", "content": "' + res + '\n\nUttrykk hvorfor vi vil oppleve dette og hvorfor det er bra det kommer til å skje. Bruk 15-20 ord" }');
-    alert(aPrompts);
-    return aPrompts.join('\n,');
-//´[{ $rSystem }
-//        ,{ "role": "user", "content": "{$res}\n\nUttrykk hvorfor vi vil oppleve dette og hvorfor det er bra det kommer til å skje. Bruk 15-20 ord"}´;
-
-//Uttrykk med få ord hvorfor vi vil oppleve dette og hvorfor det er bra
-//- Hvorfor vi vil ikke vil oppleve dette og hvorfor det er bra det ikke skjer
-//- Hvorfor vi vil oppleve dette og hvorfor det er skadelig
-//- Hvorfor vi ikke vil oppleve dette, og hvorfor det er skadelig at det ikke skjer
-
-    // { "role": "system", "content": "you want to find statements that uncover traits within \"{$a[0]}\""}`;
-    // ,{ "role": "user", "content": "{$res}\n\nUttrykk hvorfor vi vil oppleve dette og hvorfor det er bra det kommer til å skje. Bruk 15-20 ord"}`;
+    }//alert(res);
+    aPrompts.push('{ "role": "user", "content": "' + res + '\n' + root[i_attitudeyesopportunity] + '" }');
+    aPrompts.push('{ "role": "user", "content": "' + res + '\n' + root[i_attitudenoopportunity] + '" }');
+    aPrompts.push('{ "role": "user", "content": "' + res + '\n' + root[i_attitudeyesthreat] + '" }');
+    aPrompts.push('{ "role": "user", "content": "' + res + '\n' + root[i_attitudenothreat] + '" }');//alert(aPrompts.join('\n\n'));
+    return res;
 }
 
 function big6_editTests_AsHtm_AddTest() { return "<button onclick='alert(\"Buy pro-version\");'>+</button>"; }
-function big6_editTests_PromptsButton_Click(b, prompt) {
-    // Create prompt from ID's'
+function big6_editTests_PromptsButton_Click(b, prompt) { // Create prompt from ID's' //alert(prompt);
     var aPrompts = new Array();
-    prompt = big6_prompt_FromIds(prompt.split(','), aPrompts);
+    var promptText = big6_prompt_FromIds(prompt.split(','), aPrompts); // alert(promptText); // promptText = aPrompts;
     // Add prompt to clipboard
     var textArea = document.createElement("textarea");
-    textArea.value = prompt;
+    textArea.value = aPrompts; //  promptText;
     document.body.appendChild(textArea);
     textArea.focus();
     textArea.select();
     document.execCommand('copy');
     document.body.removeChild(textArea);
-    // remove content from parent after button but keep the button and everything before it, add prompt
+    // remove content from parent after button but keep the button and everything before it, add promptText
     b.parentNode.innerHTML = b.parentNode.innerHTML.substring(0, b.parentNode.innerHTML.indexOf(b.outerHTML) + b.outerHTML.length)
-        + "<i>" + prompt + "</i>"; // add text to parent of clicked button
+        + "<i>" + promptText + "</i>"; // add text to parent of clicked button
     b.style.backgroundColor = '#' + Math.floor(Math.random() * 16777215).toString(16); // Change button color to random color
     event.stopPropagation(); // stop click event to propagate to parent
     return true;
@@ -196,23 +205,31 @@ function big6_editTests_PromptsButton_Click(b, prompt) {
 function big6_editTests_PromptsButton(promptStatus) {
     return "<button onclick=\"big6_editTests_PromptsButton_Click(this, '" + promptStatus.prompt + "');\">+</button>";
 }
+function big6_children_AsHtm_YNOT(item) { // i_beliefid = 0, i_parentid = 1, i_belieftext = 2, i_consequence = 3, i_attitudeyesopportunity = 4, i_attitudenoopportunity = 5, i_attitudeyesthreat = 6, i_attitudenothreat = 7, i_time = 8;
+    var ret = "<br><table><tr><td style='width:1px;border:0px'></td><td style='border:0px;background-color:green'>&#x2714;</td><td style='border:0px;background-color:red'>&#x2714;</td></tr>";
+    ret += "<tr><td style='width:1px;border:0px'>&#x1F4CC;</td><td>" + item[i_attitudeyesopportunity] + "</td><td>" + item[i_attitudenoopportunity] + "</td></tr>";
+    ret += "<tr><td style='width:1px;border:0px'>&#x1F6A8;</td><td>" + item[i_attitudeyesthreat] + "</td><td>" + item[i_attitudenothreat] + "</td></tr>";
+    ret += "</table>";
+    return ret;
+}
 function big6_children_AsHtm(parentid, parentStatus) {
     var ret = "";
     big6.forEach((child) => {
         if (child[i_parentid] == parentid) {
             var promptStatus = {
                 hasStatements: parentStatus.hasStatements ? true : false,
-                prompt: parentStatus.prompt + "," + child[i_beliefid]
+                prompt: [...parentStatus.prompt, child[i_beliefid]] //prompt: parentStatus.prompt + "," + child[i_beliefid]
             };
             ret += "<tr><td>";
             ret += "<b>" + child[i_belieftext] + " (" + child[i_beliefid] + ")</b><br>" + child[i_consequence];
             //promptStatus.prompt += child[i_belieftext] /*+ ", " + child[i_consequence]*/ + ". ";
             if (0 < child[i_attitudeyesopportunity].length + child[i_attitudenoopportunity].length + child[i_attitudeyesthreat].length + child[i_attitudenothreat].length) {
                 promptStatus.hasStatements = true;
-                ret += "<br><table><tr><td style='width:1px;border:0px'></td><td style='border:0px;background-color:green'>&#x2714;</td><td style='border:0px;background-color:red'>&#x2714;</td></tr>";
-                ret += "<tr><td style='width:1px;border:0px'>&#x1F4CC;</td><td>" + child[i_attitudeyesopportunity] + "</td><td>" + child[i_attitudenoopportunity] + "</td></tr>";
-                ret += "<tr><td style='width:1px;border:0px'>&#x1F6A8;</td><td>" + child[i_attitudeyesthreat] + "</td><td>" + child[i_attitudenothreat] + "</td></tr>";
-                ret += "</table>";
+                ret += "<br>" + big6_children_AsHtm_YNOT(child);
+            //    ret += "<table><tr><td style='width:1px;border:0px'></td><td style='border:0px;background-color:green'>&#x2714;</td><td style='border:0px;background-color:red'>&#x2714;</td></tr>";
+            //    ret += "<tr><td style='width:1px;border:0px'>&#x1F4CC;</td><td>" + child[i_attitudeyesopportunity] + "</td><td>" + child[i_attitudenoopportunity] + "</td></tr>";
+            //    ret += "<tr><td style='width:1px;border:0px'>&#x1F6A8;</td><td>" + child[i_attitudeyesthreat] + "</td><td>" + child[i_attitudenothreat] + "</td></tr>";
+            //    ret += "</table>";
             }
             ret += "<table>" + big6_children_AsHtm(child[i_beliefid], promptStatus) + "</table>";
             ret += big6_editTests_PromptsButton(promptStatus);
@@ -232,7 +249,7 @@ function big6_editTests_ShowAsHtm(i) {
         big6.forEach((test) => { if (test[i_parentid] == 0) ret += big6_editTests_ShowAsHtm(test[i_beliefid]); });
     }
     else { // Show test
-        ret = "<table>" + big6_children_AsHtm(i, { prompt: "", hasStatements: false }) + "</table>";
+        ret = "<table>" + big6_children_AsHtm(i, { prompt: [i], hasStatements: false }) + "</table>";
     }
     return ret;
 }

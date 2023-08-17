@@ -1,6 +1,6 @@
 // Digdir drivkrefter (2023/2030)
 // mini:
-big6.push([1100000, -1, 'Drivkrefter som påvirker offentlig sektor mot 2030 (2023)', 'Vurdering av drivkreftene kan gjøre det enklere å ta valg og forberede seg på framtiden.'
+big6.push([1100000, 0, 'Drivkrefter mot 2030 (mini)', 'Vurdering av drivkreftene kan gjøre det enklere å ta valg og forberede seg på framtiden.'
     , 'Explain in 20 words or less hvorfor dette skjer, og hvorfor det er bra for miljø, samfunn og folk:'
     , 'Explain in 20 words or less hvorfor dette ikke skjer, og hvorfor det er bra for digitalisering, miljø, samfunn og folk at det ikke skjer:'
     , 'Explain in 20 words or less hvorfor dette skjer, og hvorfor det er skadelig for digitalisering, miljø, samfunn og folk at det skjer:'

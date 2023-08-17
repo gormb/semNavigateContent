@@ -1,7 +1,7 @@
 if (big6.length == 0)
     big6.push([0, -1, 'Test', '', '', '', '', '']);
 
-big6.push([10000, 0, 'Test this tool', 'This is created to test the functionality of this tool'
+big6.push([10000, -1, 'Test this tool', 'This is created to test the functionality of this tool'
     , 'Explain in 20 words or less hvorfor dette skjer, og hvorfor det er bra for miljø, samfunn og folk:'
     , 'Explain in 20 words or less hvorfor dette ikke skjer, og hvorfor det er bra for digitalisering, miljø, samfunn og folk at det ikke skjer:'
     , 'Explain in 20 words or less hvorfor dette skjer, og hvorfor det er skadelig for digitalisering, miljø, samfunn og folk at det skjer:'
