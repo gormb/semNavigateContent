@@ -1,6 +1,6 @@
 // Digdir drivkrefter (2023/2030)
 // mini:
-big6.push([1100000, 0, 'Drivkrefter mot 2030 (mini)', 'Vurdering av drivkreftene kan gjøre det enklere å ta valg og forberede seg på framtiden.<br> <img style="width:20%" src="data/big6_2030Mini.png">'
+big6.push([1100000, 0, 'Drivkrefter mot 2030 (mini)', 'Denne testen er helt anonym. Det sendes ikke data om dine svar tilbake til tjenesten (alt foregår lokalt), og svarene reflekteres i leseradressen<br><img style="width:10%" src="data/big6_2030Mini.png"><br>Vurdering av drivkreftene kan gjøre det enklere å ta valg og forberede seg på framtiden.'
     , 'Explain in 20 words or less hvorfor dette skjer, og hvorfor det er bra for miljø, samfunn og folk:'
     , 'Explain in 20 words or less hvorfor dette ikke skjer, og hvorfor det er bra for digitalisering, miljø, samfunn og folk at det ikke skjer:'
     , 'Explain in 20 words or less hvorfor dette skjer, og hvorfor det er skadelig for digitalisering, miljø, samfunn og folk at det skjer:'
