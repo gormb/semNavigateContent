@@ -139,18 +139,22 @@ function big6_TraitsPopulate() { // set names of traits for the test chosen
             document.getElementById("t" + i).innerHTML = big6_scores[i][i_trait][i_belieftext];
     }
 }
+function big6_TraitsUpdate_setBg(tc) { // opp:ja, høyre:mulighet
+    //tc.style = "background: linear-gradient(20deg, #0f0 10%, #ccc 20%);";
+    tc.style.background = "linear-gradient(45deg, green 10%, #ccc 11%)";
+    tc.style.background = "linear-gradient(270deg, green 0%, #ccc 31%)";
+    //tc.style.backgroundSize = "100% 100%";
+}
 function big6_TraitsUpdate() { // update percentages for traits based upon answers given, update gui
-    //alert("TraitsUpdate " + big6_menu[big6_bYes][i_belieftext] + " " + big6_menu[big6_bNo][i_belieftext]);
     big6_UpdateScores(big6_bYes, big6_bNo);
     bResults.style.display = 'table';
-    //bResults.style.visibility = "visible";
     for (var i = 0; i < 6; i++)
         if (i < big6_scores.length) { // var big6_scores = new Array(), i_trait=0, i_statements = 1, i_yesno=2, i_opportunityvsthreat=3;
             var tc = document.getElementById("t" + i + "c"), trait = big6_scores[i];
             var t_c = trait[i_statements].length;
             tc.style.borderColor = t_c < 1 ? 'grey' : t_c < 2 ? 'yellow' : 'green';
-            if (t_c < 2)
+            big6_TraitsUpdate_setBg(document.getElementById("t" + i), trait[i_statements]);
+            if (t_c < 1)
                 bResults.style.display = 'none';
-            //bResults.style.visibility = "hidden";
         }
 }

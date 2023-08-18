@@ -184,20 +184,40 @@ function big6_prompt_FromIds(a, aPrompts)
 }
 
 function big6_editTests_AsHtm_AddTest() { return "<button onclick='alert(\"Buy pro-version\");'>+</button>"; }
-function big6_editTests_PromptsButton_Click(b, prompt) { // Create prompt from ID's' //alert(prompt);
-    var aPrompts = new Array();
-    var promptText = big6_prompt_FromIds(prompt.split(','), aPrompts); // alert(promptText); // promptText = aPrompts;
-    // Add prompt to clipboard
+function big6_clipboardTaCopy(s) {
     var textArea = document.createElement("textarea");
-    textArea.value = aPrompts; //  promptText;
+    textArea.value = s; //  promptText;
+    textArea.style.position = "fixed";
+    textArea.style.top = "-100vh"; // Move above the viewport
+    textArea.style.left = "0";
+    textArea.style.opacity = "0"; // Make it invisible
     document.body.appendChild(textArea);
     textArea.focus();
     textArea.select();
     document.execCommand('copy');
     document.body.removeChild(textArea);
+}
+
+function big6_gptQuestionsResults(txt, q) {
+    //&#x2714; &#x2714; &#x1F4CC; &#x1F6A8;
+    var item = [
+        i_beliefid, i_parentid, i_belieftext, i_consequence
+        , big6_gptResult('&#x1F4CC;&#x2714; <i>' + txt + '</i>', q[0] + '\n' + q[1])
+        , big6_gptResult('&#x1F4CC;&#x2717; <i>' + txt + '</i>', q[0] + '\n' + q[2])
+        , big6_gptResult('&#x1F6A8;&#x2714; <i>' + txt + '</i>', q[0] + '\n' + q[3])
+        , big6_gptResult('&#x1F6A8;&#x2717; <i>' + txt + '</i>', q[0] + '\n' + q[4])
+        , i_time
+    ];
+    return big6_children_AsHtm_YNOT(item);
+}
+function big6_editTests_PromptsButton_Click(b, prompt) { // Create prompt from ID's' //alert(prompt);
+    var aPrompts = new Array();
+    var promptText = big6_prompt_FromIds(prompt.split(','), aPrompts); // alert(promptText); // promptText = aPrompts;
+    big6_clipboardTaCopy(aPrompts); // Add prompt to clipboard
     // remove content from parent after button but keep the button and everything before it, add promptText
     b.parentNode.innerHTML = b.parentNode.innerHTML.substring(0, b.parentNode.innerHTML.indexOf(b.outerHTML) + b.outerHTML.length)
-        + "<i>" + promptText + "</i>"; // add text to parent of clicked button
+        // + big6_gptResult(promptText, aPrompts); // add text to parent of clicked button
+        + big6_gptQuestionsResults(promptText, aPrompts); // add text to parent of clicked button
     b.style.backgroundColor = '#' + Math.floor(Math.random() * 16777215).toString(16); // Change button color to random color
     event.stopPropagation(); // stop click event to propagate to parent
     return true;
@@ -206,7 +226,7 @@ function big6_editTests_PromptsButton(promptStatus) {
     return "<button onclick=\"big6_editTests_PromptsButton_Click(this, '" + promptStatus.prompt + "');\">+</button>";
 }
 function big6_children_AsHtm_YNOT(item) { // i_beliefid = 0, i_parentid = 1, i_belieftext = 2, i_consequence = 3, i_attitudeyesopportunity = 4, i_attitudenoopportunity = 5, i_attitudeyesthreat = 6, i_attitudenothreat = 7, i_time = 8;
-    var ret = "<br><table><tr><td style='width:1px;border:0px'></td><td style='border:0px;background-color:green'>&#x2714;</td><td style='border:0px;background-color:red'>&#x2714;</td></tr>";
+    var ret = "<br><table><tr><td style='width:1px;border:0px'></td><td style='border:0px;background-color:green'>&#x2714;</td><td style='border:0px;background-color:red'>&#x2717;</td></tr>";
     ret += "<tr><td style='width:1px;border:0px'>&#x1F4CC;</td><td>" + item[i_attitudeyesopportunity] + "</td><td>" + item[i_attitudenoopportunity] + "</td></tr>";
     ret += "<tr><td style='width:1px;border:0px'>&#x1F6A8;</td><td>" + item[i_attitudeyesthreat] + "</td><td>" + item[i_attitudenothreat] + "</td></tr>";
     ret += "</table>";
