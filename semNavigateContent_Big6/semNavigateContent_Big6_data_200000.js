@@ -1,3 +1,6 @@
+if (big6.length == 0)
+    big6.push([0, -1, 'Test', '', '', '', '', '']);
+
 big6.push([200000, 0, 'Big 5 Mini - personality test', 'The Big Five Personality Test, also known as the Five-Factor Model (FFM), is a widely used framework in psychology to measure and describe personality traits.  The traits are considered to represent broad dimensions of personality and are used to describe and understand individual differences in personality characteristics. It\'s important to note that individuals can possess a combination of high and low scores on each trait, resulting in unique personality profiles.'
     , 'Explain in 20 words or less hvorfor dette skjer, og hvorfor det er bra for miljø, samfunn og folk:'
     , 'Explain in 20 words or less hvorfor dette ikke skjer, og hvorfor det er bra for digitalisering, miljø, samfunn og folk at det ikke skjer:'

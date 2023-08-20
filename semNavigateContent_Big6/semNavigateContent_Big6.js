@@ -59,8 +59,7 @@ function big6_statements_i(beliefid, ynot) {
 function big6_UpdateScore(iB, isY, isN) {
     var statement = big6_menu[iB];
     var beliefid=statement[i_beliefid], belieftoscoreid=statement[i_belieftoscoreid], attitudetype=statement[i_attitudetype];
-    var score = isY ? 1.0 : isN ? -1 : big6_scores_scoreForNotSelected; // score: 1:agree, -0.99:disagree, -0.0001:not chosen
-    console.log("big6_UpdateScore " + score);
+    var score = isY ? 1.0 : isN ? -1 : big6_scores_scoreForNotSelected; // score: 1:agree, -0.99:disagree, -0.0001:not chosen //console.log("big6_UpdateScore " + score);
 
     big6_statements.forEach((stat) => { // update statement count //document.write(beliefid + " " + score + "<br>");
         stat[i_shown]++;
@@ -130,20 +129,40 @@ function big6_GetStatements() {
 
 function big6_TraitsClear() { // clear names and percentages of traits since no test chosen
     t0.innerHTML = t1.innerHTML = t2.innerHTML = t3.innerHTML = t4.innerHTML = t5.innerHTML = '';
+    t0.style.background = t1.style.background = t2.style.background = t3.style.background = t4.style.background = t5.style.background = "linear-gradient(0deg, green 0%, #ccc 0%)";
     t0.style.borderColor = t1.style.borderColor = t2.style.borderColor = t3.style.borderColor = t4.style.borderColor = t5.style.borderColor =
         t0c.style.borderColor = t1c.style.borderColor = t2c.style.borderColor = t3c.style.borderColor = t4c.style.borderColor = t5c.style.borderColor = 'gray';
 }
 function big6_TraitsPopulate() { // set names of traits for the test chosen
     for (var i = 0; i < 6; i++) {
-        if (i < big6_scores.length)
+        if (i < big6_scores.length) {
             document.getElementById("t" + i).innerHTML = big6_scores[i][i_trait][i_belieftext];
+        }
     }
 }
-function big6_TraitsUpdate_setBg(tc) { // opp:ja, høyre:mulighet
-    //tc.style = "background: linear-gradient(20deg, #0f0 10%, #ccc 20%);";
-    tc.style.background = "linear-gradient(45deg, green 10%, #ccc 11%)";
-    tc.style.background = "linear-gradient(270deg, green 0%, #ccc 31%)";
-    //tc.style.backgroundSize = "100% 100%";
+function big6_TraitsUpdate_angle(yesno, opportunityvsthreat) {
+    if (yesno < 0) {
+        if (opportunityvsthreat < 0) return 315; // lower right
+        else if (opportunityvsthreat == null || opportunityvsthreat == 0) return 270; // right
+        else if (opportunityvsthreat > 0) return 225; // upper right
+    }
+    else if (yesno == null || yesno == 0) {
+        if (opportunityvsthreat < 0) return 180; // up
+        else if (opportunityvsthreat == null || opportunityvsthreat == 0) return null; // hide
+        else if (opportunityvsthreat > 0) return 0; // down
+    }
+    //else /*if (yesno > 0)*/ {
+    if (opportunityvsthreat < 0) return 45; // lower left
+    else if (opportunityvsthreat == null || opportunityvsthreat == 0) return 90; // left
+    else if (opportunityvsthreat > 0) return 135; // upper left
+    //}
+}
+function big6_TraitsUpdate_setBg(tc, yesno, opportunityvsthreat) {
+    var degree = big6_TraitsUpdate_angle(yesno, opportunityvsthreat);
+    if (degree == null)
+        tc.style.background = "linear-gradient(0deg, green 0%, #ccc 0%)";
+    else
+        tc.style.background = "linear-gradient(" + degree + "deg, green 0%, #ccc 20%)";
 }
 function big6_TraitsUpdate() { // update percentages for traits based upon answers given, update gui
     big6_UpdateScores(big6_bYes, big6_bNo);
@@ -152,8 +171,9 @@ function big6_TraitsUpdate() { // update percentages for traits based upon answe
         if (i < big6_scores.length) { // var big6_scores = new Array(), i_trait=0, i_statements = 1, i_yesno=2, i_opportunityvsthreat=3;
             var tc = document.getElementById("t" + i + "c"), trait = big6_scores[i];
             var t_c = trait[i_statements].length;
-            tc.style.borderColor = t_c < 1 ? 'grey' : t_c < 2 ? 'yellow' : 'green';
-            big6_TraitsUpdate_setBg(document.getElementById("t" + i), trait[i_statements]);
+            //tc.style.borderColor = t_c < 1 ? 'grey' : t_c < 2 ? 'yellow' : 'green';
+            tc.style.borderColor = t_c < 1 ? 'grey' : t_c < 2 ? 'grey' : 'green';
+            big6_TraitsUpdate_setBg(document.getElementById("t" + i), trait[i_yesno], trait[i_opportunityvsthreat]);
             if (t_c < 1)
                 bResults.style.display = 'none';
         }

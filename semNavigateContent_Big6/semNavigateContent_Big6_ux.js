@@ -1,6 +1,24 @@
+function ux_Click_Button(b, cell) {
+    if (big6_testIndex == 0) { // Menu click! set test and navigate to first choice!
+        big6_SetTestIndex(big6_menu[b][i_beliefid]);
+        showTestOverview();
+        big6_Url_Set(big6_testIndex, 1);
+        big6_TraitsPopulate();
+        big6_SetButtons(); // populate the first statement
+    }
+    else {
+        if (big6_bYes == b) big6_SetYN(cell, -1); // turn off yes
+        else if (big6_bNo == b) big6_SetYN(cell, null, -1); // turn off no
+        else if (big6_bYes == -1) big6_SetYN(cell, b); // set yes
+        else if (big6_bNo == -1) big6_SetYN(cell, null, b); // set no
+    }
+    bNext.style.display = big6_bYes == -1 || big6_bNo == -1 ? "none" : "table";
+    bSkip.style.display = big6_bYes != -1 || big6_bNo != -1 ? "none" : "table";
+}
 function ux_Click_Reset() {
     big6_Url_Set('', 1);
     bResults.style.display = 'none';
+    testOverviewTable.style.display = 'none';
     big6_testIndex = 0;
     big6_SetButtons();
 }
@@ -46,13 +64,13 @@ function big6_Url_Simulate(a) { // window.location.search = "?test=300000,311000
             big6_menu[0] = big6_statements[big6_statements_i(v_y[0], v_y[1])];
             big6_SetButton(0, big6_menu[0]);
             big6_bNo = big6_bYes = -1;
-            selectButton(0, b0);
+            ux_Click_Button(0, b0);
         }
         else if (v_n.length == 2) { // console.log("no " + v_n[0] + " " + v_n[1]);
             big6_menu[1] = big6_statements[big6_statements_i(v_n[0], v_n[1])];
             big6_SetButton(1, big6_menu[1]); 
             big6_bNo = -1;
-            selectButton(1, b1);
+            ux_Click_Button(1, b1);
         }
         else if (v_i.length == 2) { // console.log("ignore " + v_i[0] + " " + v_i[1])
             ignoreI = ignoreI == 2 ? 3 : 2; // swap ignore between 2 and 3
@@ -83,7 +101,7 @@ function big6_reply_AsHtm(rep) {
     var agree = rep[i_answer] > 0;
     var yes = rep[i_attitudetype] % 2 == 0; // yesopportunity/noopportunity/yesthreat/,nothreat
     var opportunity = rep[i_attitudetype] / 2 == 0; // yesopportunity/noopportunity/yesthreat/,nothreat
-    return (agree ? 'Positive' : 'Negative') + ' towards ' + (yes ? 'belief' : 'disbelief') + (opportunity ? ', driven by opportunity' : ',  avoid the alternative');// + '(' + rep + ')';
+    return '(' + (agree ? 'Positive' : 'Negative') + ' towards) ' + (yes ? 'belief' : 'disbelief') + (opportunity ? ', driven by opportunity' : ',  avoid the alternative');// + '(' + rep + ')';
 }
 
 function big6_score_AsHtm(trait) {
@@ -176,10 +194,10 @@ function big6_prompt_FromIds(a, aPrompts)
         var b6i = big6_i(a[i]); // i_beliefid=0,i_parentid=1,i_belieftext=2,i_consequence=3,i_attitudeyesopportunity=4,i_attitudenoopportunity=5,i_attitudeyesthreat=6,i_attitudenothreat=7
         res += big6_Text(b6i, i_belieftext , ". ") + big6_Text(b6i, i_consequence, ". ");
     }//alert(res);
-    aPrompts.push('{ "role": "user", "content": "' + res + '\n' + root[i_attitudeyesopportunity] + '" }');
-    aPrompts.push('{ "role": "user", "content": "' + res + '\n' + root[i_attitudenoopportunity] + '" }');
-    aPrompts.push('{ "role": "user", "content": "' + res + '\n' + root[i_attitudeyesthreat] + '" }');
-    aPrompts.push('{ "role": "user", "content": "' + res + '\n' + root[i_attitudenothreat] + '" }');//alert(aPrompts.join('\n\n'));
+    aPrompts.push('{ "role": "user", "content": ' + JSON.stringify(res + '\n\n' + root[i_attitudeyesopportunity]) + ' }');
+    aPrompts.push('{ "role": "user", "content": ' + JSON.stringify(res + '\n\n' + root[i_attitudenoopportunity]) + ' }');
+    aPrompts.push('{ "role": "user", "content": ' + JSON.stringify(res + '\n\n' + root[i_attitudeyesthreat]) + ' }');
+    aPrompts.push('{ "role": "user", "content": ' + JSON.stringify(res + '\n\n' + root[i_attitudenothreat]) + ' }');//
     return res;
 }
 
@@ -202,10 +220,10 @@ function big6_gptQuestionsResults(txt, q) {
     //&#x2714; &#x2714; &#x1F4CC; &#x1F6A8;
     var item = [
         i_beliefid, i_parentid, i_belieftext, i_consequence
-        , big6_gptResult('&#x1F4CC;&#x2714; <i>' + txt + '</i>', q[0] + '\n' + q[1])
-        , big6_gptResult('&#x1F4CC;&#x2717; <i>' + txt + '</i>', q[0] + '\n' + q[2])
-        , big6_gptResult('&#x1F6A8;&#x2714; <i>' + txt + '</i>', q[0] + '\n' + q[3])
-        , big6_gptResult('&#x1F6A8;&#x2717; <i>' + txt + '</i>', q[0] + '\n' + q[4])
+        , big6_gptResult('&#x1F4CC;&#x2714; <i>' + txt + '</i>', q[0] + ', ' + q[1])
+        , big6_gptResult('&#x1F4CC;&#x2717; <i>' + txt + '</i>', q[0] + ', ' + q[2])
+        , big6_gptResult('&#x1F6A8;&#x2714; <i>' + txt + '</i>', q[0] + ', ' + q[3])
+        , big6_gptResult('&#x1F6A8;&#x2717; <i>' + txt + '</i>', q[0] + ', ' + q[4])
         , i_time
     ];
     return big6_children_AsHtm_YNOT(item);
@@ -246,10 +264,6 @@ function big6_children_AsHtm(parentid, parentStatus) {
             if (0 < child[i_attitudeyesopportunity].length + child[i_attitudenoopportunity].length + child[i_attitudeyesthreat].length + child[i_attitudenothreat].length) {
                 promptStatus.hasStatements = true;
                 ret += "<br>" + big6_children_AsHtm_YNOT(child);
-            //    ret += "<table><tr><td style='width:1px;border:0px'></td><td style='border:0px;background-color:green'>&#x2714;</td><td style='border:0px;background-color:red'>&#x2714;</td></tr>";
-            //    ret += "<tr><td style='width:1px;border:0px'>&#x1F4CC;</td><td>" + child[i_attitudeyesopportunity] + "</td><td>" + child[i_attitudenoopportunity] + "</td></tr>";
-            //    ret += "<tr><td style='width:1px;border:0px'>&#x1F6A8;</td><td>" + child[i_attitudeyesthreat] + "</td><td>" + child[i_attitudenothreat] + "</td></tr>";
-            //    ret += "</table>";
             }
             ret += "<table>" + big6_children_AsHtm(child[i_beliefid], promptStatus) + "</table>";
             ret += big6_editTests_PromptsButton(promptStatus);
@@ -274,10 +288,23 @@ function big6_editTests_ShowAsHtm(i) {
     return ret;
 }
 
+function big6_showDb_Add(big6_testIndex) {
+    showDbDetail.innerHTML = "test index: " + big6_testIndex;
+}
 document.addEventListener('keydown', function (event) { // Add event listener to the 'keydown' event on the document
-    if (event.key === 'e') { // Check if the pressed key is 'e'
-        editTestsTable.style.innerHTML='...';
-        editTestsTable.style.display = 'table';
-        editTestsDetail.innerHTML = big6_editTests_ShowAsHtm(big6_testIndex);
+    if (event.key === 'e') { // Get into edit-mode
+        if (editTestsTable.style.display == 'table') editTestsTable.style.display = 'none';
+        else {
+            editTestsTable.style.innerHTML = '...';
+            editTestsTable.style.display = 'table';
+            editTestsDetail.innerHTML = big6_editTests_ShowAsHtm(big6_testIndex);
+        }
+    }
+    else if (event.key === 'r') { // Show results
+        ux_Click_Results();
+    }
+    else if (event.key === 's') { // Show all database actions
+        if (showDbTable.style.display == 'table') showDbTable.style.display = 'none';
+        else showDbTable.style.display = 'table';
     }
 });

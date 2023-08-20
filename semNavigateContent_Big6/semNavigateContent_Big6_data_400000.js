@@ -1,3 +1,6 @@
+if (big6.length == 0)
+    big6.push([0, -1, 'Test', '', '', '', '', '']);
+
 big6.push([400000, 1, 'Job Candidate', 'Evaluating candidates based on their responses to these statements can provide valuable insights into their mindset, skills, and adaptability. Remember to use these statements as part of a larger evaluation process to make well-rounded hiring decisions.'
     , 'Explain in 20 words or less hvorfor dette skjer, og hvorfor det er bra for miljø, samfunn og folk:'
     , 'Explain in 20 words or less hvorfor dette ikke skjer, og hvorfor det er bra for digitalisering, miljø, samfunn og folk at det ikke skjer:'

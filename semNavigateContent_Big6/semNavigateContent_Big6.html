@@ -17,25 +17,18 @@
     <script src="semNavigateContent_Big6_data_400000.js"></script>
     <script src="semNavigateContent_Big6_data_500000.js"></script>
     <script src="semNavigateContent_Big6_data_800000.js"></script>
-
     <!--script src="semNavigateContent_Big6_qr.js"></script>
     <script src="semNavigateContent_Big6_firebase.js"></script-->
     <script>
-        function selectButton(b, cell) {
-            if (big6_testIndex == 0) { // Menu click! set test and navigate to first choice!
-                big6_SetTestIndex(big6_menu[b][i_beliefid]);
-                big6_Url_Set(big6_testIndex, 1);
-                big6_TraitsPopulate();
-                big6_SetButtons(); // populate the first statement
-            }
-            else { 
-                if (big6_bYes == b) big6_SetYN(cell, -1); // turn off yes
-                else if (big6_bNo == b) big6_SetYN(cell, null, -1); // turn off no
-                else if (big6_bYes == -1) big6_SetYN(cell, b); // set yes
-                else if (big6_bNo == -1) big6_SetYN(cell, null, b); // set no
-            }
-            bNext.style.display = big6_bYes == -1 || big6_bNo == -1 ? "none" : "table";
-            bSkip.style.display = big6_bYes != -1 || big6_bNo != -1 ? "none" : "table";
+        function showTestOverview() {
+            testOverviewDetail.innerHTML =
+                '<button style="font-size: larger;height: 10%; width:20%"'
+                    + ' onclick = "ux_Click_Reset()";> ' + bReset.innerHTML + '</button><br><br>'
+                + big6_test_AsHtm() // big6_traits_ShowAsHtm();
+                + '<br><br>'
+                + '<button style="font-size: larger;height: 10%; width:20%"'
+                + ' onclick="testOverviewTable.style.display=\'none\'";> ' + bNext.innerHTML + '</button><br><br>'
+            testOverviewTable.style.display = 'table';
         }
         function big6_SetButton(b_i, t) {
             var b = document.getElementById("b" + b_i);
@@ -76,19 +69,23 @@
                 <b>Din mening</b>Velg uttalelse som passer best, og dårligst
                 <a href="?test=200000,211000y2,232000n3,232000.1,232000.0,!,221000y2,222000n3,232000.1,232000.0,!,241000y2,212000n3,232000.1,232000.0,!,251000y2,202000n3,232000.1,232000.0,!,211000y2,252000n3,232000.1,232000.0,!,241000y2,232000n3,232000.1,232000.0,!,$">big5</a>
                 <a href="?test=300000,311000y2,332000n3,332000.1,332000.0,!,321000y2,322000n3,332000.1,332000.0,!,341000y2,312000n3,332000.1,332000.0,!,351000y2,302000n3,332000.1,332000.0,!,311000y2,352000n3,332000.1,332000.0,!,341000y2,332000n3,332000.1,332000.0,!,$">norsk</a>
-                'e' redigerer.
+                'e' redigerer
             </td>
             <td id="traits" style="border-width: 4px; border-color: white;user-select: none;">
                 <table style="width: 45vw;height:100%;">
                     <tr>
-                    <td id="t0c" class="trait">
-                        <div id="t0" class="trait" onclick="big6_traits_ShowAsHtm(0);">&nbsp;</div></td>
-                    <td id="t1c" class="trait">
-                        <div id="t1" class="trait"onclick="big6_traits_ShowAsHtm(1);">&nbsp;</div></td>
-                    <td id="t2c" class="trait"><div id="t2" class="trait" onclick="big6_traits_ShowAsHtm(2);">&nbsp;</div></td></tr>
-                    <tr><td id="t3c" class="trait"><div id="t3" class="trait" onclick="big6_traits_ShowAsHtm(3);">&nbsp;</div></td>
-                    <td id="t4c" class="trait"><div id="t4" class="trait" onclick="big6_traits_ShowAsHtm(4);">&nbsp;</div></td>
-                    <td id="t5c" class="trait"><div id="t5" class="trait" onclick="big6_traits_ShowAsHtm(5);">&nbsp;</div></td>
+                        <td id="t0c" class="trait">
+                            <div id="t0" class="trait" onclick="big6_traits_ShowAsHtm(0);">&nbsp;</div>
+                        </td>
+                        <td id="t1c" class="trait">
+                            <div id="t1" class="trait" onclick="big6_traits_ShowAsHtm(1);">&nbsp;</div>
+                        </td>
+                        <td id="t2c" class="trait"><div id="t2" class="trait" onclick="big6_traits_ShowAsHtm(2);">&nbsp;</div></td>
+                    </tr>
+                    <tr>
+                        <td id="t3c" class="trait"><div id="t3" class="trait" onclick="big6_traits_ShowAsHtm(3);">&nbsp;</div></td>
+                        <td id="t4c" class="trait"><div id="t4" class="trait" onclick="big6_traits_ShowAsHtm(4);">&nbsp;</div></td>
+                        <td id="t5c" class="trait"><div id="t5" class="trait" onclick="big6_traits_ShowAsHtm(5);">&nbsp;</div></td>
                     </tr>
                 </table>
             </td>
@@ -96,30 +93,51 @@
     </table>
 
     <table id="traitsTable" style="top: 20%; position: absolute;width: 95vw;height: 80vh;border-spacing: 6px;user-select: none;">
-        <tr><td id="b0" onclick="selectButton(0, this)"></td><td id="b1" onclick="selectButton(1, this)"></td></tr>
-        <tr><td id="b2" onclick="selectButton(2, this)"></td><td id="b3" onclick="selectButton(3, this)"></td></tr>
+        <tr><td id="b0" onclick="ux_Click_Button(0, this)"></td><td id="b1" onclick="ux_Click_Button(1, this)"></td></tr>
+        <tr><td id="b2" onclick="ux_Click_Button(2, this)"></td><td id="b3" onclick="ux_Click_Button(3, this)"></td></tr>
     </table>
 
-    <table id="traitDetailsTable" style="z-index: 1; display:none;position: absolute;left: 0%; top: 20%; width: 95vw;height: 80%;border-spacing: 4px;user-select: none;">
-        <tr>
-            <td id="traitsDetail" onclick="traitDetailsTable.style.display='none'">Trait</td>
-        </tr>
+    <table id="testOverviewTable" style="z-index: 1; display:none;position: absolute;left: 0%; top: 0%; width: 100vw;height: 100%;border-spacing: 4px;user-select: none;">
+        <tr><td id="testOverviewDetail"></td></tr>
     </table>
 
-    <table id="editTestsTable" style="z-index: 99; display:none;position: absolute;left: 0%; top: 20%; width: 95vw;height: 80%;border-spacing: 4px;user-select: none;">
+    <table id="traitDetailsTable" style="z-index: 10; display:none;position: absolute;left: 0%; top: 20%; width: 95vw;height: 80%;border-spacing: 4px;user-select: none;">
+        <tr><td id="traitsDetail" onclick="traitDetailsTable.style.display = 'none';">Trait</td></tr>
+    </table>
+
+    <table id="editTestsTable" style="z-index: 100; display:none;position: absolute;left: 0%; top: 20%; width: 95vw;height: 80%;border-spacing: 4px;user-select: none;">
+        <tr><td id="editTestsDetail" onclick="editTestsTable.style.display = 'none';">Edit test(s)</td></tr>
+    </table>
+
+    <table id="showDbTable" style="z-index: 101; display:none;position: absolute;left: 0%; top: 20%; width: 95vw;height: 80%;border-spacing: 4px">
         <tr>
-            <td id="editTestsDetail" onclick="editTestsTable.style.display = 'none';">Edit test(s)</td>
+            <td id="showDbTableDetail">
+                <h3><span style="color:white">/*</span><br />Operations</h3>
+                <table id="showDbTable_operations" style="width: 90vw;border-spacing: 1px">
+                    <tr><th style="border-width: 2px">Db operation</th><th style="border-width: 2px">Details</th></tr>
+                    <tr id="showDbTable_operationsRt">
+                        <th id="showDbTable_operationsCt0" style="border-width: 2px">
+                            <span style="color:white">/*</span>
+                            Operation 1<span style="color:white">*/</span>
+                        </th>
+                        <td id="showDbTable_operationsCt1" style="border-width: 2px">
+                            Db operation 1
+                        </td>
+                    </tr>
+                </table>
+            </td>
         </tr>
     </table>
 
     <button id="bNext" onclick="ux_Click_Next();" style="position: absolute; left:35%; top:56%; width:20%; height: 8%;font-size: larger;">&#x27A1;&#x2753;</button>
-    <button id="bSkip" onclick="ux_Click_Skip();" style="display:none; position: absolute; left:35%; top:56%; width:20%; height: 8%;font-size: larger;">&#x27A1;&#x23ED;</button>
-    <button id="bResults" onclick="ux_Click_Results();" style="display:none; position: absolute; left:40%; top:16%; width:20%; height: 8%;font-size: larger;">&#x2705;&#x2753;</button>
+    <button id="bSkip" onclick="ux_Click_Skip();" style="display: none; position: absolute; left: 35%; top: 56%; width: 20%; height: 8%; font-size: larger;">&#x27A1;&#x23ED;</button>
+    <button id="bResults" onclick="ux_Click_Results();" style="display:none; position: absolute; left:55%; top:56%; width:20%; height: 8%;font-size: larger;">&#x2705;&#x2753;</button>
     <button id="bReset" onclick="ux_Click_Reset();" style="position: absolute; left:0%; top:0%; width:10%; height: 8%;font-size: larger;">&#x2190;</button><!-- <br />&#x21BA; -->
 
     <div style="display:none;position: absolute; left:10%; top:80%; width:10%; height: 8%;font-size: larger;">
         <input type="button" value="Sign In" onclick="RegisterUser('110751039536784560815')" />
         Link:<input type="text" value="randomId" /><input type="button" value="Show link" onclick="QrGenerateLink('110751039536784560815')" />
     </div>
+
 </body>
 </html>

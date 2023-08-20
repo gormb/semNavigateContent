@@ -1,3 +1,6 @@
+if (big6.length == 0)
+    big6.push([0, -1, 'Test', '', '', '', '', '']);
+
 big6.push([300000, 0, 'Big 5 Mini - personlighetstest', 'Big Five-personlighetstesten, også kjent som Femfaktormodellen (FFM), er en mye brukt ramme i psykologien for å måle og beskrive personlighetstrekk. Disse trekkene betraktes som bredt dimensjoner av personlighet og brukes til å beskrive og forstå individuelle forskjeller i personlighetstrekk. Det er viktig å merke seg at enkeltpersoner kan ha en kombinasjon av høye og lave scorer på hvert trekk, noe som resulterer i unike personlighetsprofiler.'
     , 'Explain in 20 words or less hvorfor dette skjer, og hvorfor det er bra for miljø, samfunn og folk:'
     , 'Explain in 20 words or less hvorfor dette ikke skjer, og hvorfor det er bra for digitalisering, miljø, samfunn og folk at det ikke skjer:'

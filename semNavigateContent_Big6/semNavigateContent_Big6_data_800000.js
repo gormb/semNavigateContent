@@ -1,3 +1,6 @@
+if (big6.length == 0)
+    big6.push([0, -1, 'Test', '', '', '', '', '']);
+
 big6.push([800000, 0, 'Biases', 'Biases to be extra aware of based upon your answers'
     , 'Explain in 20 words or less hvorfor dette skjer, og hvorfor det er bra for miljø, samfunn og folk:'
     , 'Explain in 20 words or less hvorfor dette ikke skjer, og hvorfor det er bra for digitalisering, miljø, samfunn og folk at det ikke skjer:'
