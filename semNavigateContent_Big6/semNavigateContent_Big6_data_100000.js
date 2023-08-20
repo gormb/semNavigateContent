@@ -3,25 +3,25 @@
 if (big6.length == 0)
     big6.push([0, -1, 'Test', '', '', '', '', '']);
 
-big6.push([1100000, 0, 'Drivkrefter mot 2030 (mini)'
+big6.push([101000, 0, 'Drivkrefter mot 2030 (mini)'
     , 'Denne testen er helt anonym. <a href="?test=100000">Full test</a><br>Det sendes ikke data om dine svar tilbake til tjenesten(alt foregår lokalt), og svarene reflekteres i leseradressen <br/><a href="https://gormb.github.io/semNavigateContent/semNavigateContent_Big6/semNavigateContent_Big6.html?test=1100000"><img style="width:10%" src="data/big6_2030Mini.png"></a><br/>Vurdering av drivkreftene kan gjøre det enklere å ta valg og forberede seg på framtiden.'
     , 'Explain in 20 words or less hvorfor dette skjer, og hvorfor det er bra for miljø, samfunn og folk:'
     , 'Explain in 20 words or less hvorfor dette ikke skjer, og hvorfor det er bra for digitalisering, miljø, samfunn og folk at det ikke skjer:'
     , 'Explain in 20 words or less hvorfor dette skjer, og hvorfor det er skadelig for digitalisering, miljø, samfunn og folk at det skjer:'
     , 'Explain in 20 words or less hvorfor dette ikke skjer, og hvorfor det er skadelig for digitalisering, miljø, samfunn og folk at det ikke skjer:']);
 
-big6.push([9110000, 1100000, 'Tekno&shy;logi', '', '', '', '', '']);
-big6.push([9110001, 9110000, '', '', 'Økt digitalisering og effektivisering av tjenester, økt tilgjengelighet.', 'Mangel på investering i teknologi, fokus på tradisjonelle metoder.', 'Datalekkasjer, personvernbrudd, økt sårbarhet for cyberangrep.', 'Manglende konkurransekraft, tregere tjenesteutvikling.']);
-big6.push([9120000, 1100000, 'Demo&shy;grafi', '', '', '', '', '']);
-big6.push([9120001, 9120000, '', '', 'Tilpasning av tjenester til aldersgrupper, bedre ressursallokering.', 'Ignorering av befolkningsendringer, dårlig målretting av tjenester.', 'Manglende tilgjengelighet for spesifikke grupper, ulikhet i tjenestetilgang.', 'Mismatch mellom tjenester og befolkningens behov, økt misnøye.']);
-big6.push([9130000, 1100000, 'Bære&shy;kraft', '', '', '', '', '']);
-big6.push([9130001, 9130000, '', '', 'Reduserte utslipp, grønnere infrastruktur, bærekraftig ressursbruk.', 'Ignorering av miljøhensyn, kortsiktig tenkning.', 'Miljøskader, ressursmangel, helseproblemer på grunn av forurensning.', 'Tap av naturressurser, økte kostnader for helsevesen.']);
-big6.push([9140000, 1100000, 'Globali&shy;sering', '', '', '', '', '']);
-big6.push([9140001, 9140000, '', '', 'Økt samarbeid, kulturell utveksling, bedre tilgang til globale ressurser.', 'Isolasjonisme, begrenset tilgang til internasjonale muligheter.', 'Sårbarhet for internasjonale kriser, tap av nasjonal kontroll over politikk.', 'Begrenset økonomisk vekst, manglende internasjonal påvirkning.']);
-big6.push([9150000, 1100000, 'Kompet&shy;anse', '', '', '', '', '']);
-big6.push([9150001, 9150000, '', '', 'Økt kompetanseutvikling, tilpasning til fremtidens arbeidsmarked.', 'Stagnasjon i utdanningssystemet, manglende opplæring.', 'Mismatch mellom arbeidskraft og behov, økt arbeidsledighet.', 'Manglende innovasjon, tap av kompetitivt fortrinn.']);
-big6.push([9160000, 1100000, 'Poli&shy;tikk, jus', '', '', '', '', '']);
-big6.push([9160001, 9160000, '', '', 'Effektiv styring, tilpassede reguleringer, bedre beslutningsprosesser.', 'Politisk stillstand, manglende regulering, langdryge prosesser.', 'Usikkerhet, uklare rammebetingelser, potensiell maktkonsentrasjon.', 'Tap av tillit til myndigheter, forvrengt beslutningsprosess.']);
+big6.push([101100, 101000, 'Tekno&shy;logi', '', '', '', '', '']);
+big6.push([101101, 101100, '', '', 'Økt digitalisering og effektivisering av tjenester, økt tilgjengelighet.', 'Mangel på investering i teknologi, fokus på tradisjonelle metoder.', 'Datalekkasjer, personvernbrudd, økt sårbarhet for cyberangrep.', 'Manglende konkurransekraft, tregere tjenesteutvikling.']);
+big6.push([101200, 101000, 'Demo&shy;grafi', '', '', '', '', '']);
+big6.push([101201, 101200, '', '', 'Tilpasning av tjenester til aldersgrupper, bedre ressursallokering.', 'Ignorering av befolkningsendringer, dårlig målretting av tjenester.', 'Manglende tilgjengelighet for spesifikke grupper, ulikhet i tjenestetilgang.', 'Mismatch mellom tjenester og befolkningens behov, økt misnøye.']);
+big6.push([101300, 101000, 'Bære&shy;kraft', '', '', '', '', '']);
+big6.push([101301, 101300, '', '', 'Reduserte utslipp, grønnere infrastruktur, bærekraftig ressursbruk.', 'Ignorering av miljøhensyn, kortsiktig tenkning.', 'Miljøskader, ressursmangel, helseproblemer på grunn av forurensning.', 'Tap av naturressurser, økte kostnader for helsevesen.']);
+big6.push([101400, 101000, 'Globali&shy;sering', '', '', '', '', '']);
+big6.push([101401, 101400, '', '', 'Økt samarbeid, kulturell utveksling, bedre tilgang til globale ressurser.', 'Isolasjonisme, begrenset tilgang til internasjonale muligheter.', 'Sårbarhet for internasjonale kriser, tap av nasjonal kontroll over politikk.', 'Begrenset økonomisk vekst, manglende internasjonal påvirkning.']);
+big6.push([101500, 101000, 'Kompet&shy;anse', '', '', '', '', '']);
+big6.push([101501, 101500, '', '', 'Økt kompetanseutvikling, tilpasning til fremtidens arbeidsmarked.', 'Stagnasjon i utdanningssystemet, manglende opplæring.', 'Mismatch mellom arbeidskraft og behov, økt arbeidsledighet.', 'Manglende innovasjon, tap av kompetitivt fortrinn.']);
+big6.push([101600, 101000, 'Poli&shy;tikk, jus', '', '', '', '', '']);
+big6.push([101601, 101600, '', '', 'Effektiv styring, tilpassede reguleringer, bedre beslutningsprosesser.', 'Politisk stillstand, manglende regulering, langdryge prosesser.', 'Usikkerhet, uklare rammebetingelser, potensiell maktkonsentrasjon.', 'Tap av tillit til myndigheter, forvrengt beslutningsprosess.']);
 
 // Digdir drivkrefter (2023/2030)
 // full:
