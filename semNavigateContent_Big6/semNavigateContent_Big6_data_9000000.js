@@ -12,7 +12,7 @@ if (big6.length == 0)
     big6.push([9111120,9111100,'Svimmelhet eller ørhet','','','','','']);
     big6.push([9111121,9111120,'','','Hver gang jeg spytter eller kaster opp, ser jeg spor av blod, og jeg blir veldig svimmel rett etterpå."','Jeg har hatt noen svimmelhetsepisoder, men det er ingen andre tegn på blødning, som for eksempel blod i avføringen."','Jeg føler meg svimmel og har merket litt blod når jeg spytter, men det startet etter en tannlegebesøk."','Selv om jeg ikke har følt meg spesielt svimmel, har jeg mistet appetitten og har hatt smerter i magen, pluss at avføringen ser annerledes ut."']);
     big6.push([9111122,9111120,'','','"Nylig har jeg følt meg konstant ør, spesielt etter måltider, og jeg har merket en mørk, tjæreaktig avføring."','"Selv om jeg føler meg ør, har det ikke vært noen forandringer i spyttingen, oppkastet, eller avføringen min.','"Jeg har sett litt blod i avføringen og føler meg svimmel, men jeg begynte nettopp på en ny medisin som kan forårsake begge symptomene."','"Jeg føler meg ikke ør, men magen har vondt og jeg føler meg tappet for energi. Jeg lurte på om dette kan være relatert til en blødning selv om jeg ikke har sett direkte tegn."']);
-    big6.push([9200000,900000,'Oransj','','','','','']);
-    big6.push([9300000,900000,'Gul','','','','','']);
-    big6.push([9400000,900000,'Grønn','','','','','']);
-    big6.push([9500000,900000,'Blå','','','','','']);
+    big6.push([9200000,9000000,'Oransj','','','','','']);
+    big6.push([9300000,9000000,'Gul','','','','','']);
+    big6.push([9400000,9000000,'Grønn','','','','','']);
+    big6.push([9500000,9000000,'Blå','','','','','']);
