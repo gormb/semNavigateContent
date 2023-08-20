@@ -9,7 +9,7 @@ big6.push([9000000, 0, 'Triagering (PoC)', ''
     , 'Gi meg en påstand som er basert på ekskluderingskriterier signaliserer at tilstanden ikke er der, men det kan være feil'
 ]);
 
-big6.push([9100000, 9000000, 'Rød', '', '', '', '', '']);
+big6.push([9100000,9000000, 'Rød', '', '', '', '', '']);
 big6.push([9110000,9100000,'Somatisk ','Rød','','','','']);
 big6.push([9111000,9110000,'Mage- og tarmplager','Somatisk Rød','','','','']);
 big6.push([9111100,9111000,'Øvre gastrointestinal blødning','Rød','','','','']);
