@@ -125,12 +125,17 @@ function big6_score_AsHtm(trait) {
             h += '<td style="border-width:0px; width:25%">' // &#x1F4C8;, ' // 
                 + ' ' // yes/no
                 + (rep[i_answer] > .9 ? (yes ? '&#x2714' : '&#x2717;') // yn: green
-                    : (yes ? '&#x2717 (-&#x2714;)' : '&#x2714; (-&#x2717;)')) // yn: red
-                + ' ' // opportunity/threat
+                    : (yes ? '&#x2717' : '&#x2714;')) // yn: red
+                + '' // opportunity/threat
                 + (rep[i_answer] > .9 ? (opportunity ? '&#x1F4CC' : '&#x1F6A8;') // ot: green
-                    : (opportunity ? '&#x1F6A8 (-&#x1F4CC;)' : '&#x1F4CC; (-&#x1F6A8;)')) // ot: red
+                    : (opportunity ? '&#x1F6A8' : '&#x1F4CC;')) // ot: red
                 + '<br>'
-                + big6_reply_AsHtm(rep)
+                + (rep[i_answer] > .9 ? '<br>'
+                    : ('<span style="border: 2px solid red; padding: 1px;">'
+                        + (yes ? '&#x2714;' : '&#x2717;')
+                        + (opportunity ? '&#x1F4CC;' : '&#x1F6A8;')
+                        + '</span>'))
+                //+ '<br>' + big6_reply_AsHtm(rep)
                 + '</td>';
             if (iAnswersGiven % cols == cols - 1) h += '</tr>'
             iAnswersGiven++;
@@ -139,7 +144,7 @@ function big6_score_AsHtm(trait) {
     //if (len % cols == 1) h += '<td style="border-width: 0px;"></td></tr>'
     h += "</table>";
     return h;
-} //= new Array(), i_trait=0, i_statements = 1, i_yesno=2, i_opportunityvsthreat=3;
+} 
 
 var big6_traits_ShowAsHtm_lastShow = -1;
 function big6_traits_ShowAsHtm(i) {
@@ -187,17 +192,17 @@ function big6_prompt_FromIds(a, aPrompts)
     var newid = big6_i_nextfree(parseInt(parentid == 0 ? 0 : a[a.length - 1]) + 1); // last id or parent + 1 -- or next free
 
     var root = big6[big6_i(a.length == 0 ? 0 : a[0])];
-    aPrompts.push('{ "role": "system", "content": "Find statements that uncover traits within \''
+    aPrompts.push('{"role":"system","content":"Find statements that uncover traits within \''
         + big6_Text(big6_i(a[1]), i_belieftext, '. ') + big6_Text(big6_i(a[1]), i_consequence, '. ') + '\'"}'); //alert(root); // ultimate parent (to be scored)
     var res = '';
     for (var i = a.length - 1; (i > 1 && i > a.length - 4) || res.length == 0; i--) { // item and max 3 ancestors
         var b6i = big6_i(a[i]); // i_beliefid=0,i_parentid=1,i_belieftext=2,i_consequence=3,i_attitudeyesopportunity=4,i_attitudenoopportunity=5,i_attitudeyesthreat=6,i_attitudenothreat=7
         res += big6_Text(b6i, i_belieftext , ". ") + big6_Text(b6i, i_consequence, ". ");
     }//alert(res);
-    aPrompts.push('{ "role": "user", "content": ' + JSON.stringify(res + '\n\n' + root[i_attitudeyesopportunity]) + ' }');
-    aPrompts.push('{ "role": "user", "content": ' + JSON.stringify(res + '\n\n' + root[i_attitudenoopportunity]) + ' }');
-    aPrompts.push('{ "role": "user", "content": ' + JSON.stringify(res + '\n\n' + root[i_attitudeyesthreat]) + ' }');
-    aPrompts.push('{ "role": "user", "content": ' + JSON.stringify(res + '\n\n' + root[i_attitudenothreat]) + ' }');//
+    aPrompts.push('{"role":"user","content": ' + JSON.stringify(res + '\n\n' + root[i_attitudeyesopportunity]) + '}');
+    aPrompts.push('{"role":"user","content": ' + JSON.stringify(res + '\n\n' + root[i_attitudenoopportunity]) + '}');
+    aPrompts.push('{"role":"user","content": ' + JSON.stringify(res + '\n\n' + root[i_attitudeyesthreat]) + '}');
+    aPrompts.push('{"role":"user","content": ' + JSON.stringify(res + '\n\n' + root[i_attitudenothreat]) + '}');//
     return res;
 }
 

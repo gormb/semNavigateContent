@@ -10,28 +10,28 @@ big6.push([101000, 0, 'Drivkrefter mot 2030 (mini)'
     , 'Explain in 20 words or less hvorfor dette skjer, og hvorfor det er skadelig for digitalisering, miljø, samfunn og folk at det skjer:'
     , 'Explain in 20 words or less hvorfor dette ikke skjer, og hvorfor det er skadelig for digitalisering, miljø, samfunn og folk at det ikke skjer:']);
 
-big6.push([101100, 101000, 'Tekno&shy;logi', '', '', '', '', '']);
+big6.push([101100, 101000, 'Tek&shy;no&shy;logi', '', '', '', '', '']);
 big6.push([101101, 101100, '', '', 'Økt digitalisering og effektivisering av tjenester, økt tilgjengelighet.', 'Mangel på investering i teknologi, fokus på tradisjonelle metoder.', 'Datalekkasjer, personvernbrudd, økt sårbarhet for cyberangrep.', 'Manglende konkurransekraft, tregere tjenesteutvikling.']);
 big6.push([101200, 101000, 'Demo&shy;grafi', '', '', '', '', '']);
 big6.push([101201, 101200, '', '', 'Tilpasning av tjenester til aldersgrupper, bedre ressursallokering.', 'Ignorering av befolkningsendringer, dårlig målretting av tjenester.', 'Manglende tilgjengelighet for spesifikke grupper, ulikhet i tjenestetilgang.', 'Mismatch mellom tjenester og befolkningens behov, økt misnøye.']);
 big6.push([101300, 101000, 'Bære&shy;kraft', '', '', '', '', '']);
 big6.push([101301, 101300, '', '', 'Reduserte utslipp, grønnere infrastruktur, bærekraftig ressursbruk.', 'Ignorering av miljøhensyn, kortsiktig tenkning.', 'Miljøskader, ressursmangel, helseproblemer på grunn av forurensning.', 'Tap av naturressurser, økte kostnader for helsevesen.']);
-big6.push([101400, 101000, 'Globali&shy;sering', '', '', '', '', '']);
+big6.push([101400, 101000, 'Global&shy;i&shy;ser&shy;ing', '', '', '', '', '']);
 big6.push([101401, 101400, '', '', 'Økt samarbeid, kulturell utveksling, bedre tilgang til globale ressurser.', 'Isolasjonisme, begrenset tilgang til internasjonale muligheter.', 'Sårbarhet for internasjonale kriser, tap av nasjonal kontroll over politikk.', 'Begrenset økonomisk vekst, manglende internasjonal påvirkning.']);
-big6.push([101500, 101000, 'Kompet&shy;anse', '', '', '', '', '']);
+big6.push([101500, 101000, 'Kom&shy;pet&shy;anse', '', '', '', '', '']);
 big6.push([101501, 101500, '', '', 'Økt kompetanseutvikling, tilpasning til fremtidens arbeidsmarked.', 'Stagnasjon i utdanningssystemet, manglende opplæring.', 'Mismatch mellom arbeidskraft og behov, økt arbeidsledighet.', 'Manglende innovasjon, tap av kompetitivt fortrinn.']);
 big6.push([101600, 101000, 'Poli&shy;tikk, jus', '', '', '', '', '']);
 big6.push([101601, 101600, '', '', 'Effektiv styring, tilpassede reguleringer, bedre beslutningsprosesser.', 'Politisk stillstand, manglende regulering, langdryge prosesser.', 'Usikkerhet, uklare rammebetingelser, potensiell maktkonsentrasjon.', 'Tap av tillit til myndigheter, forvrengt beslutningsprosess.']);
 
 // Digdir drivkrefter (2023/2030)
 // full:
-big6.push([100000, 0, 'Drivkrefter som påvirker offentlig sektor mot 2030 (2023)', 'Vurdering av drivkreftene kan gjøre det enklere å ta valg og forberede seg på framtiden.'
+big6.push([100000, -1, 'Drivkrefter som påvirker offentlig sektor mot 2030 (2023)', 'Vurdering av drivkreftene kan gjøre det enklere å ta valg og forberede seg på framtiden.'
     , 'Explain in 20 words or less hvorfor dette skjer, og hvorfor det er bra for miljø, samfunn og folk:'
     , 'Explain in 20 words or less hvorfor dette ikke skjer, og hvorfor det er bra for digitalisering, miljø, samfunn og folk at det ikke skjer:'
     , 'Explain in 20 words or less hvorfor dette skjer, og hvorfor det er skadelig for digitalisering, miljø, samfunn og folk at det skjer:'
     , 'Explain in 20 words or less hvorfor dette ikke skjer, og hvorfor det er skadelig for digitalisering, miljø, samfunn og folk at det ikke skjer:']);
 
-big6.push([110000, 100000, 'Polit&shy;iske strøm&shy;ninger', '', '', '', '', '']);
+big6.push([110000, 100000, 'Poli&shy;tikk', 'Polit&shy;iske strøm&shy;ninger', '', '', '', '']);
 big6.push([111000, 110000, 'Politisk polarisering', 'Demokratisk svekkelse og økte kontraster preger den politiske utviklingen i verden', '', '', '', '']);
 big6.push([111100, 111000,'Demokratisk svekkelse internasjonalt','','','','','']);
 big6.push([111110, 111100,'','Andel av verdens befolkning som lever i et velfungerende demokrati har falt med 56 % fra 2008 til 2021, og mer enn 1/3 av verdens befolkning lever i et autoritært regime','','','','']);
@@ -54,7 +54,7 @@ big6.push([113000, 110000,'Innovasjon blir viktigere','Offentlig sektor er under
 big6.push([113100, 113000,'Norge har et godt utgangspunkt og satser på innovasjon','','','','','']);
 big6.push([113200, 113000,'Norge har en vei å gå når det gjelder innovasjon','','','','','']);
 big6.push([113300, 113000,'Store forskjeller i kommune-Norge','','','','','']);
-big6.push([120000, 100000, 'Øko&shy;nomi i frem&shy;tiden', '', '', '', '', '']);
+big6.push([120000, 100000, 'Øko&shy;nomi', 'Øko&shy;nomi i frem&shy;tiden', '', '', '', '']);
 big6.push([121000, 120000, 'Mindre økonomisk handlingsrom', 'Norge er et av verdens rikeste land, men fremover blir det større press på statsfinansene', '', '', '', '']);
 big6.push([121100, 121000,'Større gap i det norske budsjettet','','','','','']);
 big6.push([121200, 121000,'Forsørgerbyrden øker som følge av aldrende befolkning','','','','','']);
@@ -68,7 +68,7 @@ big6.push([123000, 120000,'Nye samarbeidsmodeller','Stadig nye samarbeidsformer 
 big6.push([123100, 123000,'Nye samarbeidsformer vokser frem','','','','','']);
 big6.push([123200, 123000,'Innbyggerne bidrar på nye måter','','','','','']);
 big6.push([123300, 123000,'Innovative kommuner samarbeider med eksterne','','','','','']);
-big6.push([130000, 100000, 'Sosio&shy;kultur&shy;elt', 'Befolknings behov og kultur', '', '', '', '']);
+big6.push([130000, 100000, 'Kultur&shy;elt', 'Sosio&shy;kultur&shy;elt, Befolknings behov og kultur', '', '', '', '']);
 big6.push([131000, 130000, 'Mer utenforskap', 'Utenforskapet i Norge vokser selv om de økonomiske forskjellene er blant de minste i verden', '', '', '', '']);
 big6.push([131100, 131000,'Norge har små økonomiske forskjeller, men ulikhetene vokser','','','','','']);
 big6.push([131200, 131000,'Andel i jobb, lønn og arbeidsledighet henger tett sammen med utdanningsnivået','','','','','']);
@@ -89,7 +89,7 @@ big6.push([135000, 130000,'Økte forventninger fra innbyggere','Forventningene t
 big6.push([135100, 135000,'Innbyggerne har høye forventninger','','','','','']);
 big6.push([135200, 135000,'Ny teknologi og algoritmer analyserer tilgjengelige data og øker muligheten for persontilpasning','','','','','']);
 big6.push([135400, 135000,'Bedre offentlige tjenester gir økt tillit','','','','','']);
-big6.push([140000, 100000, 'Tekno&shy;log&shy;isk skif&shy;te', '', '', '', '', '']);
+big6.push([140000, 100000, 'Tekno&shy;log&shy;i', 'Tekno&shy;log&shy;isk skif&shy;te', '', '', '', '']);
 big6.push([141000, 140000,'Akselerert digitalisering','En høy digital endringstakt, forsterket av koronapandemien, gir både økt gevinstpotensial og sårbarhet','','','','']);
 big6.push([141100, 141000,'Eksplosjon av data tilgjengelig med store økonomiske verdier','','','','','']);
 big6.push([141110, 141100,'','Sensorer og IoT-teknologier har gitt oss dataoverflod i verden og annethvert år fordobles verdens samlede datamengde','p:Explain in 20 words or less hvorfor dette skjer, og hvorfor det er bra for miljø, samfunn og folk:','p:Explain in 20 words or less hvorfor dette ikke skjer, og hvorfor det er bra for digitalisering, miljø, samfunn og folk at det ikke skjer:','p:Explain in 20 words or less hvorfor dette skjer, og hvorfor det er skadelig for digitalisering, miljø, samfunn og folk at det skjer:','p:Explain in 20 words or less hvorfor dette ikke skjer, og hvorfor det er skadelig for digitalisering, miljø, samfunn og folk at det ikke skjer:']);
@@ -108,7 +108,7 @@ big6.push([142000, 140000,'Økt samhandling menneske-maskin','Maskinene blir vå
 big6.push([142100, 142000,'Økt samhandling mellom mennesket og maskinen','','','','','']);
 big6.push([142200, 142000,'I arbeidslivet blir maskinene våre nye kollegaer','','','','','']);
 big6.push([142300, 142000,'Samhandlingen fremover blir også mer personlig','','','','','']);
-big6.push([150000, 100000, 'Klima', '', '', '', '', '']);
+big6.push([150000, 100000, 'Kli&shy;ma', '', '', '', '', '']);
 big6.push([151000, 150000, 'Kostbar klimatilpasning', 'Klimaendringene medfører risiko og store økonomiske konsekvenser, og får kraftig politisk respons', '', '', '', '']);
 big6.push([151100, 151000,'Betydelig klimarisiko som følger av klimaendringene','','','','','']);
 big6.push([151200, 151000,'Betydelig klimarisiko med store økonomiske konsekvenser','','','','','']);
@@ -121,7 +121,7 @@ big6.push([152100, 152000,'Vår klimaholdning gir klimahandling','','','','','']
 big6.push([152100, 152000,'Innovativ teknologi anvendes for å skape smartere og mer bærekraftige løsninger','','','','','']);
 big6.push([152200, 152000,'Næringslivet er en betydelig driver for det grønne skiftet','','','','','']);
 big6.push([152300, 152000,'Politikerne følger opp med investeringsmidler for annvendelse av innovativ teknologi','','','','','']);
-big6.push([160000, 100000, 'Juri&shy;di&shy;ske end&shy;rin&shy;ger', '', '', '', '', '']);
+big6.push([160000, 100000, 'Jus', 'Juri&shy;di&shy;ske end&shy;rin&shy;ger', '', '', '', '', '']);
 big6.push([161000, 160000, 'Strengere personvern', 'GDPR styrker personvernet, men vanskelig balansegang mellom å utnytte muligheter og agere i tråd med direktivet', '', '', '', '']);
 big6.push([161100, 161000,'GDPR styrker personvernet på tvers av EU/EØS, men regelverket er komplisert','','','','','']);
 big6.push([161200, 161000,'Offentlig sektor med stor mobilisering','','','','','']);
