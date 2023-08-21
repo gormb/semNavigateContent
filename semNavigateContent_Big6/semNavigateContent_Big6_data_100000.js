@@ -4,7 +4,7 @@ if (big6.length == 0)
     big6.push([0, -1, 'Test', '', '', '', '', '']);
 
 big6.push([101000, 0, 'Drivkrefter mot 2030 (mini)'
-    , 'Denne testen er helt anonym. <a href="?test=100000">Full test</a><br>Det sendes ikke data om dine svar tilbake til tjenesten(alt foregår lokalt), og svarene reflekteres i leseradressen <br/><a href="https://gormb.github.io/semNavigateContent/semNavigateContent_Big6/semNavigateContent_Big6.html?test=1100000"><img style="width:10%" src="data/big6_2030Mini.png"></a><br/>Vurdering av drivkreftene kan gjøre det enklere å ta valg og forberede seg på framtiden.'
+    , '<a href="?test=100000">Alternativ full test</a><br>Denne testen er helt anonym. Det sendes ikke data om dine svar tilbake til tjenesten(alt foregår lokalt), svarene reflekteres i leseradressen <br/><br/><a href="https://gormb.github.io/semNavigateContent/semNavigateContent_Big6/semNavigateContent_Big6.html?test=1100000"><img style="width:10%" src="data/big6_2030Mini.png"></a><br/><br/>Vurdering av drivkreftene kan gjøre det enklere å ta valg og forberede seg på framtiden.'
     , 'Explain in 20 words or less hvorfor dette skjer, og hvorfor det er bra for miljø, samfunn og folk:'
     , 'Explain in 20 words or less hvorfor dette ikke skjer, og hvorfor det er bra for digitalisering, miljø, samfunn og folk at det ikke skjer:'
     , 'Explain in 20 words or less hvorfor dette skjer, og hvorfor det er skadelig for digitalisering, miljø, samfunn og folk at det skjer:'
@@ -25,7 +25,8 @@ big6.push([101601, 101600, '', '', 'Effektiv styring, tilpassede reguleringer, b
 
 // Digdir drivkrefter (2023/2030)
 // full:
-big6.push([100000, -1, 'Drivkrefter som påvirker offentlig sektor mot 2030 (2023)', 'Vurdering av drivkreftene kan gjøre det enklere å ta valg og forberede seg på framtiden.'
+big6.push([100000, -1, 'Drivkrefter som påvirker offentlig sektor mot 2030 (2023)'
+    , '<a href="?test=101000">Alternativ minitest</a><br>Denne testen er helt anonym. Det sendes ikke data om dine svar tilbake til tjenesten(alt foregår lokalt), svarene reflekteres i leseradressen <br/><br/><a href="https://gormb.github.io/semNavigateContent/semNavigateContent_Big6/semNavigateContent_Big6.html?test=1100000"><img style="width:10%" src="data/big6_2030Mini.png"></a><br/><br/>Vurdering av drivkreftene kan gjøre det enklere å ta valg og forberede seg på framtiden.'
     , 'Explain in 20 words or less hvorfor dette skjer, og hvorfor det er bra for miljø, samfunn og folk:'
     , 'Explain in 20 words or less hvorfor dette ikke skjer, og hvorfor det er bra for digitalisering, miljø, samfunn og folk at det ikke skjer:'
     , 'Explain in 20 words or less hvorfor dette skjer, og hvorfor det er skadelig for digitalisering, miljø, samfunn og folk at det skjer:'
@@ -68,7 +69,7 @@ big6.push([123000, 120000,'Nye samarbeidsmodeller','Stadig nye samarbeidsformer 
 big6.push([123100, 123000,'Nye samarbeidsformer vokser frem','','','','','']);
 big6.push([123200, 123000,'Innbyggerne bidrar på nye måter','','','','','']);
 big6.push([123300, 123000,'Innovative kommuner samarbeider med eksterne','','','','','']);
-big6.push([130000, 100000, 'Kultur&shy;elt', 'Sosio&shy;kultur&shy;elt, Befolknings behov og kultur', '', '', '', '']);
+big6.push([130000, 100000, 'Kul&shy;turelt', 'Sosio&shy;kultur&shy;elt, Befolknings behov og kultur', '', '', '', '']);
 big6.push([131000, 130000, 'Mer utenforskap', 'Utenforskapet i Norge vokser selv om de økonomiske forskjellene er blant de minste i verden', '', '', '', '']);
 big6.push([131100, 131000,'Norge har små økonomiske forskjeller, men ulikhetene vokser','','','','','']);
 big6.push([131200, 131000,'Andel i jobb, lønn og arbeidsledighet henger tett sammen med utdanningsnivået','','','','','']);

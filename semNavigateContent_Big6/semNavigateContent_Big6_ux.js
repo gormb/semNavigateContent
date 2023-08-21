@@ -60,24 +60,25 @@ function big6_Url_Simulate(a) { // window.location.search = "?test=300000,311000
     for (var i=0;i<a.length;i++) {
         var v = a[i];
         var v_y = v.split("y"), v_n = v.split("n"), v_i = v.split(".");
-        if (v_y.length == 2) { // console.log("yes " + v_y[0] + " " + v_y[1]);
+        if (v_y.length == 2) { // agree! // console.log("yes " + v_y[0] + " " + v_y[1]);
             big6_menu[0] = big6_statements[big6_statements_i(v_y[0], v_y[1])];
             big6_SetButton(0, big6_menu[0]);
             big6_bNo = big6_bYes = -1;
             ux_Click_Button(0, b0);
         }
-        else if (v_n.length == 2) { // console.log("no " + v_n[0] + " " + v_n[1]);
+        else if (v_n.length == 2) { // disagree! // console.log("no " + v_n[0] + " " + v_n[1]);
             big6_menu[1] = big6_statements[big6_statements_i(v_n[0], v_n[1])];
             big6_SetButton(1, big6_menu[1]); 
             big6_bNo = -1;
             ux_Click_Button(1, b1);
         }
-        else if (v_i.length == 2) { // console.log("ignore " + v_i[0] + " " + v_i[1])
+        else if (v_i.length == 2) { // not agree or disagree // console.log("ignore " + v_i[0] + " " + v_i[1])
             ignoreI = ignoreI == 2 ? 3 : 2; // swap ignore between 2 and 3
             big6_menu[ignoreI] = big6_statements[big6_statements_i(v_i[0], v_i[1])];
             big6_SetButton(ignoreI, big6_menu[ignoreI]); 
+            testOverviewTable.style.display = 'none'; // hide test overview
         }
-        else if (v == '!' || v == '-') { // console.log("commit");
+        else if (v == '!' || v == '-') { // commit or skip // console.log("commit");
             big6_TraitsUpdate();big6_SetButtons() 
         }
         else if (v == '$') { // console.log("show results");
@@ -85,6 +86,7 @@ function big6_Url_Simulate(a) { // window.location.search = "?test=300000,311000
         }
         else if (Number.isInteger(parseInt(v))) { // console.log("select test " + v);
             big6_SetTestIndex(v);
+            showTestOverview();
             big6_TraitsPopulate();
             big6_SetButtons(); // populate the first statement
         }
@@ -123,22 +125,20 @@ function big6_score_AsHtm(trait) {
             var yes = rep[i_attitudetype] % 2 == 0; // yesopportunity/noopportunity/yesthreat/,nothreat
             var opportunity = rep[i_attitudetype] / 2 == 0; // yesopportunity/noopportunity/yesthreat/,nothreat
             h += '<td style="border-width:0px; width:25%">' // &#x1F4C8;, ' // 
-                + ' ' // yes/no
-                + (rep[i_answer] > .9 ? (yes ? '&#x2714' : '&#x2717;') // yn: green
+                + ' ' /* yes/no */ + (rep[i_answer] > .9 ? (yes ? '&#x2714' : '&#x2717;') // yn: green
                     : (yes ? '&#x2717' : '&#x2714;')) // yn: red
-                + '' // opportunity/threat
-                + (rep[i_answer] > .9 ? (opportunity ? '&#x1F4CC' : '&#x1F6A8;') // ot: green
+                + /* opportunity/threat */ (rep[i_answer] > .9 ? (opportunity ? '&#x1F4CC' : '&#x1F6A8;') // ot: green
                     : (opportunity ? '&#x1F6A8' : '&#x1F4CC;')) // ot: red
-                + '<br>'
+                + '<br>' /* inverting/disagree-answer */
                 + (rep[i_answer] > .9 ? '<br>'
                     : ('<span style="border: 2px solid red; padding: 1px;">'
                         + (yes ? '&#x2714;' : '&#x2717;')
                         + (opportunity ? '&#x1F4CC;' : '&#x1F6A8;')
                         + '</span>'))
-                //+ '<br>' + big6_reply_AsHtm(rep)
-                + '</td>';
-            if (iAnswersGiven % cols == cols - 1) h += '</tr>'
-            iAnswersGiven++;
+                //+ /* explaining text */ '<br>' + big6_reply_AsHtm(rep)
+                + '</td>'; // end of cell
+            if ((iAnswersGiven++) % cols == cols - 1)
+                h += '</tr>' // end of row
         }
     }
     //if (len % cols == 1) h += '<td style="border-width: 0px;"></td></tr>'
@@ -296,8 +296,9 @@ function big6_editTests_ShowAsHtm(i) {
 function big6_showDb_Add(big6_testIndex) {
     showDbDetail.innerHTML = "test index: " + big6_testIndex;
 }
+
 document.addEventListener('keydown', function (event) { // Add event listener to the 'keydown' event on the document
-    if (event.key === 'e') { // Get into edit-mode
+    if (event.key === 'e') { // Get into or out of edit-mode
         if (editTestsTable.style.display == 'table') editTestsTable.style.display = 'none';
         else {
             editTestsTable.style.innerHTML = '...';
@@ -308,7 +309,7 @@ document.addEventListener('keydown', function (event) { // Add event listener to
     else if (event.key === 'r') { // Show results
         ux_Click_Results();
     }
-    else if (event.key === 's') { // Show all database actions
+    else if (event.key === 'd') { // Show all database actions
         if (showDbTable.style.display == 'table') showDbTable.style.display = 'none';
         else showDbTable.style.display = 'table';
     }
