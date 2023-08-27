@@ -49,7 +49,7 @@ function big6_Url_Set(a, clear) { // history.pushState(nextState, nextTitle, nex
         if (a.length == 0) a = new URLSearchParams(window.location.search).get('test').toString();
         else a = new URLSearchParams(window.location.search).get('test').toString() + "," + a;
     }
-    history.pushState(null, '', "?test=" + a);
+    history.pushState(null, '', "?" + big6_gptGetKeysAsUrl("&") + "test=" + a);
     console.log("big6_Url_Set -> " + window.location.search);
 }
 
@@ -186,23 +186,35 @@ function big6_Text(b6i, f, addIfContent) {
     res = res.replace(/"/g, '\'');
     return res;
 }
-function big6_prompt_FromIds(a, aPrompts)
+function big6_prompt_FromIds(a, aPrompts, bUseChat)
 { // create prompts to ask open ai
     var parentid = a.length == 0 ? 0 : a.length == 1 ? a[0] : a[a.length - 2];
     var newid = big6_i_nextfree(parseInt(parentid == 0 ? 0 : a[a.length - 1]) + 1); // last id or parent + 1 -- or next free
 
     var root = big6[big6_i(a.length == 0 ? 0 : a[0])];
-    aPrompts.push('{"role":"system","content":"Find statements that uncover traits within \''
-        + big6_Text(big6_i(a[1]), i_belieftext, '. ') + big6_Text(big6_i(a[1]), i_consequence, '. ') + '\'"}'); //alert(root); // ultimate parent (to be scored)
+    if (bUseChat) aPrompts.push('{"role":"system","content":"Find statements that uncover traits within \''
+            + big6_Text(big6_i(a[1]), i_belieftext, '. ') + big6_Text(big6_i(a[1]), i_consequence, '. ') + '\'"}'); //alert(root); // ultimate parent (to be scored)
+    else aPrompts.push('Find statements that uncover traits within \''
+            + big6_Text(big6_i(a[1]), i_belieftext, '. ') + big6_Text(big6_i(a[1]), i_consequence, '. ') + '\'');
     var res = '';
     for (var i = a.length - 1; (i > 1 && i > a.length - 4) || res.length == 0; i--) { // item and max 3 ancestors
         var b6i = big6_i(a[i]); // i_beliefid=0,i_parentid=1,i_belieftext=2,i_consequence=3,i_attitudeyesopportunity=4,i_attitudenoopportunity=5,i_attitudeyesthreat=6,i_attitudenothreat=7
         res += big6_Text(b6i, i_belieftext , ". ") + big6_Text(b6i, i_consequence, ". ");
     }//alert(res);
-    aPrompts.push('{"role":"user","content": ' + JSON.stringify(res + '\n\n' + root[i_attitudeyesopportunity]) + '}');
-    aPrompts.push('{"role":"user","content": ' + JSON.stringify(res + '\n\n' + root[i_attitudenoopportunity]) + '}');
-    aPrompts.push('{"role":"user","content": ' + JSON.stringify(res + '\n\n' + root[i_attitudeyesthreat]) + '}');
-    aPrompts.push('{"role":"user","content": ' + JSON.stringify(res + '\n\n' + root[i_attitudenothreat]) + '}');//
+    if (bUseChat) {
+        aPrompts.push('{"role":"user","content": ' + JSON.stringify(res + '\n\n' + root[i_attitudeyesopportunity]) + '}');
+        aPrompts.push('{"role":"user","content": ' + JSON.stringify(res + '\n\n' + root[i_attitudenoopportunity]) + '}');
+        aPrompts.push('{"role":"user","content": ' + JSON.stringify(res + '\n\n' + root[i_attitudeyesthreat]) + '}');
+        aPrompts.push('{"role":"user","content": ' + JSON.stringify(res + '\n\n' + root[i_attitudenothreat]) + '}');//
+    }
+    else {
+        aPrompts.push(JSON.stringify(res + '\n\n' + root[i_attitudeyesopportunity] + '\n\n'));
+        aPrompts.push(JSON.stringify(res + '\n\n' + root[i_attitudenoopportunity] + '\n\n'));
+        aPrompts.push(JSON.stringify(res + '\n\n' + root[i_attitudeyesthreat] + '\n\n'));
+        aPrompts.push(JSON.stringify(res + '\n\n' + root[i_attitudenothreat] + '\n\n'));
+    }
+    aPrompts.push(newid);
+    aPrompts.push(parentid);
     return res;
 }
 
@@ -221,19 +233,36 @@ function big6_clipboardTaCopy(s) {
     document.body.removeChild(textArea);
 }
 
-function big6_gptQuestionsResults(txt, q) {
+function big6_gptQuestionsResults(txt, q, useChat) {
     //&#x2714; &#x2714; &#x1F4CC; &#x1F6A8;
     var item = [
         i_beliefid, i_parentid, i_belieftext, i_consequence
-        , big6_gptResult('&#x1F4CC;&#x2714; <i>' + txt + '</i>', q[0] + ', ' + q[1])
-        , big6_gptResult('&#x1F4CC;&#x2717; <i>' + txt + '</i>', q[0] + ', ' + q[2])
-        , big6_gptResult('&#x1F6A8;&#x2714; <i>' + txt + '</i>', q[0] + ', ' + q[3])
-        , big6_gptResult('&#x1F6A8;&#x2717; <i>' + txt + '</i>', q[0] + ', ' + q[4])
+        , big6_gptResult('&#x1F4CC;&#x2714; <i>' + txt + '</i>', q[0] + ', ' + q[1], useChat)
+        , big6_gptResult('&#x1F4CC;&#x2717; <i>' + txt + '</i>', q[0] + ', ' + q[2], useChat)
+        , big6_gptResult('&#x1F6A8;&#x2714; <i>' + txt + '</i>', q[0] + ', ' + q[3], useChat)
+        , big6_gptResult('&#x1F6A8;&#x2717; <i>' + txt + '</i>', q[0] + ', ' + q[4], useChat)
         , i_time
     ];
     return big6_children_AsHtm_YNOT(item);
 }
-function big6_editTests_PromptsButton_Click(b, prompt) { // Create prompt from ID's' //alert(prompt);
+
+function big6_editTests_PromptsButton_Click(b, prompt, useChat) { // Create prompt from ID's' //alert(prompt);
+    var aPrompts = new Array();
+    var promptText = big6_prompt_FromIds(prompt.split(','), aPrompts, useChat); // alert(promptText); // promptText = aPrompts;
+
+    big6_clipboardTaCopy(aPrompts); // Add prompt to clipboard
+
+    // remove content from parent after button but keep the button and everything before it, add promptText
+    b.parentNode.innerHTML += ''// b.parentNode.innerHTML.substring(0, b.parentNode.innerHTML.indexOf(b.outerHTML) + b.outerHTML.length)
+        // + big6_gptResult(promptText, aPrompts); // add text to parent of clicked button
+        + big6_gptQuestionsResults(promptText, aPrompts, useChat); // add text to parent of clicked button
+
+    b.style.backgroundColor = '#' + Math.floor(Math.random() * 16777215).toString(16); // Change button color to random color
+    event.stopPropagation(); // stop click event to propagate to parent
+    return true;
+}
+/*
+function z_big6_editTests_PromptsButton_Click(b, prompt) { // Create prompt from ID's' //alert(prompt);
     var aPrompts = new Array();
     var promptText = big6_prompt_FromIds(prompt.split(','), aPrompts); // alert(promptText); // promptText = aPrompts;
     big6_clipboardTaCopy(aPrompts); // Add prompt to clipboard
@@ -244,9 +273,11 @@ function big6_editTests_PromptsButton_Click(b, prompt) { // Create prompt from I
     b.style.backgroundColor = '#' + Math.floor(Math.random() * 16777215).toString(16); // Change button color to random color
     event.stopPropagation(); // stop click event to propagate to parent
     return true;
-}
+}*/
+
 function big6_editTests_PromptsButton(promptStatus) {
-    return "<button onclick=\"big6_editTests_PromptsButton_Click(this, '" + promptStatus.prompt + "');\">+</button>";
+    return "<button onclick=\"big6_editTests_PromptsButton_Click(this, '" + promptStatus.prompt + "', true);\">*</button>"
+        + "<button onclick=\"big6_editTests_PromptsButton_Click(this, '" + promptStatus.prompt + "', false);\">+</button>";
 }
 function big6_children_AsHtm_YNOT(item) { // i_beliefid = 0, i_parentid = 1, i_belieftext = 2, i_consequence = 3, i_attitudeyesopportunity = 4, i_attitudenoopportunity = 5, i_attitudeyesthreat = 6, i_attitudenothreat = 7, i_time = 8;
     var ret = "<br><table><tr><td style='width:1px;border:0px'></td><td style='border:0px;background-color:green'>&#x2714;</td><td style='border:0px;background-color:red'>&#x2717;</td></tr>";
@@ -297,14 +328,21 @@ function big6_showDb_Add(big6_testIndex) {
     showDbDetail.innerHTML = "test index: " + big6_testIndex;
 }
 
+function big6_edit_Toggle() {
+    if (editTestsTable.style.display == 'table') editTestsTable.style.display = 'none';
+    else {
+        editTestsTable.style.innerHTML = '...';
+        editTestsTable.style.display = 'table';
+        editTestsDetail.innerHTML = big6_editTests_ShowAsHtm(big6_testIndex);
+    }
+}
+
+document.addEventListener('touchstart', ux_timerStartPress);
+document.addEventListener('touchend', ux_timerStopPress);
+
 document.addEventListener('keydown', function (event) { // Add event listener to the 'keydown' event on the document
     if (event.key === 'e') { // Get into or out of edit-mode
-        if (editTestsTable.style.display == 'table') editTestsTable.style.display = 'none';
-        else {
-            editTestsTable.style.innerHTML = '...';
-            editTestsTable.style.display = 'table';
-            editTestsDetail.innerHTML = big6_editTests_ShowAsHtm(big6_testIndex);
-        }
+        big6_edit_Toggle();
     }
     else if (event.key === 'r') { // Show results
         ux_Click_Results();
@@ -314,3 +352,11 @@ document.addEventListener('keydown', function (event) { // Add event listener to
         else showDbTable.style.display = 'table';
     }
 });
+
+var ux_timerPressEvent;
+function ux_timerStartPress() {
+    ux_timerPressEvent = setTimeout(ux_timerHandleLongPress, 1000); // 1000 milliseconds (1 second) for long press
+}
+function ux_timerStopPress() { clearTimeout(ux_timerPressEvent); }
+function ux_timerHandleLongPress() { ux_timerStopPress(); big6_edit_Toggle(); }
+
