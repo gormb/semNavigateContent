@@ -16,11 +16,13 @@ function ux_Click_Button(b, cell) {
     bSkip.style.display = big6_bYes != -1 || big6_bNo != -1 ? "none" : "table";
 }
 function ux_Click_Reset() {
-    big6_Url_Set('', 1);
-    bResults.style.display = 'none';
-    testOverviewTable.style.display = 'none';
-    big6_testIndex = 0;
-    big6_SetButtons();
+    if (confirm("Reset;\nTop menu?") == true) {
+        big6_Url_Set('', 1);
+        bResults.style.display = 'none';
+        testOverviewTable.style.display = 'none';
+        big6_testIndex = 0;
+        big6_SetButtons();
+    }
 }
 function ux_Click_Next() {
     big6_Url_Set('!', 0);
@@ -328,8 +330,9 @@ function big6_showDb_Add(big6_testIndex) {
     showDbDetail.innerHTML = "test index: " + big6_testIndex;
 }
 
-function big6_edit_Toggle() {
-    if (editTestsTable.style.display == 'table') editTestsTable.style.display = 'none';
+function big6_edit_Toggle(visible) {
+    if (visible == null) visible = (editTestsTable.style.display == 'none');
+    if (!visible) editTestsTable.style.display = 'none';
     else {
         editTestsTable.style.innerHTML = '...';
         editTestsTable.style.display = 'table';
@@ -337,26 +340,31 @@ function big6_edit_Toggle() {
     }
 }
 
-document.addEventListener('touchstart', ux_timerStartPress);
-document.addEventListener('touchend', ux_timerStopPress);
+function big6_data_Toggle(visible) {
+    if (visible == null) visible = (showDbTable.style.display == 'none');
+    if (!visible) showDbTable.style.display = 'none';
+    else {
+        //showDbTable.style.innerHTML = '...';
+        showDbTable.style.display = 'table';
+        //showDbTable.innerHTML = big6_editTests_ShowAsHtm(big6_testIndex);
+    }
+}
+
 
 document.addEventListener('keydown', function (event) { // Add event listener to the 'keydown' event on the document
-    if (event.key === 'e') { // Get into or out of edit-mode
-        big6_edit_Toggle();
-    }
-    else if (event.key === 'r') { // Show results
-        ux_Click_Results();
-    }
-    else if (event.key === 'd') { // Show all database actions
-        if (showDbTable.style.display == 'table') showDbTable.style.display = 'none';
-        else showDbTable.style.display = 'table';
-    }
+    if (event.key === 'e') big6_edit_Toggle(); // Get into or out of edit-mode
+    else if (event.key === 'r') ux_Click_Results(); // Show results
+    else if (event.key === 'd') big6_data_Toggle(); // Show all database actions
 });
 
-var ux_timerPressEvent;
-function ux_timerStartPress() {
-    ux_timerPressEvent = setTimeout(ux_timerHandleLongPress, 1000); // 1000 milliseconds (1 second) for long press
-}
-function ux_timerStopPress() { clearTimeout(ux_timerPressEvent); }
-function ux_timerHandleLongPress() { ux_timerStopPress(); big6_edit_Toggle(); }
+var ux_touchTimerEvent;
+document.addEventListener('touchstart', ()=> {
+    ux_touchTimerEvent = setTimeout(() => {
+        clearTimeout(ux_touchTimerEvent);
+        big6_edit_Toggle();
+        ux_Click_Results();
+        big6_data_Toggle();
+    }, 1000); /* 1000 milliseconds (1 second) for long press*/
+});
 
+document.addEventListener('touchend', () => { clearTimeout(ux_touchTimerEvent); });

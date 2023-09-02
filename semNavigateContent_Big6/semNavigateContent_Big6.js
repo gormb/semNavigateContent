@@ -157,12 +157,16 @@ function big6_TraitsUpdate_angle(yesno, opportunityvsthreat) {
     else if (opportunityvsthreat > 0) return 135; // upper left
     //}
 }
-function big6_TraitsUpdate_setBg(tc, yesno, opportunityvsthreat) {
-    var degree = big6_TraitsUpdate_angle(yesno, opportunityvsthreat);
-    if (degree == null)
+function big6_TraitsUpdate_setBg(tc, yesno, opportunityvsthreat, iAnswerCount) {
+    if (iAnswerCount == 0)
         tc.style.background = "linear-gradient(0deg, green 0%, #ccc 0%)";
-    else
-        tc.style.background = "linear-gradient(" + degree + "deg, green 0%, #ccc 20%)";
+    else {
+        var degree = big6_TraitsUpdate_angle(yesno, opportunityvsthreat);
+        if (degree == null)
+            tc.style.background = "#ada"; // Center(!) use circle in middle
+        else
+            tc.style.background = "linear-gradient(" + degree + "deg, green 0%, #ccc " + 15 + "%)";
+    }
 }
 function big6_TraitsUpdate() { // update percentages for traits based upon answers given, update gui
     big6_UpdateScores(big6_bYes, big6_bNo);
@@ -173,7 +177,7 @@ function big6_TraitsUpdate() { // update percentages for traits based upon answe
             var t_c = trait[i_statements].length;
             //tc.style.borderColor = t_c < 1 ? 'grey' : t_c < 2 ? 'yellow' : 'green';
             tc.style.borderColor = t_c < 1 ? 'grey' : t_c < 2 ? 'grey' : 'green';
-            big6_TraitsUpdate_setBg(document.getElementById("t" + i), trait[i_yesno], trait[i_opportunityvsthreat]);
+            big6_TraitsUpdate_setBg(document.getElementById("t" + i), trait[i_yesno], trait[i_opportunityvsthreat], trait[i_statements].length);
             if (t_c < 1)
                 bResults.style.display = 'none';
         }
