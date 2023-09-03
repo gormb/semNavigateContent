@@ -2,7 +2,7 @@ if (big6.length == 0)
     big6.push([0, -1, 'Test', '', '', '', '', '']);
 
 //big6.push([9000000, 0, 'Triagering (PoC)', '', 'Gi meg 2 påstander som er basert på inkluderingskriterier for "Svimmelhet eller ørhet" og gi meg 2 påstander som er basert på ekskluderingskristerier for "Svimmelhet eller ørhet". Gi meg 2 påstander som er basert på at inkluderingskriterier for "Svimmelhet eller ørhet" er feil og gi meg 2 påstander som er basert på at ekskluderingskriterier for ""Svimmelhet eller ørhet"" er feil. Knytt påstandene opp mot tilstand Øvre gastrointestinal blødning', '', '', '']);
-big6.push([9000000, -1, 'Triagering (PoC)', ''
+big6.push([9000000, 0, 'Triagering (PoC)', ''
     , 'Gi meg en påstand som er basert på inkluderingskriterier signaliserer tilstanden, at det er alvorlig og haster'
     , 'Gi meg en påstand som er basert på ekskluderingskriterier diskvalifiserer tilstanden, men at helsetilstanden er alvorlig og det haster'
     , 'Gi meg en påstand som er basert på inkluderingskriterier signaliserer tilstanden, at det er alvorlig og ikke haster'
