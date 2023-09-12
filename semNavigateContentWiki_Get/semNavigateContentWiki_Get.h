@@ -181,8 +181,8 @@ public:
     {
         //pTsk->idval.value;
         // Open command specified
-        ShellExecute
-        pTsk->idval.value
+        //ShellExecute
+        //pTsk->idval.value
         return 0;
     }
 protected:
